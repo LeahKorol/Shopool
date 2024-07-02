@@ -88,6 +88,8 @@ async function showCategoryProducts(categoryName) {
 }
 
 function showProductDetails(product) {
+    document.querySelector('.search-input').value=''; ////delete searching filter so user returns to regular page
+
     localStorage.setItem('selectedProduct', JSON.stringify(product)); // Store the product object in localStorage
     window.location.href = './product-details.html'; // Redirect to product-details page
 }
@@ -280,6 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showAllCategories();
     showDefaultProducts();
     handleSearch();
+    closeDropdown();
 });
 
 
