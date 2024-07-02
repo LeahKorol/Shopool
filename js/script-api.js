@@ -38,6 +38,15 @@ async function searchProducts(query){
     }
 }
 
-getAllProducts();
+async function getProductById(id){
+    try {
+        const response = await fetch(`https://dummyjson.com/products/${id}`);
+        const categories = await response.json();
+        console.log(categories);
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+    }
+}
+
 
 
