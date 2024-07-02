@@ -249,7 +249,8 @@ main {
     justify-content: space-around;
     max-width: 100wv;
     height: 85vh;
-    margin: 0 auto;
+    margin-bottom: 5%;
+    overflow-x: hidden;
 }
 
 .footer-section {

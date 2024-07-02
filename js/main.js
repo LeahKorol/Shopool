@@ -1,73 +1,120 @@
-async function getCategoryList() {
-    try {
-        const response = await fetch('https://dummyjson.com/products/category-list');
-        const categories = await response.json();
-        return categories; 
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-    }
-}
-
-async function getAllProducts(){
-    try {
-        const response = await fetch('https://dummyjson.com/products');
-        const categories = await response.json();
-        console.log(categories);
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-    }
-}
-
-async function getCategoryProducts(categoryName){
-    try {
-        const response = await fetch(`https://dummyjson.com/products/category/${categoryName}`);
-        const categories = await response.json();
-        console.log(categories);
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-    }
-}
-
-async function searchProducts(query){
-    try {
-        const response = await fetch(`https://dummyjson.com/products/search?q=${query}`);
-        const categories = await response.json();
-        console.log(categories);
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-    }
-}
-
-async function getProductById(id){
-    try {
-        const response = await fetch(`https://dummyjson.com/products/${id}`);
-        const categories = await response.json();
-        console.log(categories);
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-    }
-}
+import { getCategoryList, getCategoryProducts, getDefaultProducts} from './api.js';
 
 async function showAllCategories() {
     try {
-        const categories = await getCategoryList(); // Call the API function
-        const categoriesList = document.getElementById('categories-list');
-        categoriesList.innerHTML = ''; // Clear previous content
-        categories.forEach(category => {
-            const categoryItem = document.createElement('a');
+        const categories = await getCategoryList();
+        
+        const headerCategoriesList = document.getElementById('header-categories-list');
+        headerCategoriesList.innerHTML = '';
+        categories.forEach(category => { 
+            const categoryItem = document.createElement('a'); 
             categoryItem.href = '#'; // Set the href as needed
-            categoryItem.textContent = category;
-            console.log(category);
-            categoriesList.appendChild(categoryItem);
+            categoryItem.textContent = category; 
+            categoryItem.addEventListener('click', (event) => { 
+                event.preventDefault(); 
+                showCategoryProducts(category); 
+            }); 
+            headerCategoriesList.appendChild(categoryItem); 
+        });  
+
+        const footerCategoriesList = document.getElementById('footer-categories-list');
+        footerCategoriesList.innerHTML = '';
+        categories.forEach(category => {
+            const categoryItem = document.createElement('li');
+            const categoryLink = document.createElement('a');
+            categoryLink.href = '#';
+            categoryLink.textContent = category;
+            categoryItem.appendChild(categoryLink);
+            footerCategoriesList.appendChild(categoryItem);
         });
+
     } catch (error) {
         console.error('Error fetching categories:', error);
     }
 }
 
-showAllCategories();
+// Function to show products based on selected category
+async function showCategoryProducts(categoryName) {
+    try {
+        const products = await getCategoryProducts(categoryName);
 
+        const productList = document.getElementById('product-list');
+        if (!productList) {
+            console.error('Product list element not found');
+            return;
+        }
+        productList.innerHTML = ''; // Clear previous content
 
+        products.forEach(product => {
+            const productItem = document.createElement('div');
+            productItem.classList.add('product-item');
+
+            // Display important details of each product
+            productItem.innerHTML = `
+                <h3>${product.title}</h3>
+                <img src="${product.thumbnail}" alt="product #${product.id} image" />
+                <p>Price: $${product.price}</p>
+                <p>Rating: ${product.rating}</p>
+                <p>Availability: ${product.stock}</p>
+                <button onclick="showProductDetails('${product.id}')">View Details</button>
+            `;
+            productList.appendChild(productItem);
+        });
+
+    } catch (error) {
+        console.error('Error fetching products:', error);
+    }
+}
+
+function showProductDetails(productId){
+    window.location.href = `./html/product-details.html?id=${productId}`;
+
+}
+
+// Function to show default products if no category is chosen
+async function showDefaultProducts() {
+    try {
+        const defaultProducts = await getDefaultProducts();
+        if (defaultProducts) {
+            displayDefaultProducts(defaultProducts);
+        } else {
+            console.log('Failed to fetch default products.');
+        }
+    } catch (error) {
+        console.error('Error fetching default products:', error);
+    }
+}
+
+// Function to display default products
+function displayDefaultProducts(productsByCategory) {
+    const productList = document.getElementById('product-list');
+    if (!productList) {
+        console.error('Product list element not found');
+        return;
+    }
+    productList.innerHTML = ''; // Clear previous content
+
+    for (const category in productsByCategory) {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.innerHTML = `<h3>${category}</h3>`;
+        productsByCategory[category].forEach(product => {
+            const productItem = document.createElement('div');
+            productItem.classList.add('product-item');
+
+            // Display important details of each product
+            productItem.innerHTML = `
+                <h3>${product.title}</h3>
+                <img src="${product.thumbnail}" alt="product #${product.id} image" />
+                <p>Price: $${product.price}</p>
+                <p>Rating: ${product.rating}</p>
+                <p>Availability: ${product.stock}</p>
+                <button onclick="showProductDetails('${product.id}')">View Details</button>
+            `;
+            categoryDiv.appendChild(productItem);
+        });
+        productList.appendChild(categoryDiv);
+    }
+}
 
 
 // carousel - of hot sales
@@ -148,3 +195,9 @@ document.addEventListener("DOMContentLoaded", function() {
         tiktokIcon.src = "../images/community-icons/tiktok-black.png";
     });
 });
+
+document.addEventListener('DOMContentLoaded',()=>{
+    showAllCategories();
+    showDefaultProducts()
+});
+
