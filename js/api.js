@@ -57,7 +57,7 @@ async function getDefaultProducts() {
         const categories = await getCategoryList();
 
         // Fetch a few products from each category
-        const defaultProductLimit = 3; // Number of products to fetch per category
+        const defaultProductLimit = 2; // Number of products to fetch per category
         const defaultProducts = {};
 
         for (const category of categories) {
@@ -72,75 +72,4 @@ async function getDefaultProducts() {
     }
 }
 
-
-//functions to show data on the screen
-
-async function showAllCategories() {
-    try {
-        const categories = await getCategoryList();
-        const categoriesList = document.getElementById('categories-list');
-        categoriesList.innerHTML = ''; // Clear previous content
-        categories.forEach(category => {
-            const categoryItem = document.createElement('a');
-            categoryItem.href = '#'; // Set the href as needed
-            categoryItem.textContent = category;
-            categoryItem.addEventListener('click', (event) => {
-                event.preventDefault();
-                showCategoryProducts(category);
-            });
-            categoriesList.appendChild(categoryItem);
-        });
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-    }
-}
-
-async function showCategoryProducts(categoryName) {
-    try {
-        const products = await getCategoryProducts(categoryName);
-
-        const productList = document.getElementById('product-list');
-        if (!productList) {
-            console.error('Product list element not found');
-            return;
-        }
-        productList.innerHTML = ''; // Clear previous content
-
-        products.forEach(product => {
-            const productItem = document.createElement('div');
-            productItem.classList.add('product-item');
-
-            // Display important details of each product
-            productItem.innerHTML = `
-                <h3>${product.title}</h3>
-                <img src=${product.thumbnail} alt="product #${product.id} image" />
-                <p>Price: $${product.price}</p>
-                <p>Rating: ${product.rating}</p>
-                <p>Availability: ${product.availabilityStatus}</p>
-                <button onclick="showProductDetails('${product.id}')">View Details</button>
-            `;
-            productList.appendChild(productItem);
-        });
-
-    } catch (error) {
-        console.error('Error fetching products:', error);
-    }
-}
-
-
-function showProductDetails(productId) {
-    // Redirect to a new page showing all details of the selected product
-    window.location.href = `product-details.html?id=${productId}`;
-}
-
-// Initialize categories on page load
-document.addEventListener('DOMContentLoaded', showAllCategories);
-
-
-
-
-
-
-
-
-
+export { getCategoryList, getCategoryProducts, getDefaultProducts};
