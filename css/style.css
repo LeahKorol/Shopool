@@ -341,15 +341,9 @@ h2.category-title {
     border-bottom: var(--box-shadow-light); 
 }
 
-.category-products {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
 
 .product-item {
     flex: 1 1 calc(25% - 1rem); 
-    border: 1px solid #ccc;
     padding: 10px;
     border-radius: 8px;
     box-shadow: var(--box-shadow);
