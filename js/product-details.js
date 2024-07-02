@@ -1,14 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+    
     // Retrieve the product object from localStorage
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
+  
+    // Clear the item from localStorage 
+    localStorage.removeItem('selectedProduct');   
 
-    // Clear the item from localStorage (optional)
-    localStorage.removeItem('selectedProduct');
-
-    // Select the element where you want to insert product details
     const productDetailsElement = document.getElementById('product-details');
 
-    // Generate HTML markup for product details
     const productHTML = `
         <h2>${product.title}</h2>
         <img src="${product.thumbnail}" alt="Product Thumbnail">
