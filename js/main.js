@@ -12,7 +12,8 @@ async function showAllCategories() {
             categoryItem.textContent = category; 
             categoryItem.addEventListener('click', (event) => { 
                 event.preventDefault(); 
-                showCategoryProducts(category); 
+                showCategoryProducts(category);
+                closeDropdown(); 
             }); 
             headerCategoriesList.appendChild(categoryItem); 
         });  
@@ -24,12 +25,25 @@ async function showAllCategories() {
             const categoryLink = document.createElement('a');
             categoryLink.href = '#';
             categoryLink.textContent = category;
+            categoryItem.addEventListener('click', (event) => { 
+                event.preventDefault(); 
+                showCategoryProducts(category); 
+                closeDropdown();
+            }); 
             categoryItem.appendChild(categoryLink);
             footerCategoriesList.appendChild(categoryItem);
         });
 
     } catch (error) {
         console.error('Error fetching categories:', error);
+    }
+}
+
+// Function to close the dropdown list
+function closeDropdown() {
+    const dropdownContent = document.querySelector('.dropdown-content');
+    if (dropdownContent) {
+        dropdownContent.style.display = 'none';
     }
 }
 
@@ -60,6 +74,9 @@ async function showCategoryProducts(categoryName) {
             `;
             productList.appendChild(productItem);
         });
+
+        // Scroll to the product list
+        productList.scrollIntoView({ behavior: 'smooth' });
 
     } catch (error) {
         console.error('Error fetching products:', error);
