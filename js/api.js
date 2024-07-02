@@ -73,4 +73,4 @@ async function getDefaultProducts() {
 }
 
 
-export { getCategoryList, getCategoryProducts, getDefaultProducts };
+export { getCategoryList, getCategoryProducts, getDefaultProducts, searchProducts };
