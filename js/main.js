@@ -70,8 +70,13 @@ async function showCategoryProducts(categoryName) {
                 <p>Price: $${product.price}</p>
                 <p>Rating: ${product.rating}</p>
                 <p>Availability: ${product.stock}</p>
-                <button onclick="showProductDetails('${product.id}')">View Details</button>
+                <button class="view-details-btn">View Details</button>
             `;
+            // Add click event listener to each product item's button
+            const viewDetailsBtn = productItem.querySelector('.view-details-btn');
+            viewDetailsBtn.addEventListener('click', () => {
+                showProductDetails(product); 
+            });
             productList.appendChild(productItem);
         });
 
@@ -83,9 +88,9 @@ async function showCategoryProducts(categoryName) {
     }
 }
 
-function showProductDetails(productId){
-    window.location.href = `./html/product-details.html?id=${productId}`;
-
+function showProductDetails(product){
+     localStorage.setItem('selectedProduct', JSON.stringify(product)); // Store the product object in localStorage
+     window.location.href = './product-details.html'; // Redirect to product-details page
 }
 
 // Function to show default products if no category is chosen
@@ -125,8 +130,13 @@ function displayDefaultProducts(productsByCategory) {
                 <p>Price: $${product.price}</p>
                 <p>Rating: ${product.rating}</p>
                 <p>Availability: ${product.stock}</p>
-                <button onclick="showProductDetails('${product.id}')">View Details</button>
+                <button class="view-details-btn">View Details</button>
             `;
+            // Add click event listener to each product item's button
+            const viewDetailsBtn = productItem.querySelector('.view-details-btn');
+            viewDetailsBtn.addEventListener('click', () => {
+                showProductDetails(product); 
+            });
             categoryDiv.appendChild(productItem);
         });
         productList.appendChild(categoryDiv);
@@ -204,13 +214,13 @@ document.addEventListener("DOMContentLoaded", function() {
         twitterIcon.src = "../images/community-icons/twitter-black.png";
     });
 
-    tiktokIcon.addEventListener("mouseover", function() {
-        tiktokIcon.src = tiktokIcon.getAttribute("data-src");
-    });
+    // tiktokIcon.addEventListener("mouseover", function() {
+    //     tiktokIcon.src = tiktokIcon.getAttribute("data-src");
+    // });
 
-    tiktokIcon.addEventListener("mouseout", function() {
-        tiktokIcon.src = "../images/community-icons/tiktok-black.png";
-    });
+    // tiktokIcon.addEventListener("mouseout", function() {
+    //     tiktokIcon.src = "../images/community-icons/tiktok-black.png";
+    // });
 });
 
 document.addEventListener('DOMContentLoaded',()=>{
