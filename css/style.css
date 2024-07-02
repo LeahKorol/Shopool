@@ -94,6 +94,57 @@ header .logo-container img {
 }
 
 
+.categories-container {
+    position: relative;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.dropbtn i {
+    margin-left: 10px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--white);
+    min-width: 160px;
+    box-shadow: var(--box-shadow-light);
+    z-index: 1;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: var(--text-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--light-text-color);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 
 @media (max-width: 600px) {
     .search-input {
@@ -105,5 +156,10 @@ header .logo-container img {
     .search-container .search-icon {
         right: 15px;
         font-size: 18px;
+    }
+
+    .dropbtn {
+        padding: 8px 16px;
+        font-size: 14px;
     }
 }
