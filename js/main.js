@@ -47,6 +47,33 @@ function closeDropdown() {
     }
 }
 
+// Function to toggle the dropdown list
+function toggleDropdown() {
+    const dropdownContent = document.querySelector('.dropdown-content');
+    if (dropdownContent.style.display === 'block') {
+        dropdownContent.style.display = 'none';
+    } else {
+        dropdownContent.style.display = 'block';
+    }
+}
+
+// Event listener to show/hide dropdown content
+document.addEventListener('DOMContentLoaded', function() {
+    const dropbtn = document.querySelector('.dropbtn');
+    dropbtn.addEventListener('click', function(event) {
+        event.stopPropagation();
+        toggleDropdown();
+    });
+
+    // Close dropdown if clicked outside of it
+    document.addEventListener('click', function(event) {
+        const dropdownContent = document.querySelector('.dropdown-content');
+        if (dropdownContent && !dropdownContent.contains(event.target) && !event.target.matches('.dropbtn')) {
+            dropdownContent.style.display = 'none';
+        }
+    });
+});
+
 // Function to show products based on selected category
 async function showCategoryProducts(categoryName) {
     try {
@@ -217,4 +244,3 @@ document.addEventListener('DOMContentLoaded',()=>{
     showAllCategories();
     showDefaultProducts()
 });
-
