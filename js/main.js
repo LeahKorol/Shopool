@@ -118,7 +118,7 @@ async function showCategoryProducts(categoryName) {
             viewDetailsBtn.addEventListener('click', () => {
                 showProductDetails(product); 
             });
-            categoryContainer.appendChild(productItem);
+            productsContainer.appendChild(productItem);
         });
 
         categoryContainer.appendChild(productsContainer);
