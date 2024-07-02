@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
 :root {
     /* colors plate */
@@ -6,12 +6,12 @@
     --secondary-color: #F3AA53;
     --dark: #CC4646;
     --white: #F2F2F2;
-    --text-color: #333;
+    --text-color: #555;
+    --light-text-color: #888;
 
     /* box styles */
-    --box-shadow-light: ;
+    --box-shadow-light: 0 4px 8px rgba(0,0,0,0.1);
 }
-
 
 .element {
     -webkit-touch-callout: none; 
@@ -24,14 +24,16 @@
 
 * {
     box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
 body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    font-family: "Poppins", sans-serif;
     background-color: var(--white);
+    height: 100vh;
+    width: 100vw;
 
     -webkit-user-select: none;
     -moz-user-select: none; 
@@ -39,28 +41,69 @@ body {
     user-select: none; 
 }
 
+header {
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2%;
+}
 
-.c1, .c2, .c3, .c4, .c5 {
+header .logo-container {
+    display: flex;
+    flex-direction: row;
+}
+
+header .logo-container img {
+    height: 60px;
+}
+
+.search-container {
+    position: relative;
+    width: 90%; 
+    max-width: 400px;
+    margin: 0 20px; 
+}
+
+.search-input {
     width: 100%;
-    height: 50px;
+    padding: 15px 20px;
+    padding-right: 45px; 
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    box-shadow: var(--box-shadow-light);
+    outline: none;
 }
 
-.c1 {
-    background-color: var(--primary-color);
+.search-input::placeholder {
+    color: var(--light-text-color);
 }
 
-.c2 {
-    background-color: var(--secondary-color);
+.search-container .search-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--secondary-color);
+    font-size: 20px;
+    pointer-events: none; 
 }
 
-.c3 {
-    background-color: var(--dark);
-}
 
-.c4 {
-    background-color: var(--completed-color);
-}
 
-.c5 {
-    background-color: var(--white);
+@media (max-width: 600px) {
+    .search-input {
+        font-size: 14px;
+        padding: 10px 15px;
+        padding-right: 40px; 
+    }
+    
+    .search-container .search-icon {
+        right: 15px;
+        font-size: 18px;
+    }
 }
