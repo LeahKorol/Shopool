@@ -110,7 +110,6 @@ async function showCategoryProducts(categoryName) {
                 <img src="${product.thumbnail}" alt="product #${product.id} image" />
                 <p>Price: $${product.price}</p>
                 <p>Rating: ${product.rating}</p>
-<<<<<<< HEAD
                 <p>Availability: ${product.stock}</p>
                 <button class="view-details-btn">View Details</button>
             `;
@@ -120,12 +119,6 @@ async function showCategoryProducts(categoryName) {
                 showProductDetails(product); 
             });
             productList.appendChild(productItem);
-=======
-                <button onclick="showProductDetails('${product.id}')">View Details</button>
-            `;
-
-            productsContainer.appendChild(productItem);
->>>>>>> c81f49f2f4efca9725191a8580b076bd0689f7e2
         });
 
         categoryContainer.appendChild(productsContainer);
@@ -193,7 +186,6 @@ function displayDefaultProducts(productsByCategory) {
                 <img src="${product.thumbnail}" alt="product #${product.id} image" />
                 <p>Price: $${product.price}</p>
                 <p>Rating: ${product.rating}</p>
-<<<<<<< HEAD
                 <p>Availability: ${product.stock}</p>
                 <button class="view-details-btn">View Details</button>
             `;
@@ -203,11 +195,6 @@ function displayDefaultProducts(productsByCategory) {
                 showProductDetails(product); 
             });
             categoryDiv.appendChild(productItem);
-=======
-                <button onclick="showProductDetails('${product.id}')">View Details</button>
-            `;
-            productsContainer.appendChild(productItem);
->>>>>>> c81f49f2f4efca9725191a8580b076bd0689f7e2
         });
 
         categoryContainer.appendChild(productsContainer);
