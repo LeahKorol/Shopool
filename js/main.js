@@ -106,3 +106,45 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }, 5000);
 });
+
+
+// icons transform
+document.addEventListener("DOMContentLoaded", function() {
+    const facebookIcon = document.getElementById("facebook-icon");
+    const instagramIcon = document.getElementById("instagram-icon");
+    const twitterIcon = document.getElementById("twitter-icon");
+    const tiktokIcon = document.getElementById("tiktok-icon");
+
+    // Event listeners for hover effect
+    facebookIcon.addEventListener("mouseover", function() {
+        facebookIcon.src = facebookIcon.getAttribute("data-src");
+    });
+
+    facebookIcon.addEventListener("mouseout", function() {
+        facebookIcon.src = "../images/community-icons/facebook-black.png";
+    });
+
+    instagramIcon.addEventListener("mouseover", function() {
+        instagramIcon.src = instagramIcon.getAttribute("data-src");
+    });
+
+    instagramIcon.addEventListener("mouseout", function() {
+        instagramIcon.src = "../images/community-icons/instagram-black.png";
+    });
+
+    twitterIcon.addEventListener("mouseover", function() {
+        twitterIcon.src = twitterIcon.getAttribute("data-src");
+    });
+
+    twitterIcon.addEventListener("mouseout", function() {
+        twitterIcon.src = "../images/community-icons/twitter-black.png";
+    });
+
+    tiktokIcon.addEventListener("mouseover", function() {
+        tiktokIcon.src = tiktokIcon.getAttribute("data-src");
+    });
+
+    tiktokIcon.addEventListener("mouseout", function() {
+        tiktokIcon.src = "../images/community-icons/tiktok-black.png";
+    });
+});
