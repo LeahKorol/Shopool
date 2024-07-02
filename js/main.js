@@ -86,6 +86,20 @@ async function showCategoryProducts(categoryName) {
         }
         productList.innerHTML = ''; // Clear previous content
 
+        // Create a container for the category title and products
+        const categoryContainer = document.createElement('div');
+        categoryContainer.classList.add('category-container');
+
+        // Display category title
+        const categoryTitle = document.createElement('h2');
+        categoryTitle.classList.add('category-title');
+        categoryTitle.textContent = categoryName;
+        categoryContainer.appendChild(categoryTitle);
+
+        // Create a container for the products
+        const productsContainer = document.createElement('div');
+        productsContainer.classList.add('products-container');
+
         products.forEach(product => {
             const productItem = document.createElement('div');
             productItem.classList.add('product-item');
@@ -96,6 +110,7 @@ async function showCategoryProducts(categoryName) {
                 <img src="${product.thumbnail}" alt="product #${product.id} image" />
                 <p>Price: $${product.price}</p>
                 <p>Rating: ${product.rating}</p>
+<<<<<<< HEAD
                 <p>Availability: ${product.stock}</p>
                 <button class="view-details-btn">View Details</button>
             `;
@@ -105,7 +120,16 @@ async function showCategoryProducts(categoryName) {
                 showProductDetails(product); 
             });
             productList.appendChild(productItem);
+=======
+                <button onclick="showProductDetails('${product.id}')">View Details</button>
+            `;
+
+            productsContainer.appendChild(productItem);
+>>>>>>> c81f49f2f4efca9725191a8580b076bd0689f7e2
         });
+
+        categoryContainer.appendChild(productsContainer);
+        productList.appendChild(categoryContainer);
 
         // Scroll to the product list
         productList.scrollIntoView({ behavior: 'smooth' });
@@ -144,18 +168,32 @@ function displayDefaultProducts(productsByCategory) {
     productList.innerHTML = ''; // Clear previous content
 
     for (const category in productsByCategory) {
-        const categoryDiv = document.createElement('div');
-        categoryDiv.innerHTML = `<h3>${category}</h3>`;
+        const categoryContainer = document.createElement('div');
+        categoryContainer.classList.add('category-container');
+
+        const cateroryTitleCon = document.createElement('div');
+        cateroryTitleCon.classList.add('category-title-container');
+
+        const categoryTitle = document.createElement('h2');
+        categoryTitle.classList.add('category-title');
+        categoryTitle.textContent = category;
+        cateroryTitleCon.appendChild(categoryTitle);
+
+        categoryContainer.appendChild(cateroryTitleCon);
+
+        const productsContainer = document.createElement('div');
+        productsContainer.classList.add('products-container');
+
         productsByCategory[category].forEach(product => {
             const productItem = document.createElement('div');
             productItem.classList.add('product-item');
 
-            // Display important details of each product
             productItem.innerHTML = `
                 <h3>${product.title}</h3>
                 <img src="${product.thumbnail}" alt="product #${product.id} image" />
                 <p>Price: $${product.price}</p>
                 <p>Rating: ${product.rating}</p>
+<<<<<<< HEAD
                 <p>Availability: ${product.stock}</p>
                 <button class="view-details-btn">View Details</button>
             `;
@@ -165,11 +203,17 @@ function displayDefaultProducts(productsByCategory) {
                 showProductDetails(product); 
             });
             categoryDiv.appendChild(productItem);
+=======
+                <button onclick="showProductDetails('${product.id}')">View Details</button>
+            `;
+            productsContainer.appendChild(productItem);
+>>>>>>> c81f49f2f4efca9725191a8580b076bd0689f7e2
         });
-        productList.appendChild(categoryDiv);
+
+        categoryContainer.appendChild(productsContainer);
+        productList.appendChild(categoryContainer);
     }
 }
-
 
 // carousel - of hot sales
 document.addEventListener("DOMContentLoaded", function() {
