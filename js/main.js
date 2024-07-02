@@ -78,8 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
 async function showCategoryProducts(categoryName) {
     try {
         const products = await getCategoryProducts(categoryName);
+           // Create an object `result` with the categoryName as key and products as value
         const result = {};
-        result[categoryName]= products;
+        result[categoryName] = products;
         displayProducts(result);
     } catch (error) {
         console.error('Error fetching products:', error);
@@ -105,7 +106,11 @@ async function showDefaultProducts() {
     }
 }
 
-// Function to display products
+/**
+ * Displays products categorized by their respective categories on the UI.
+ * @param {Object} productsByCategory - Object containing products categorized by their respective categories.
+ *                                      Example: { 'Electronics': [{ product1 }, { product2 }], 'Clothing': [{ product3 }] }
+ */
 function displayProducts(productsByCategory) {
     console.log(productsByCategory);
     const productList = document.getElementById('product-list');
@@ -239,24 +244,32 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function handleSearch() {
-    const searchInput = document.querySelector('#search-input');
-    const container = document.querySelector('#product-list');
+    const searchContainer = document.querySelector('.search-container');
+    const searchInput = document.querySelector('.search-input')
 
-    searchInput.addEventListener('keypress', (event) => {
+    searchContainer.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
-            const query = searchInput.value.trim();
-            updateContainer(query);
+            performSearch();
         }
     });
-   
+    searchContainer.addEventListener('click', () => {
+        performSearch();
+    });
+
+    const performSearch = () => {
+        const query = searchInput.value.trim();
+        updateContainer(query);
+    };
+
     async function updateContainer(query) {
         if (query) {
             const products = await searchProducts(query);
-            const result={}
-            result[query]=products;
-            console.log(result);
+            // Create an object `result` with the query as key and products as value
+            const result = {}
+            result[query] = products;
             displayProducts(result);
-        } else {
+        }
+        else {
             showDefaultProducts();
         }
     }
