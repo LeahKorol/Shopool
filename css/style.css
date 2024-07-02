@@ -44,15 +44,22 @@ body {
 
 header {
     width: 100vw;
-    height: fit-content;
+    height: 15vh;
     display: flex;
     flex-direction: row;
     position: fixed;
+    top: 0;
     justify-content: space-between;
     align-items: center;
     padding: 2%;
     box-shadow: var(--box-shadow); 
     z-index: 1000;
+    background-color: var(--white);
+}
+
+header a {
+    text-decoration: none;
+    cursor: pointer;
 }
 
 header .logo-container {
@@ -162,7 +169,6 @@ header .logo-container img {
 
 
 
-
 .icons {
     display: flex;
     gap: 1.5rem;
@@ -186,6 +192,58 @@ header .logo-container img {
 
 
 
+/* main section */
+main {
+    position: relative;
+    overflow-y: auto;
+    margin-top: 15vh; 
+}
+
+.hot-sales {
+    width: 100vw;
+    height: 85vh;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    width: 500vh; 
+    height: 85vh;
+    transition: transform 1s ease;
+    animation: slide 20s infinite linear;
+}
+
+.carousel-item {
+    width: 100vw;
+    height: 85vh;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--white);
+    background-color: var(--primary-color);
+}
+
+.carousel-item:nth-child(2) {
+    background-color: var(--secondary-color);
+}
+
+.carousel-item:nth-child(3) {
+    background-color: var(--dark);
+}
+
+.carousel-item:nth-child(4) {
+    background-color: var(--text-color);
+}
+
+.carousel-item:nth-child(5) {
+    background-color: var(--primary-color); 
+}
+
+
+
+/* resposive for all kinds of screens */
 @media (max-width: 600px) {
     .search-input {
         font-size: 14px;
