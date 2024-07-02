@@ -53,23 +53,24 @@ async function getProductById(id) {
 }
 
 async function getDefaultProducts() {
+    const defaultProductLimit = 4;
+    const categoryLimit = 3;
     try {
-        const categories = await getCategoryList();
+        const categories = await getCategoryList()
+        const limitedCategories = categories.slice(0, categoryLimit); // Limit the number of categories
 
-        // Fetch a few products from each category
-        const defaultProductLimit = 2; // Number of products to fetch per category
-        const defaultProducts = {};
-
-        for (const category of categories) {
+        // Fetch products for each limited category
+        const results = {};
+        for (const category of limitedCategories) {
             const response = await fetch(`https://dummyjson.com/products/category/${category}?limit=${defaultProductLimit}`);
             const data = await response.json();
-            defaultProducts[category] = data.products;
+            results[category] = data.products;
         }
-        return defaultProducts;
+        return results;
     } catch (error) {
-        console.error('Error fetching default products:', error);
-        return null;
+        console.error('Error fetching categories or products:', error);
     }
 }
 
-export { getCategoryList, getCategoryProducts, getDefaultProducts};
+
+export { getCategoryList, getCategoryProducts, getDefaultProducts };
