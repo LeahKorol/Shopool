@@ -78,54 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
 async function showCategoryProducts(categoryName) {
     try {
         const products = await getCategoryProducts(categoryName);
-        const productList = document.getElementById('product-list');
-        if (!productList) {
-            console.error('Product list element not found');
-            return;
-        }
-        productList.innerHTML = ''; // Clear previous content
-
-        // Create a container for the category title and products
-        const categoryContainer = document.createElement('div');
-        categoryContainer.classList.add('category-container');
-
-        // Display category title
-        const categoryTitle = document.createElement('h2');
-        categoryTitle.classList.add('category-title');
-        categoryTitle.textContent = categoryName;
-        categoryContainer.appendChild(categoryTitle);
-
-        // Create a container for the products
-        const productsContainer = document.createElement('div');
-        productsContainer.classList.add('products-container');
-
-        products.forEach(product => {
-            const productItem = document.createElement('div');
-            productItem.classList.add('product-item');
-
-            // Display important details of each product
-            productItem.innerHTML = `
-                <h3>${product.title}</h3>
-                <img src="${product.thumbnail}" alt="product #${product.id} image" />
-                <p>Price: $${product.price}</p>
-                <p>Rating: ${product.rating}</p>
-                <p>Availability: ${product.stock}</p>
-                <button class="view-details-btn">View Details</button>
-            `;
-            // Add click event listener to each product item's button
-            const viewDetailsBtn = productItem.querySelector('.view-details-btn');
-            viewDetailsBtn.addEventListener('click', () => {
-                showProductDetails(product);
-            });
-            productsContainer.appendChild(productItem);
-        });
-
-        categoryContainer.appendChild(productsContainer);
-        productList.appendChild(categoryContainer);
-
-        // Scroll to the product list
-        productList.scrollIntoView({ behavior: 'smooth' });
-
+        const result = {};
+        result[categoryName]= products;
+        displayProducts(result);
     } catch (error) {
         console.error('Error fetching products:', error);
     }
@@ -200,6 +155,8 @@ function displayProducts(productsByCategory) {
         categoryContainer.appendChild(productsContainer);
         productList.appendChild(categoryContainer);
     }
+    // Scroll to the product list
+    productList.scrollIntoView({ behavior: 'smooth' });
 }
 
 // carousel - of hot sales
