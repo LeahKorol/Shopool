@@ -149,7 +149,7 @@ function displayProducts(productsByCategory) {
             viewDetailsBtn.addEventListener('click', () => {
                 showProductDetails(product);
             });
-            categoryContainer.appendChild(productItem);
+            productsContainer.appendChild(productItem);
         });
 
         categoryContainer.appendChild(productsContainer);
