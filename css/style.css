@@ -11,6 +11,7 @@
 
     /* box styles */
     --box-shadow-light: 0 4px 8px rgba(0,0,0,0.1);
+    --box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
 .element {
@@ -50,6 +51,8 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 2%;
+    box-shadow: var(--box-shadow); 
+    z-index: 1000;
 }
 
 header .logo-container {
@@ -64,7 +67,7 @@ header .logo-container img {
 .search-container {
     position: relative;
     width: 90%; 
-    max-width: 400px;
+    max-width: 50%;
     margin: 0 20px; 
 }
 
@@ -96,10 +99,10 @@ header .logo-container img {
 
 .categories-container {
     position: relative;
+    display: inline-block;
 }
 
 .dropdown {
-    position: relative;
     display: inline-block;
 }
 
@@ -110,13 +113,10 @@ header .logo-container img {
     font-size: 16px;
     border: none;
     cursor: pointer;
-    border-radius: 30px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
-}
-
-.dropbtn i {
-    margin-left: 10px;
+    gap: 5px;
 }
 
 .dropdown-content {
@@ -126,24 +126,64 @@ header .logo-container img {
     min-width: 160px;
     box-shadow: var(--box-shadow-light);
     z-index: 1;
+    max-height: 50vh;
+    overflow-y: auto; 
+    padding: 0;
+}
+
+.dropdown-content::-webkit-scrollbar {
+    width: 8px;
+    background: var(--white);
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
     border-radius: 10px;
-    overflow: hidden;
+    border: 2px solid var(--white);
 }
 
 .dropdown-content a {
     color: var(--text-color);
-    padding: 12px 16px;
+    padding: 8px 16px;
     text-decoration: none;
     display: block;
+    white-space: nowrap;
+    font-size: 14px; 
 }
 
 .dropdown-content a:hover {
-    background-color: var(--light-text-color);
+    background-color: var(--secondary-color);
+    color: var(--white);
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+
+
+
+.icons {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.icons i {
+    color: var(--secondary-color);
+    font-size: 28px;
+    cursor: pointer;
+    transition: 0.3s; 
+    position: relative; 
+}
+
+.icons i:hover {
+    text-shadow: 
+        -2px -2px 0 black,  
+        2px -2px 0 black,
+        -2px 2px 0 black,
+        2px 2px 0 black; 
+}
+
 
 
 @media (max-width: 600px) {
@@ -161,5 +201,9 @@ header .logo-container img {
     .dropbtn {
         padding: 8px 16px;
         font-size: 14px;
+    }
+
+    .icons i {
+        font-size: 20px;
     }
 }
