@@ -194,7 +194,7 @@ function displayDefaultProducts(productsByCategory) {
             viewDetailsBtn.addEventListener('click', () => {
                 showProductDetails(product); 
             });
-            categoryDiv.appendChild(productItem);
+            categoryContainer.appendChild(productItem);
         });
 
         categoryContainer.appendChild(productsContainer);
