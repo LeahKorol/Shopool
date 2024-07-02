@@ -66,3 +66,43 @@ async function showAllCategories() {
 }
 
 showAllCategories();
+
+
+
+
+// carousel - of hot sales
+document.addEventListener("DOMContentLoaded", function() {
+    const header = document.querySelector("header");
+    const main = document.querySelector("main");
+    const hotSales = document.querySelector(".hot-sales");
+
+    function adjustLayout() {
+        const headerHeight = header.offsetHeight;
+        document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+        hotSales.style.height = `calc(100vh - ${headerHeight}px)`;
+        main.style.marginTop = `calc(${headerHeight}px)`;
+    }
+
+    window.addEventListener("resize", adjustLayout);
+    adjustLayout();
+
+    const carousel = document.querySelector(".carousel");
+    let index = 0;
+    const slides = document.querySelectorAll(".carousel-item");
+    const totalSlides = slides.length;
+
+    setInterval(() => {
+        index++;
+        if (index === totalSlides) {
+            index = 1;
+            carousel.style.transition = "none"; 
+            carousel.style.transform = `translateX(0)`;
+            setTimeout(() => {
+                carousel.style.transition = "transform 1s ease"; 
+                carousel.style.transform = `translateX(-${index * 100}vw)`;
+            }, 20);
+        } else {
+            carousel.style.transform = `translateX(-${index * 100}vw)`;
+        }
+    }, 5000);
+});
