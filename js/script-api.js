@@ -38,4 +38,6 @@ async function searchProducts(query){
     }
 }
 
+getAllProducts();
+
 
