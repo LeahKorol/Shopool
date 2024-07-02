@@ -66,6 +66,3 @@ async function showAllCategories() {
 }
 
 showAllCategories();
-
-
-
