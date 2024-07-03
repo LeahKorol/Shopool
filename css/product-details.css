@@ -273,7 +273,6 @@ body {
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    animation: shake 0.5s;
 }
 
 
