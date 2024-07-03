@@ -562,6 +562,9 @@ h2.category-title {
 .product-item h3 {
     font-size: 16px;
     margin: 10px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .product-item p {
@@ -572,7 +575,8 @@ h2.category-title {
     background-color: var(--secondary-color);
     color: white;
     border: none;
-    padding: 10px;
+    padding: 10px 20px;
+    bottom: 0;
     width: 100%;
     max-height: 20vh;
     border-radius: 5px;

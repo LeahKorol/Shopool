@@ -287,6 +287,20 @@ function handleSearch() {
 }
 
 
+// change the size of product title
+document.addEventListener("DOMContentLoaded", function() {
+    var productTitles = document.querySelectorAll('.product-item h3');
+    
+    productTitles.forEach(function(title) {
+        let fontSize = 16;
+        while (title.scrollWidth > title.clientWidth && fontSize > 10) {
+            fontSize -= 1;
+            title.style.fontSize = fontSize + 'px';
+        }
+    });
+});
+
+
 document.addEventListener('DOMContentLoaded', () => {
     showAllCategories();
     showDefaultProducts();
