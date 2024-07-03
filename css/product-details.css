@@ -273,9 +273,7 @@ body {
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    animation: shake 0.5s;
 }
-
 
 
 #add-to-cart {
@@ -283,14 +281,33 @@ body {
     color: white;
 }
 
+
 #add-to-wishlist {
     background-color: transparent;
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
+    border: none;
     border-radius: 50%;
     padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
 }
 
 #add-to-wishlist i {
-    font-size: 20px;
+    font-size: 35px;
+    transition: all 0.3s ease;
+    color: white;
+    text-shadow: 
+        -1px -1px 0 var(--primary-color),  
+        1px -1px 0 var(--primary-color),
+        -1px 1px 0 var(--primary-color),
+        1px 1px 0 var(--primary-color); 
+}
+
+#add-to-wishlist.active i {
+    color: var(--primary-color);
+    border: none;
 }
