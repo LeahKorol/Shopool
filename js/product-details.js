@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const decreaseQuantityButton = document.getElementById('decrease-quantity');
     const increaseQuantityButton = document.getElementById('increase-quantity');
     const minOrderInfoElement = document.getElementById('min-order-info');
+    const addToWishlistButton = document.getElementById('add-to-wishlist');
 
 
     thumbnailElement.src = product.thumbnail;
@@ -131,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert('Sorry, product is out of stock');
                 }
             
-                cart[index].quantity = product.stock; // Cap quantity to the maximum available
+                cart[index].quantity = product.stock; 
             } else {
                 cart[index].quantity = newQuantity;
             }
@@ -143,8 +144,27 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(JSON.stringify(cart));
     });
 
-    document.getElementById('add-to-wishlist').addEventListener('click', function () {
-        alert(`${product.title} added to wishlist`);
+    addToWishlistButton.addEventListener('click', function () {
+        addToWishlistButton.classList.toggle('active');
+
+        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const index = wishlist.findIndex(item => item.id === product.id);
+
+        if (addToWishlistButton.classList.contains('active')) {
+            if (index === -1) {
+                wishlist.push(product);
+                alert(`${product.title} added to wishlist`);
+            }
+        } else {
+            if (index !== -1) {
+                wishlist.splice(index, 1);
+                alert(`${product.title} removed from wishlist`);
+            }
+        }
+
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+
+        console.log(localStorage);
     });
 });
 
@@ -171,6 +191,3 @@ window.addEventListener('load', (event) => {
         localStorage.removeItem('selectedProduct');
     }
 });
-
-
-
