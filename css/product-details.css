@@ -81,27 +81,25 @@ body {
 .star {
     font-size: 24px;
     position: relative;
-    color: transparent; 
-    -webkit-text-stroke: 1px var(--secondary-color);
+    color: transparent;
+    -webkit-text-stroke: 1px var(--secondary-color); 
     display: inline-block;
 }
 
 .star.filled {
     color: var(--secondary-color); 
-    -webkit-text-stroke: 0; 
-    position: relative;
-    z-index: 1;
+    -webkit-text-stroke: 0;
 }
 
 .star.filled.secondary-star {
     position: absolute;
     top: 0;
     left: 0;
-    color: transparent; 
+    color: var(--secondary-color); 
     -webkit-text-stroke: 0; 
-    z-index: 2;
+    z-index: 1;
     clip-path: inset(0 0 0 50%); 
-
+}
 
 
 .star.half::before {
@@ -112,6 +110,38 @@ body {
     width: 50%;
     -webkit-text-stroke: 0;
 }
+
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: fit-content;
+    font-size: 14px;
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 105%;
+    left: 50%;
+    margin-left: -40px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+
 
 #stock-info {
     color: red;
@@ -138,6 +168,9 @@ body {
     padding: 5px 10px;
     font-size: 16px;
     cursor: pointer;
+    border: none;
+    color: black;
+    background-color: white;
 }
 
 #quantity {
