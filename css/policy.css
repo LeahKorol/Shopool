@@ -38,6 +38,8 @@ main {
 .policy-container h1 {
     font-size: 2em;
     margin-bottom: 10px;
+    text-align: center;
+    color: var(--secondary-color);
 }
 
 .policy-container h2 {

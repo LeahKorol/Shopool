@@ -203,6 +203,7 @@ main {
     width: 100vw;
     height: 85vh;
     overflow: hidden;
+    margin-bottom: 5%;
 }
 
 .carousel {
@@ -211,6 +212,170 @@ main {
     height: 85vh;
     transition: transform 1s ease;
     animation: slide 20s infinite linear;
+}
+
+/* .iframely-embed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background: var(--white);
+  } */
+  
+  /* App styling */
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    height: 85vh;
+    width: 100vw;
+    background: var(--white);
+    color: var(--text-color);
+    z-index: 100;
+  }
+
+  .title {
+    padding-left: 1em;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    font-family: "Prata", serif;
+    font-size: 8vw;
+    width: 100%;
+    z-index: 2;
+  
+    > .title-inner {
+      display: inline-block;
+    }
+  }
+
+  /* Keyframes for animations */
+@keyframes text-clip {
+    from {
+      clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+    }
+    to {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  }
+  
+  @keyframes outer-left {
+    from {
+      transform: translateX(50%);
+    }
+    to {
+      transform: none;
+    }
+  }
+  
+  @keyframes inner-left {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+.cafe,
+.mozart {
+  animation: outer-left 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
+}
+
+.title-inner {
+  display: inline-block;
+  animation: inner-left 1s 1s ease both;
+}
+
+.cafe-inner {
+  display: inline-block;
+  animation: inner-left 1s 1s ease both,
+    text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
+}
+
+.mozart-inner {
+  animation: text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
+}
+
+.title {
+  animation: outer-left 1s 1s ease both;
+}
+
+.cafe {
+  > .cafe-inner {
+    display: inline-block;
+  }
+}
+
+.mozart {
+  display: inline-block;
+}
+
+/* Image styling */
+.image {
+  grid-row: 1;
+  grid-column: 2;
+  margin-left: -2rem;
+  opacity: 0.7;
+  animation: image-in 1s cubic-bezier(0.5, 0, 0.1, 1) 2s backwards;
+}
+
+@keyframes image-in {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+.image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Replay animation */
+body:active * {
+  animation: none !important;
+}
+
+
+.coming-soon {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    background: var(--white);
+}
+
+.coming-soon-text {
+    font-size: 8vw;
+    line-height: 8vw;
+    margin: 0;
+    font-family: 'Red Hat Display', sans-serif;
+    font-weight: 900;
+    background: url(../images/gift.png);
+    background-size: 40%;
+    background-position: 50% 50%;
+    background-clip: text;
+    color: rgba(0,0,0,0.1);
+    animation: zoomout 10s ease 500ms forwards;
+}
+
+  
+@keyframes zoomout {
+  from {
+    background-size: 40%;
+  }
+  to {
+    background-size: 10%;
+  }
 }
 
 .carousel-item {
@@ -222,7 +387,8 @@ main {
     justify-content: center;
     font-size: 24px;
     color: var(--white);
-    background-color: var(--primary-color);
+    padding: 20px; 
+    box-sizing: border-box; 
 }
 
 .carousel-item:nth-child(2) {
@@ -436,6 +602,7 @@ h2.category-title {
     color: black;
     font-size: 1.5rem;
     transition: color 0.3s ease;
+    cursor: pointer;
 }
 
 .footer-section .credit-card-icons {
