@@ -1,21 +1,11 @@
 let cart = {
     products: [],
 
-    addProduct: function (id, title, thumbnail, price, quantity, minQuantity, maxQuantity) {
+    addProduct: function (product) {
         const index = this.products.findIndex(product => product.id === id);
         if (index !== -1) {
             return false; // product already exists
         }
-
-        let product = {
-            id: id,
-            title: title,
-            thumbnail: thumbnail,
-            price: price,
-            quantity: quantity,
-            minQuantity: minQuantity,
-            maxQuantity: maxQuantity,
-        };
         this.products.push(product);
         return true;
     },

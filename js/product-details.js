@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
-    localStorage.removeItem('selectedProduct');
+    //localStorage.removeItem('selectedProduct');
 
     const thumbnailElement = document.getElementById('thumbnail');
     const imagesElement = document.getElementById('images');
@@ -116,6 +116,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('add-to-cart').addEventListener('click', function() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        // if(cart.lenght>0){
+
+        // }
+        cart.push(product);
+        localStorage.setItem('cart', JSON.stringify(cart));
         alert(`Added ${quantity} units of ${product.title} to cart`);
     });
 
@@ -123,3 +129,30 @@ document.addEventListener('DOMContentLoaded', function() {
         alert(`${product.title} added to wishlist`);
     });
 });
+
+
+
+// Set a flag in localStorage indicating the page was unloaded
+window.addEventListener('beforeunload', (event) => {
+    localStorage.setItem('isPageUnloading', 'true');
+});
+
+// Check the flag on page load to determine if the last action was a refresh or navigation away
+window.addEventListener('load', (event) => {
+    const isPageUnloading = localStorage.getItem('isPageUnloading') === 'true';
+    
+    // Reset the flag
+    localStorage.setItem('isPageUnloading', 'false');
+    
+    if (isPageUnloading) {
+        // The page was reloaded, not navigated away from
+        console.log('Page was refreshed');
+    } else {
+        // The page was navigated away from
+        console.log('User is navigating away from the page');
+        localStorage.removeItem('selectedProduct');
+    }
+});
+
+
+

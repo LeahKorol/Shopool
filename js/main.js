@@ -347,6 +347,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
 document.addEventListener('DOMContentLoaded', () => {
     showAllCategories();
     showDefaultProducts();
