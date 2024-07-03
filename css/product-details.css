@@ -81,14 +81,28 @@ body {
 .star {
     font-size: 24px;
     position: relative;
-    color: transparent;
+    color: transparent; 
     -webkit-text-stroke: 1px var(--secondary-color);
+    display: inline-block;
 }
 
 .star.filled {
-    color: var(--secondary-color);
-    -webkit-text-stroke: 0;
+    color: var(--secondary-color); 
+    -webkit-text-stroke: 0; 
+    position: relative;
+    z-index: 1;
 }
+
+.star.filled.secondary-star {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: transparent; 
+    -webkit-text-stroke: 0; 
+    z-index: 2;
+    clip-path: inset(0 0 0 50%); 
+
+
 
 .star.half::before {
     content: '\2605';

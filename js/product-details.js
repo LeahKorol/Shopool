@@ -18,15 +18,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     productTitleElement.innerHTML = product.title;
 
-    // Display rating stars
-    const fullStars = Math.floor(product.rating);
-    const hasHalfStar = product.rating % 1 >= 0.5;
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    let ratingStarsHTML = '<span class="star filled">&#9733;</span>'.repeat(fullStars);
-    if (hasHalfStar) {
-        ratingStarsHTML += '<span class="star half">&#9733;</span>';
+    const ratingStars = parseFloat(product.rating);
+    const fullStars = Math.floor(ratingStars);
+    const decimalPart = ratingStars - fullStars;
+
+    let ratingStarsHTML = '';
+
+    for (let i = 1; i <= 5; i++) {
+        if (i <= fullStars) {
+            ratingStarsHTML += `<span class="star filled">&#9733;</span>`;
+        } else if (i === fullStars + 1 && decimalPart > 0) {
+            // Calculate the percentage of the last star to fill
+            const percentage = Math.round(decimalPart * 100);
+            ratingStarsHTML += `<span class="star" style="position: relative;">`;
+            ratingStarsHTML += `<span class="star filled secondary-star" style="clip-path: inset(0 0 0 ${percentage}%);">&#9733;</span>`;
+            ratingStarsHTML += `&#9733;</span>`;
+        } else {
+            ratingStarsHTML += `<span class="star">&#9733;</span>`;
+        }
     }
-    ratingStarsHTML += '<span class="star">&#9733;</span>'.repeat(emptyStars);
+
     ratingElement.innerHTML = ratingStarsHTML;
 
     stockInfoElement.innerHTML = product.stock <= 5 ? `Only ${product.stock} items left in stock` : 'In Stock';
