@@ -38,19 +38,25 @@
                     <span>Total:</span>
                     <span id="total">$0.00</span>
                 </div>
-                <button class="checkout-btn">Proceed to Checkout</button>
-                <div id="checkout-form" style="display: none;">
+
+                <button id="checkout-btn">Proceed to Checkout</button>
+
+                <div id="checkout-form">
+                    <span class="close" id="closeCheckoutForm">&times;</span>
                     <h2>Checkout</h2>
                     <form id="payment-form">
-                        <label for="delivery-address">Delivery Address:</label><br>
-                        <textarea id="delivery-address" rows="4" cols="50" required></textarea><br><br>
+                        <label for="street-address">Street Address:</label><br>
+                        <input type="text" id="street-address" required><br><br>
+                        <label for="city">City:</label><br>
+                        <input type="text" id="city" required><br><br>
+                        <label for="state">State:</label><br>
+                        <input type="text" id="state" required><br><br>
+
                         <label for="credit-card">Credit Card Number:</label><br>
                         <input type="text" id="credit-card" required><br><br>
                         <button type="submit" id="pay-now-btn">Pay Now</button>
                     </form>
-                    <p id="order-message" style="display: none;">Your order is on its way!</p>
                 </div>
-            </div>
         </section>
     </main>
 
@@ -59,4 +65,5 @@
     </footer>
     <script src="../js/cart.js"></script>
 </body>
+
 </html>

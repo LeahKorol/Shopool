@@ -166,6 +166,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log(localStorage);
     });
+
+    //pass to cart page
+    document.querySelector('.fa-shopping-cart').addEventListener('click', () => {
+        window.location.href = 'cart.html';
+    });
 });
 
 
