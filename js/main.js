@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             carousel.style.transform = `translateX(-${index * 100}vw)`;
         }
-    }, 3500);
+    }, 5000);
 });
 
 
@@ -285,6 +285,41 @@ function handleSearch() {
         }
     }
 }
+
+
+// loading for load the api
+document.addEventListener("DOMContentLoaded", function() {
+    function hideLoading() {
+        const loadingElement = document.getElementById('loading');
+        loadingElement.style.opacity = 0;
+        setTimeout(() => {
+            loadingElement.style.display = 'none';
+            startExistingAnimations();
+        }, 500); 
+    }
+
+    function simulateApiLoading() {
+        return new Promise((resolve) => {
+            setTimeout(resolve, 3000); 
+        });
+    }
+
+    function startExistingAnimations() {
+        const elementsToShow = document.querySelectorAll('header, main, footer');
+        elementsToShow.forEach(el => {
+            el.classList.remove('hidden');
+        });
+
+        const mainElement = document.querySelector('main');
+        mainElement.classList.add('animations-start');
+
+        const welcomeAnimation = document.querySelector('.welcome-animation');
+        welcomeAnimation.style.opacity = 1;
+    }
+
+    simulateApiLoading().then(hideLoading);
+});
+
 
 
 // change the size of product title
