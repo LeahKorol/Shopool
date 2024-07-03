@@ -98,7 +98,6 @@ function scrollToProducts() {
     });
 }
 
-
 function showProductDetails(product) {
     document.querySelector('.search-input').value=''; ////delete searching filter so user returns to regular page
 
@@ -126,12 +125,9 @@ async function showDefaultProducts() {
  *                                      Example: { 'Electronics': [{ product1 }, { product2 }], 'Clothing': [{ product3 }] }
  */
 function displayProducts(productsByCategory) {
-    console.log(productsByCategory);
+
     const productList = document.getElementById('product-list');
-    if (!productList) {
-        console.error('Product list element not found');
-        return;
-    }
+
     productList.innerHTML = ''; // Clear previous content
 
     for (const category in productsByCategory) {
@@ -168,16 +164,16 @@ function displayProducts(productsByCategory) {
             viewDetailsBtn.addEventListener('click', () => {
                 showProductDetails(product);
             });
-
-            categoryContainer.appendChild(productItem);
             productsContainer.appendChild(productItem);
-
         });
-
         categoryContainer.appendChild(productsContainer);
         productList.appendChild(categoryContainer);
     }
-
+    if(!productsByCategory[0]){
+        const categoryContainer = document.createElement('div');
+        categoryContainer.innerHTML += `<p>No results for "${Object.keys(productsByCategory)}"</p>`;
+        productList.appendChild(categoryContainer);
+    }
 }
 
 // carousel - of hot sales
@@ -261,6 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function handleSearch() {
     const searchContainer = document.querySelector('.search-container');
+    const searchSymbol = document.querySelector('.search-icon');
     const searchInput = document.querySelector('.search-input')
 
     searchContainer.addEventListener('keypress', (event) => {
@@ -268,7 +265,7 @@ function handleSearch() {
             performSearch();
         }
     });
-    searchContainer.addEventListener('click', () => {
+    searchSymbol.addEventListener('click', () => {
         performSearch();
     });
 
