@@ -2,66 +2,73 @@ document.addEventListener('DOMContentLoaded', function() {
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
     localStorage.removeItem('selectedProduct');
 
-    const productDetailsElement = document.getElementById('product-details');
-    const importantDetailsElement = document.getElementById('important-details');
-    const moreDetailsElement = document.getElementById('more-details');
-    const technicalDetailsElement = document.getElementById('technical-details');
-    const reviewsElement = document.getElementById('reviews');
+    const thumbnailElement = document.getElementById('thumbnail');
     const imagesElement = document.getElementById('images');
+    const productTitleElement = document.getElementById('product-title');
+    const ratingElement = document.getElementById('rating');
+    const stockInfoElement = document.getElementById('stock-info');
+    const priceElement = document.getElementById('price');
+    const descriptionElement = document.getElementById('description');
+    const quantityElement = document.getElementById('quantity');
 
-    const importantHTML = `
-        <h2>${product.title}</h2>
-        <img src="${product.thumbnail}" alt="Product Thumbnail">
-        <p>Description: ${product.description}</p>
-        <p>Price: $${product.price}</p>
-        <p>Rating: ${product.rating}</p>
-        <p>Stock: ${product.stock}</p>
-    `;
+    thumbnailElement.src = product.thumbnail;
 
     const imagesHTML = product.images.map(image => `<img src="${image}" alt="Product Image">`).join('');
-
-    const moreHTML = `
-        <p>Brand: ${product.brand}</p>
-        <p>Warranty: ${product.warrantyInformation}</p>
-        <p>Shipping Information: ${product.shippingInformation}</p>
-        <p>Availability Status: ${product.availabilityStatus}</p>
-    `;
-
-    const technicalHTML = `
-        <p>SKU: ${product.sku}</p>
-        <p>Weight: ${product.weight} kg</p>
-        <p>Dimensions: Width: ${product.dimensions.width} cm, Height: ${product.dimensions.height} cm, Depth: ${product.dimensions.depth} cm</p>
-    `;
-
-    const reviewsHTML = product.reviews && product.reviews.length > 0 ? `
-        <div class="product-reviews">
-            <h3>Customer Reviews</h3>
-            ${product.reviews.map(review => `
-                <div class="review">
-                    <p><strong>Rating: ${review.rating}</strong></p>
-                    <p>Comment: ${review.comment}</p>
-                    <p>Reviewer: ${review.reviewerName} (${review.reviewerEmail})</p>
-                    <p>Date: ${new Date(review.date).toLocaleDateString()}</p>
-                </div>
-            `).join('')}
-        </div>
-    ` : '<p>No reviews available</p>';
-
-    importantDetailsElement.innerHTML = importantHTML;
     imagesElement.innerHTML = imagesHTML;
-    moreDetailsElement.innerHTML = moreHTML;
-    technicalDetailsElement.innerHTML = technicalHTML;
-    reviewsElement.innerHTML = reviewsHTML;
 
-    document.getElementById('show-more-details').addEventListener('click', function() {
-        moreDetailsElement.style.display = 'block';
+    productTitleElement.innerHTML = product.title;
+
+    const ratingStars = parseFloat(product.rating);
+    const fullStars = Math.floor(ratingStars);
+    const decimalPart = ratingStars - fullStars;
+
+    let ratingStarsHTML = '';
+
+    for (let i = 1; i <= 5; i++) {
+        if (i <= fullStars) {
+            ratingStarsHTML += `<span class="star filled">&#9733;</span>`;
+        } else if (i === fullStars + 1 && decimalPart > 0) {
+            // Calculate the percentage of the last star to fill
+            const percentage = Math.round(decimalPart * 100);
+            ratingStarsHTML += `<span class="star" style="position: relative;">`;
+            ratingStarsHTML += `<span class="star filled secondary-star" style="clip-path: inset(0 0 0 ${percentage}%);">&#9733;</span>`;
+            ratingStarsHTML += `&#9733;</span>`;
+        } else {
+            ratingStarsHTML += `<span class="star">&#9733;</span>`;
+        }
+    }
+
+    ratingElement.innerHTML = ratingStarsHTML;
+
+    stockInfoElement.innerHTML = product.stock <= 5 ? `Only ${product.stock} items left in stock` : 'In Stock';
+    stockInfoElement.style.color = product.stock <= 5 ? 'red' : 'green';
+
+    priceElement.innerHTML = `$${product.price}`;
+    descriptionElement.innerHTML = product.description;
+
+    let quantity = 1;
+
+    document.getElementById('increase-quantity').addEventListener('click', function() {
+        quantity++;
+        quantityElement.innerHTML = quantity;
     });
 
-    document.getElementById('show-technical-details').addEventListener('click', function() {
-        technicalDetailsElement.style.display = 'block';
+    document.getElementById('decrease-quantity').addEventListener('click', function() {
+        if (quantity > 1) {
+            quantity--;
+            quantityElement.innerHTML = quantity;
+        }
     });
 
-    document.getElementById('show-reviews').addEventListener('click', function() {
-        reviewsElement.style.display = 'block';
+    document.getElementById('buy-now').addEventListener('click', function() {
+        alert(`You have purchased ${quantity} units of ${product.title} for a total of $${(product.price * quantity).toFixed(2)}`);
+    });
+
+    document.getElementById('add-to-cart').addEventListener('click', function() {
+        alert(`Added ${quantity} units of ${product.title} to cart`);
+    });
+
+    document.getElementById('add-to-wishlist').addEventListener('click', function() {
+        alert(`${product.title} added to wishlist`);
     });
 });
