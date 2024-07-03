@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             carousel.style.transform = `translateX(-${index * 100}vw)`;
         }
-    }, 5000);
+    }, 3500);
 });
 
 
