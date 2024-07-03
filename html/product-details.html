@@ -4,28 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details</title>
-    <link rel="stylesheet" href="../css/style.css"> 
-</head>
-<style>
-    #product-details img {
-    max-width: 100%;
-    height: auto;
-    margin: 10px 0;
-}
 
-#images img {
-    max-width: 100px;
-    height: auto;
-    margin: 5px;
-}
-main {
-    padding: 40px;
-    max-width: 800px;
-    margin: 60px auto 60px; /* Adjusted margin to account for fixed header and footer */
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-</style>
+    <!-- css links -->
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="../css/product-details.css"> 
+
+    <!-- icons link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+</head>
+
 <body>
     <header>
         <a href="../html/index.html">
@@ -34,9 +22,20 @@ main {
                 <img src="../images/shopool.png" alt="shopool">
             </div>
         </a>
+
+        <div class="icons">
+            <i class="fas fa-shopping-cart"></i>
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-user"></i>
+        </div>
+
     </header>
 
-    <main>
+
+    <button class="back-home-button" onclick="window.location.href='../html/index.html'">חזור לדף הבית</button>
+
+    
+    <main class="main">
         <div id="product-details">
             <div id="important-details"></div>
             <div id="images"></div>
@@ -49,10 +48,13 @@ main {
         </div>
     </main>
 
-      <footer>
+
+    <footer>
         <p>&copy; Created By Leah Korol & Talya Kazayof | <b>shopool</b> - 2024</p>
     </footer>
 
-    <script src="../js/product-details.js"></script> <!-- Link to your JavaScript file -->
+
+    <!-- js link -->
+    <script src="../js/product-details.js"></script> 
 </body>
 </html>
