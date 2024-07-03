@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const quantityElement = document.getElementById('quantity');
     const decreaseQuantityButton = document.getElementById('decrease-quantity');
     const increaseQuantityButton = document.getElementById('increase-quantity');
+    const minOrderInfoElement = document.getElementById('min-order-info');
+
 
     thumbnailElement.src = product.thumbnail;
 
@@ -59,6 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let minOrderQuantity = product.minOrderQuantity || 1; 
     let maxQuantity = product.stock; 
+
+    if (minOrderQuantity > 1) {
+        minOrderInfoElement.style.display = 'block';
+        minOrderInfoElement.innerHTML = `Minimum order quantity: ${minOrderQuantity}`;
+    }
 
     if (quantityElement.innerHTML < minOrderQuantity) {
         quantityElement.innerHTML = minOrderQuantity;
