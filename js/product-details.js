@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const increaseQuantityButton = document.getElementById('increase-quantity');
     const minOrderInfoElement = document.getElementById('min-order-info');
     const addToWishlistButton = document.getElementById('add-to-wishlist');
+    const reviewsListElement = document.getElementById('reviews-list');
 
 
     thumbnailElement.src = product.thumbnail;
@@ -144,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(JSON.stringify(cart));
     });
 
+
     addToWishlistButton.addEventListener('click', function () {
         addToWishlistButton.classList.toggle('active');
 
@@ -166,6 +168,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log(localStorage);
     });
+
+
+    
+    reviewsListElement.innerHTML = '';
+
+    product.reviews.forEach(review => {
+        const reviewElement = document.createElement('div');
+        reviewElement.classList.add('review');
+
+        let starsHTML = '';
+        for (let i = 0; i < review.rating; i++) {
+            starsHTML += '&#9733;';
+        }
+
+        const reviewDate = new Date(review.date).toLocaleDateString();
+
+        reviewElement.innerHTML = `
+            <div class="left">
+                <img class="avatar" src="../images/user-picture.png" alt="User Icon">
+                <div class="reviewer">${review.reviewerName}</div>
+            </div>
+            <div class="right">
+                <div class="rating">${starsHTML}</div>
+                <div class="date">${reviewDate}</div>
+                <div class="comment">${review.comment}</div>
+            </div>
+        `;
+
+        reviewsListElement.appendChild(reviewElement);
+    });
+
+
+    console.log(product.reviews);
+        
+
 });
 
 
