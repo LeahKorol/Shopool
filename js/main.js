@@ -85,14 +85,29 @@ async function showCategoryProducts(categoryName) {
     } catch (error) {
         console.error('Error fetching products:', error);
     }
-    const productList = document.getElementById('product-list');
+    scrollToProducts();
+}
+
+function scrollToProducts() {
+    const productList = document.querySelector('#product-list');
+    const header = document.querySelector('.hot-sales'); // Adjust the selector to match your header element
+    const offset = header ? header.offsetHeight : 0;
+
     if (!productList) {
         console.error('Product list element not found');
         return;
     }
-        // Scroll to the product list
-        productList.scrollIntoView({ behavior: 'smooth' });
+
+    // Calculate the scroll position with offset
+    const scrollPosition = productList.getBoundingClientRect().top + window.scrollY - offset;
+
+    // Scroll to the product list with offset
+    window.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth'
+    });
 }
+
 
 function showProductDetails(product) {
     document.querySelector('.search-input').value=''; ////delete searching filter so user returns to regular page
@@ -279,6 +294,7 @@ function handleSearch() {
             const result = {}
             result[query] = products;
             displayProducts(result);
+            scrollToProducts();
         }
         else {
             showDefaultProducts();
