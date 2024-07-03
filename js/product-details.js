@@ -27,18 +27,27 @@ document.addEventListener('DOMContentLoaded', function() {
     for (let i = 1; i <= 5; i++) {
         if (i <= fullStars) {
             ratingStarsHTML += `<span class="star filled">&#9733;</span>`;
-        } else if (i === fullStars + 1 && decimalPart > 0) {
+        } 
+        else if (i === fullStars + 1 && decimalPart > 0) {
             // Calculate the percentage of the last star to fill
-            const percentage = Math.round(decimalPart * 100);
+            const percentage = 100-Math.round(decimalPart * 100);
             ratingStarsHTML += `<span class="star" style="position: relative;">`;
-            ratingStarsHTML += `<span class="star filled secondary-star" style="clip-path: inset(0 0 0 ${percentage}%);">&#9733;</span>`;
+            ratingStarsHTML += `<span class="star filled secondary-star" style="clip-path: inset(0 ${percentage}% 0 0);">&#9733;</span>`;
             ratingStarsHTML += `&#9733;</span>`;
-        } else {
+        } 
+        else {
             ratingStarsHTML += `<span class="star">&#9733;</span>`;
         }
     }
 
     ratingElement.innerHTML = ratingStarsHTML;
+    
+    const ratingDiv = document.getElementById('rating');
+    const ratingTooltipText = `${product.rating} stars`; 
+
+    ratingDiv.classList.add('tooltip');
+    ratingDiv.innerHTML += `<span class="tooltiptext">${ratingTooltipText}</span>`;
+
 
     stockInfoElement.innerHTML = product.stock <= 5 ? `Only ${product.stock} items left in stock` : 'In Stock';
     stockInfoElement.style.color = product.stock <= 5 ? 'red' : 'green';
