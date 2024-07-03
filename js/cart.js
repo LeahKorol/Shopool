@@ -1,58 +1,88 @@
-let cart = {
-    products: [],
+document.addEventListener('DOMContentLoaded', function () {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    addProduct: function (product) {
-        const index = this.products.findIndex(product => product.id === id);
-        if (index !== -1) {
-            return false; // product already exists
-        }
-        this.products.push(product);
-        return true;
-    },
+    const productsContainer = document.getElementById('products-container');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const checkoutForm = document.getElementById('checkout-form');
+    const paymentMessage = document.getElementById('payment-message');
 
-    removeProduct: function (id) {
-        const index = this.products.findIndex(product => product.id === id);
-        if (index !== -1) {
-            this.products.splice(index, 1);
-            return true; //removed successfully
-        }
-        return false; //product not found
-    },
 
-    changeProductQuantity: function (id, quantity) {
-        const product = this.products.find(product => product.id === id);
-        if (!product) {
-            return false; // product does not exist
-        }
-        if (quantity < product.minQuantity || quantity > product.maxQuantity) {
-            return false; // quantity out of bounds
-        }
-        product.quantity = quantity;
-        return true;
+    // Function to render cart products
+    function rendercart() {
+
+        productsContainer.innerHTML = '';
+        let sum = 0;
+
+        cart.forEach(product => {
+            const productElement = document.createElement('div');
+            productElement.classList.add('product-item');
+
+            productElement.innerHTML = `
+            <div class="product-link">
+                <img id="thumbnail" src="${product.thumbnail}" alt="Product Thumbnail">
+                <h3>${product.title}</h3>
+            </div>
+            <p>Price: $${product.price}</p>
+            <p>Quantity: ${product.quantity}</p>
+        `;
+            const deleteButton = createDeleteButton(product.id);
+            productElement.appendChild(deleteButton);
+
+            productsContainer.appendChild(productElement);
+
+            productElement.querySelector('.product-link').addEventListener('click', function () {
+                localStorage.setItem('selectedProduct', JSON.stringify(product));
+                window.location.href = './product-details.html';
+            });
+            sum += product.price;
+        });
+        document.querySelector('#total').textContent = sum;
     }
-};
+    rendercart();
 
 
-// Test addProduct
-console.assert(cart.addProduct(1, 'Product 1', 'thumb1.jpg', 10, 2, 1, 5) === true, 'Test 1 Failed');
-console.assert(cart.addProduct(1, 'Product 1', 'thumb1.jpg', 10, 2, 1, 5) === false, 'Test 2 Failed');
-console.assert(cart.products.length === 1, 'Test 3 Failed');
+    function createDeleteButton(productId) {
+        const button = document.createElement('button');
+        button.className = 'delete-product-btn';
+        button.textContent = 'Delete';
 
-// Test removeProduct
-console.assert(cart.removeProduct(1) === true, 'Test 4 Failed');
-console.assert(cart.removeProduct(1) === false, 'Test 5 Failed');
-console.assert(cart.products.length === 0, 'Test 6 Failed');
-
-// Add product again for quantity tests
-cart.addProduct(1, 'Product 1', 'thumb1.jpg', 10, 2, 1, 5);
-
-// Test changeQuantity
-console.assert(cart.changeProductQuantity(1, 3) === true, 'Test 7 Failed');
-console.assert(cart.products[0].quantity === 3, 'Test 8 Failed');
-console.assert(cart.changeProductQuantity(1, 6) === false, 'Test 9 Failed'); // greater than maxQuantity
-console.assert(cart.changeProductQuantity(1, 0) === false, 'Test 10 Failed'); // less than minQuantity
-console.assert(cart.changeProductQuantity(2, 3) === false, 'Test 11 Failed'); // product does not exist
-
-console.log('All tests passed!');
+        button.addEventListener('click', function () {
+            const productIndex = cart.findIndex(product => product.id === productId);
+            if (productIndex !== -1) {
+                cart.splice(productIndex, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                rendercart();
+            }
+        });
+        return button;
+    }
 
 
+    // Event listener for checkout button
+    checkoutBtn.addEventListener('click', function () {
+        checkoutForm.style.display = 'block';
+    });
+
+    // // Close modal when clicking on the close button
+    // modalClose.onclick = function () {
+    //     modal.style.display = 'none';
+    // };
+
+    // // Close modal when clicking outside the modal content
+    // window.onclick = function (event) {
+    //     if (event.target == modal) {
+    //         modal.style.display = 'none';
+    //     }
+    // };
+
+    // // Event listener for checkout form submission
+    // checkoutForm.addEventListener('submit', function (event) {
+    //     event.preventDefault();
+    //     const address = document.getElementById('delivery-address').value;
+    //     const creditCard = document.getElementById('credit-card').value;
+
+    //     paymentMessage.textContent = 'Payment successful! Your products are on their way.';
+    //     localStorage.removeproduct('cart'); // Clear cart after successful payment (simulated)
+    //     rendercart(); // Update cart display
+    // });
+});

@@ -271,9 +271,9 @@ function handleSearch() {
 
     searchInput.addEventListener('input', () => { //return default products if user cleared search field
         const query = searchInput.value.trim();
-        if (!query) 
+        if (!query)
             showDefaultProducts();
-        else 
+        else
             console.log('Query:', query);
     });
 
@@ -353,4 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
     showDefaultProducts();
     handleSearch();
     closeDropdown();
+
+    document.querySelector('.fa-shopping-cart').addEventListener('click', () => {
+        window.location.href = 'cart.html';
+    });
 });
