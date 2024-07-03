@@ -6,12 +6,52 @@
     <title>Product Details</title>
     <link rel="stylesheet" href="../css/style.css"> 
 </head>
+<style>
+    #product-details img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+}
+
+#images img {
+    max-width: 100px;
+    height: auto;
+    margin: 5px;
+}
+main {
+    padding: 40px;
+    max-width: 800px;
+    margin: 60px auto 60px; /* Adjusted margin to account for fixed header and footer */
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
 <body>
-    <div class="container">
+    <header>
+        <a href="../html/index.html">
+            <div class="logo-container">
+                <img src="../images/icon.png" alt="icon">
+                <img src="../images/shopool.png" alt="shopool">
+            </div>
+        </a>
+    </header>
+
+    <main>
         <div id="product-details">
-            <!-- Product details will be dynamically inserted here -->
+            <div id="important-details"></div>
+            <div id="images"></div>
+            <button id="show-more-details">Show More Details</button>
+            <div id="more-details" style="display:none;"></div>
+            <button id="show-technical-details">Show Technical Details</button>
+            <div id="technical-details" style="display:none;"></div>
+            <button id="show-reviews">Show Reviews</button>
+            <div id="reviews" style="display:none;"></div>
         </div>
-    </div>
+    </main>
+
+      <footer>
+        <p>&copy; Created By Leah Korol & Talya Kazayof | <b>shopool</b> - 2024</p>
+    </footer>
 
     <script src="../js/product-details.js"></script> <!-- Link to your JavaScript file -->
 </body>
