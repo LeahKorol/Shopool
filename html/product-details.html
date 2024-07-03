@@ -34,17 +34,36 @@
 
     <button class="back-home-button" onclick="window.location.href='../html/index.html'">חזור לדף הבית</button>
 
-    
+
     <main class="main">
         <div id="product-details">
-            <div id="important-details"></div>
-            <div id="images"></div>
-            <button id="show-more-details">Show More Details</button>
-            <div id="more-details" style="display:none;"></div>
-            <button id="show-technical-details">Show Technical Details</button>
-            <div id="technical-details" style="display:none;"></div>
-            <button id="show-reviews">Show Reviews</button>
-            <div id="reviews" style="display:none;"></div>
+            <div id="product-info">
+                <div id="left-section">
+                    <img id="thumbnail" src="" alt="Product Thumbnail">
+                    <div id="images"></div>
+                </div>
+                <div id="right-section">
+                    <div id="row1">
+                        <h2 id="product-title"></h2>
+                        <div id="rating"></div>
+                    </div>
+                    <p id="stock-info"></p>
+                    <p id="price"></p>
+                    <p id="description"></p>
+                    <div id="quantity-controls">
+                        <button id="decrease-quantity">-</button>
+                        <span id="quantity">1</span>
+                        <button id="increase-quantity">+</button>
+                    </div>
+                    <div id="action-buttons">
+                        <button id="buy-now">Buy Now</button>
+                        <button id="add-to-cart">Add to Cart</button>
+                        <button id="add-to-wishlist">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
