@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
 async function showCategoryProducts(categoryName) {
     try {
         const products = await getCategoryProducts(categoryName);
-           // Create an object `result` with the categoryName as key and products as value
+        // Create an object `result` with the categoryName as key and products as value
         const result = {};
         result[categoryName] = products;
         displayProducts(result);
@@ -91,7 +91,7 @@ async function showCategoryProducts(categoryName) {
 function scrollToProducts() {
     const productList = document.querySelector('#product-list');
     const scrollPosition = productList.offsetTop;
-  
+
     window.scrollTo({
         top: scrollPosition,
         behavior: 'smooth'
@@ -99,7 +99,7 @@ function scrollToProducts() {
 }
 
 function showProductDetails(product) {
-    document.querySelector('.search-input').value=''; ////delete searching filter so user returns to regular page
+    document.querySelector('.search-input').value = ''; ////delete searching filter so user returns to regular page
 
     localStorage.setItem('selectedProduct', JSON.stringify(product)); // Store the product object in localStorage
     window.location.href = './product-details.html'; // Redirect to product-details page
@@ -169,7 +169,7 @@ function displayProducts(productsByCategory) {
         categoryContainer.appendChild(productsContainer);
         productList.appendChild(categoryContainer);
     }
-    if(!productsByCategory[0]){
+    if (!document.querySelector('.product-item')) {
         const categoryContainer = document.createElement('div');
         categoryContainer.innerHTML += `<p>No results for "${Object.keys(productsByCategory)}"</p>`;
         productList.appendChild(categoryContainer);
@@ -269,6 +269,14 @@ function handleSearch() {
         performSearch();
     });
 
+    searchInput.addEventListener('input', () => { //return default products if user cleared search field
+        const query = searchInput.value.trim();
+        if (!query) 
+            showDefaultProducts();
+        else 
+            console.log('Query:', query);
+    });
+
     const performSearch = () => {
         const query = searchInput.value.trim();
         updateContainer(query);
@@ -291,19 +299,19 @@ function handleSearch() {
 
 
 // loading for load the api
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     function hideLoading() {
         const loadingElement = document.getElementById('loading');
         loadingElement.style.opacity = 0;
         setTimeout(() => {
             loadingElement.style.display = 'none';
             startExistingAnimations();
-        }, 500); 
+        }, 500);
     }
 
     function simulateApiLoading() {
         return new Promise((resolve) => {
-            setTimeout(resolve, 3000); 
+            setTimeout(resolve, 3000);
         });
     }
 
@@ -326,10 +334,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 // change the size of product title
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     var productTitles = document.querySelectorAll('.product-item h3');
-    
-    productTitles.forEach(function(title) {
+
+    productTitles.forEach(function (title) {
         let fontSize = 16;
         while (title.scrollWidth > title.clientWidth && fontSize > 10) {
             fontSize -= 1;
