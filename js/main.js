@@ -85,6 +85,13 @@ async function showCategoryProducts(categoryName) {
     } catch (error) {
         console.error('Error fetching products:', error);
     }
+    const productList = document.getElementById('product-list');
+    if (!productList) {
+        console.error('Product list element not found');
+        return;
+    }
+        // Scroll to the product list
+        productList.scrollIntoView({ behavior: 'smooth' });
 }
 
 function showProductDetails(product) {
@@ -156,7 +163,7 @@ function displayProducts(productsByCategory) {
             viewDetailsBtn.addEventListener('click', () => {
                 showProductDetails(product);
             });
-            
+
             categoryContainer.appendChild(productItem);
             productsContainer.appendChild(productItem);
 
@@ -165,8 +172,7 @@ function displayProducts(productsByCategory) {
         categoryContainer.appendChild(productsContainer);
         productList.appendChild(categoryContainer);
     }
-    // Scroll to the product list
-    productList.scrollIntoView({ behavior: 'smooth' });
+
 }
 
 // carousel - of hot sales
