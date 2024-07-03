@@ -90,18 +90,8 @@ async function showCategoryProducts(categoryName) {
 
 function scrollToProducts() {
     const productList = document.querySelector('#product-list');
-    const header = document.querySelector('.hot-sales'); // Adjust the selector to match your header element
-    const offset = header ? header.offsetHeight : 0;
-
-    if (!productList) {
-        console.error('Product list element not found');
-        return;
-    }
-
-    // Calculate the scroll position with offset
-    const scrollPosition = productList.getBoundingClientRect().top + window.scrollY - offset;
-
-    // Scroll to the product list with offset
+    const scrollPosition = productList.offsetTop;
+  
     window.scrollTo({
         top: scrollPosition,
         behavior: 'smooth'
