@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const priceElement = document.getElementById('price');
     const descriptionElement = document.getElementById('description');
     const quantityElement = document.getElementById('quantity');
+    const decreaseQuantityButton = document.getElementById('decrease-quantity');
+    const increaseQuantityButton = document.getElementById('increase-quantity');
+    const minOrderInfoElement = document.getElementById('min-order-info');
+
 
     thumbnailElement.src = product.thumbnail;
 
@@ -55,17 +59,30 @@ document.addEventListener('DOMContentLoaded', function() {
     priceElement.innerHTML = `$${product.price}`;
     descriptionElement.innerHTML = product.description;
 
-    let quantity = 1;
+    let minOrderQuantity = product.minOrderQuantity || 1; 
+    let maxQuantity = product.stock; 
 
-    document.getElementById('increase-quantity').addEventListener('click', function() {
-        quantity++;
-        quantityElement.innerHTML = quantity;
+    if (minOrderQuantity > 1) {
+        minOrderInfoElement.style.display = 'block';
+        minOrderInfoElement.innerHTML = `Minimum order quantity: ${minOrderQuantity}`;
+    }
+
+    if (quantityElement.innerHTML < minOrderQuantity) {
+        quantityElement.innerHTML = minOrderQuantity;
+    } else if (quantityElement.innerHTML > maxQuantity) {
+        quantityElement.innerHTML = maxQuantity;
+    }
+
+
+    decreaseQuantityButton.addEventListener('click', function() {
+        if (quantityElement.innerHTML > minOrderQuantity) {
+            quantityElement.innerHTML--;
+        }
     });
 
-    document.getElementById('decrease-quantity').addEventListener('click', function() {
-        if (quantity > 1) {
-            quantity--;
-            quantityElement.innerHTML = quantity;
+    increaseQuantityButton.addEventListener('click', function() {
+        if (quantityElement.innerHTML < maxQuantity) {
+            quantityElement.innerHTML++;
         }
     });
 
