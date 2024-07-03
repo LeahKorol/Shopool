@@ -16,8 +16,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
     thumbnailElement.src = product.thumbnail;
 
+    const popup = document.getElementById('image-popup');
+    const popupImg = document.getElementById('popup-img');
+    const close = document.getElementsByClassName('close')[0];
+
+    thumbnailElement.addEventListener('click', function() {
+        popup.style.display = 'block';
+        popupImg.src = thumbnailElement.src;
+    });
+
+    close.addEventListener('click', function() {
+        popup.style.display = 'none';
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target == popup) {
+            popup.style.display = 'none';
+        }
+    });
+
     const imagesHTML = product.images.map(image => `<img src="${image}" alt="Product Image">`).join('');
     imagesElement.innerHTML = imagesHTML;
+
+    document.querySelectorAll('#images img').forEach(function(imageElement) {
+        imageElement.addEventListener('click', function() {
+            thumbnailElement.src = imageElement.src;
+        });
+    });
 
     productTitleElement.innerHTML = product.title;
 
