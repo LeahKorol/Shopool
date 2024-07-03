@@ -134,7 +134,7 @@ header .logo-container img {
     transform: translateY(-50%);
     color: var(--secondary-color);
     font-size: 20px;
-    pointer-events: none; 
+    cursor: pointer;
 }
 
 .categories-container {
@@ -570,7 +570,6 @@ h2.category-title {
 
 #product-list > div {
     display: flex;
-    flex-direction: row;
     gap: 1rem;
 }
 
