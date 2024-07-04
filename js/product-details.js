@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const imagesElement = document.getElementById('images');
     const productTitleElement = document.getElementById('product-title');
     const ratingElement = document.getElementById('rating');
+    const productSkuElement = document.getElementById('sku');
     const stockInfoElement = document.getElementById('stock-info');
     const priceElement = document.getElementById('price');
     const descriptionElement = document.getElementById('description');
@@ -58,8 +59,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const increaseQuantityButton = document.getElementById('increase-quantity');
     const minOrderInfoElement = document.getElementById('min-order-info');
     const addToWishlistButton = document.getElementById('add-to-wishlist');
-    const shippingInfoElement = document.getElementById('shipping-info');
+    const moreProductInformation = document.getElementById('more-product-info');
+    const dimenssionContainer = document.getElementById('dimenssion-container');
+    const shippingInfo = document.getElementById('shipping-info');
+    const returnPolicy = document.getElementById('return-policy');
+    const warrantyInformation = document.getElementById('warranty-information');
     const reviewsListElement = document.getElementById('reviews-list');
+    
 
 
     thumbnailElement.src = product.thumbnail;
@@ -123,6 +129,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     ratingDiv.classList.add('tooltip');
     ratingDiv.innerHTML += `<span class="tooltiptext">${ratingTooltipText}</span>`;
+
+
+    productSkuElement.innerHTML = `SKU: ${product.sku}`;
 
 
     stockInfoElement.innerHTML = product.stock <= 5 ? `Only ${product.stock} items left in stock` : 'In Stock';
@@ -214,6 +223,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log(localStorage);
     });
+
+
+
+    moreProductInformation.innerHTML = '';
+
+
+
 
 
     reviewsListElement.innerHTML = '';

@@ -210,6 +210,11 @@ body {
 }
 
 
+#sku {
+    color: var(--text-color);
+    font-size: 12px;
+    margin-top: -0.8%;
+}
 
 #stock-info {
     color: red;
@@ -312,6 +317,66 @@ body {
     border: none;
 }
 
+
+
+
+#more-product-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: max-content;
+    margin: 0 auto;
+}
+
+.box {
+    width: calc(25% - 20px);
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.info-content {
+    display: flex;
+    align-items: center;
+}
+
+.fas {
+    font-size: 30px;
+    color: #8b4513;
+    margin-right: 15px;
+}
+
+.text {
+    flex-grow: 1;
+}
+
+h3 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+@media (max-width: 1000px) {
+    .box {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 600px) {
+    .box {
+        width: 100%;
+    }
+}
 
 
 .rating-chart {
