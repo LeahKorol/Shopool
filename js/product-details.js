@@ -144,7 +144,10 @@ document.addEventListener('DOMContentLoaded', function () {
     priceElement.innerHTML = `$${product.price}`;
     descriptionElement.innerHTML = product.description;
 
-    let minOrderQuantity = product.minOrderQuantity || 1;
+    let minOrderQuantity = product.minimumOrderQuantity || 1;
+    if (product.stock < minOrderQuantity) {
+        minOrderQuantity = product.stock;
+    }
     let maxQuantity = product.stock;
 
     if (minOrderQuantity > 1) {
