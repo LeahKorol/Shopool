@@ -1,6 +1,51 @@
 document.addEventListener('DOMContentLoaded', function () {
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
 
+
+    function createRatingChart() {
+        const ratingCounts = [0, 0, 0, 0, 0];
+        const chartElement = document.getElementById('ratingChart');
+        
+        // Count ratings
+        product.reviews.forEach(review => {
+            ratingCounts[review.rating - 1]++;
+        });
+
+        const totalRatings = ratingCounts.reduce((sum, count) => sum + count, 0);
+
+        // Create and append chart rows
+        for (let i = 5; i >= 1; i--) {
+            const row = document.createElement('div');
+            row.className = 'rating-row';
+
+            const stars = document.createElement('div');
+            stars.className = 'stars';
+            stars.textContent = '★'.repeat(i) + '☆'.repeat(5 - i);
+
+            const barContainer = document.createElement('div');
+            barContainer.className = 'bar-container';
+
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            const percentage = (ratingCounts[i - 1] / totalRatings) * 100;
+            bar.style.width = `${percentage}%`;
+
+            const count = document.createElement('div');
+            count.className = 'count';
+            count.textContent = ratingCounts[i - 1];
+
+            barContainer.appendChild(bar);
+            row.appendChild(stars);
+            row.appendChild(barContainer);
+            row.appendChild(count);
+
+            chartElement.appendChild(row);
+        }
+    }
+
+    // Call createRatingChart after loading product data
+    createRatingChart();
+
     const thumbnailElement = document.getElementById('thumbnail');
     const imagesElement = document.getElementById('images');
     const productTitleElement = document.getElementById('product-title');
@@ -13,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const increaseQuantityButton = document.getElementById('increase-quantity');
     const minOrderInfoElement = document.getElementById('min-order-info');
     const addToWishlistButton = document.getElementById('add-to-wishlist');
+    const shippingInfoElement = document.getElementById('shipping-info');
     const reviewsListElement = document.getElementById('reviews-list');
 
 
@@ -170,10 +216,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    
     reviewsListElement.innerHTML = '';
 
+    const ratingsCount = [0, 0, 0, 0, 0];
+
     product.reviews.forEach(review => {
+        ratingsCount[review.rating - 1]++;
+
+        const reviewContainer = document.createElement('div');
+        reviewContainer.classList.add('review-container');
+
         const reviewElement = document.createElement('div');
         reviewElement.classList.add('review');
 
@@ -185,23 +237,49 @@ document.addEventListener('DOMContentLoaded', function () {
         const reviewDate = new Date(review.date).toLocaleDateString();
 
         reviewElement.innerHTML = `
-            <div class="left">
-                <img class="avatar" src="../images/user-picture.png" alt="User Icon">
-                <div class="reviewer">${review.reviewerName}</div>
-            </div>
-            <div class="right">
-                <div class="rating">${starsHTML}</div>
+            <div class="review-top">
+                <div class="review-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
                 <div class="date">${reviewDate}</div>
-                <div class="comment">${review.comment}</div>
+            </div>
+            <p class="review-comment">${review.comment}</p>
+            <div class="review-bottom">
+                <img class="avatar" src="../images/user-picture.png" alt="User Icon">
+                <div>
+                    <h4>${review.reviewerName}</h4>
+                    <p class="reviewer-description">${review.reviewerEmail}</p>
+                </div>
             </div>
         `;
 
-        reviewsListElement.appendChild(reviewElement);
+        reviewContainer.appendChild(reviewElement);
+        reviewsListElement.appendChild(reviewContainer);
+
+        const reviewComment = reviewElement.querySelector('.review-comment');
+
+        if (reviewComment.scrollHeight > reviewComment.clientHeight) {
+            const readMoreLink = document.createElement('span');
+            readMoreLink.classList.add('read-more');
+            readMoreLink.textContent = 'read more';
+
+            readMoreLink.addEventListener('click', function () {
+                if (reviewComment.style.webkitLineClamp === 'unset') {
+                    reviewComment.style.webkitLineClamp = '3';
+                    readMoreLink.textContent = 'read more';
+                } else {
+                    reviewComment.style.webkitLineClamp = 'unset';
+                    reviewComment.style.overflow = 'visible';
+                    reviewComment.style.textOverflow = 'clip';
+                    readMoreLink.textContent = 'hide';
+                }
+            });
+
+            reviewElement.appendChild(readMoreLink);
+        }
+    
     });
 
 
-    console.log(product.reviews);
-        
+    console.log(product);
 
 });
 
