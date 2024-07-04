@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
+    console.log(localStorage);
 
-
+    document.querySelector('.fa-shopping-cart').addEventListener('click', () => { //navigate to the cart page
+        window.location.href = 'cart.html';
+    });
+    
     function createRatingChart() {
         const ratingCounts = [0, 0, 0, 0, 0];
         const chartElement = document.getElementById('ratingChart');
@@ -197,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function () {
             cart.push(product);
         }
         localStorage.setItem('cart', JSON.stringify(cart));
-        console.log(JSON.stringify(cart));
     });
 
 
@@ -293,32 +296,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     
     });
-
-
-    console.log(product);
-
-});
-
-
-
-// Set a flag in localStorage indicating the page was unloaded
-window.addEventListener('beforeunload', (event) => {
-    localStorage.setItem('isPageUnloading', 'true');
-});
-
-// Check the flag on page load to determine if the last action was a refresh or navigation away
-window.addEventListener('load', (event) => {
-    const isPageUnloading = localStorage.getItem('isPageUnloading') === 'true';
-
-    // Reset the flag
-    localStorage.setItem('isPageUnloading', 'false');
-
-    if (isPageUnloading) {
-        // The page was reloaded, not navigated away from
-        console.log('Page was refreshed');
-    } else {
-        // The page was navigated away from
-        console.log('User is navigating away from the page');
-        localStorage.removeItem('selectedProduct');
-    }
 });
