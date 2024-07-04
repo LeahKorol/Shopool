@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
 
-
+    document.querySelector('.fa-shopping-cart').addEventListener('click', () => { //navigate to the cart page
+        window.location.href = 'cart.html';
+    });
+    
     function createRatingChart() {
         const ratingCounts = [0, 0, 0, 0, 0];
         const chartElement = document.getElementById('ratingChart');
@@ -188,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
             cart.push(product);
         }
         localStorage.setItem('cart', JSON.stringify(cart));
-        console.log(JSON.stringify(cart));
+        // console.log(JSON.stringify(cart));
     });
 
 
@@ -284,25 +287,22 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
-// Set a flag in localStorage indicating the page was unloaded
-window.addEventListener('beforeunload', (event) => {
+/*
+Set a flag in localStorage indicating the page was being unloaded
+selectedProduct is deleted upon loading a new page if the previous load was due to navigation away,
+ ensuring it isn't deleted on a simple page refresh.
+*/
+window.addEventListener('beforeunload', () => {
     localStorage.setItem('isPageUnloading', 'true');
 });
 
-// Check the flag on page load to determine if the last action was a refresh or navigation away
-window.addEventListener('load', (event) => {
+// Check the flag in localStorage when the page loads
+window.addEventListener('load', () => {
     const isPageUnloading = localStorage.getItem('isPageUnloading') === 'true';
+    localStorage.setItem('isPageUnloading', 'false'); // Reset the flag for future unload events
 
-    // Reset the flag
-    localStorage.setItem('isPageUnloading', 'false');
-
-    if (isPageUnloading) {
-        // The page was reloaded, not navigated away from
-        console.log('Page was refreshed');
-    } else {
-        // The page was navigated away from
-        console.log('User is navigating away from the page');
+    // If the flag was false, it means the page was navigated away from
+    if (!isPageUnloading) {
         localStorage.removeItem('selectedProduct');
     }
 });
