@@ -132,10 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const minOrderInfoElement = document.getElementById('min-order-info');
     const addToWishlistButton = document.getElementById('add-to-wishlist');
     const moreProductInformation = document.getElementById('more-product-info');
-    const dimenssionContainer = document.getElementById('dimenssion-container');
-    const shippingInfo = document.getElementById('shipping-info');
-    const returnPolicy = document.getElementById('return-policy');
-    const warrantyInformation = document.getElementById('warranty-information');
     const reviewsCounter = document.getElementById('reviews-counter');
     const reviewsListElement = document.getElementById('reviews-list');
     
@@ -178,26 +174,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let ratingStarsHTML = '';
 
-    function stars() {
-        for (let i = 1; i <= 5; i++) {
-            if (i <= fullStars) {
-                ratingStarsHTML += `<span class="star filled">&#9733;</span>`;
-            }
-            else if (i === fullStars + 1 && decimalPart > 0) {
-                // Calculate the percentage of the last star to fill
-                const percentage = 100 - Math.round(decimalPart * 100);
-                ratingStarsHTML += `<span class="star" style="position: relative;">`;
-                ratingStarsHTML += `<span class="star filled secondary-star" style="clip-path: inset(0 ${percentage}% 0 0);">&#9733;</span>`;
-                ratingStarsHTML += `&#9733;</span>`;
-            }
-            else {
-                ratingStarsHTML += `<span class="star">&#9733;</span>`;
-            }
+    for (let i = 1; i <= 5; i++) {
+        if (i <= fullStars) {
+            ratingStarsHTML += `<span class="star filled">&#9733;</span>`;
+        }
+        else if (i === fullStars + 1 && decimalPart > 0) {
+            // Calculate the percentage of the last star to fill
+            const percentage = 100 - Math.round(decimalPart * 100);
+            ratingStarsHTML += `<span class="star" style="position: relative;">`;
+            ratingStarsHTML += `<span class="star filled secondary-star" style="clip-path: inset(0 ${percentage}% 0 0);">&#9733;</span>`;
+            ratingStarsHTML += `&#9733;</span>`;
+        }
+        else {
+            ratingStarsHTML += `<span class="star">&#9733;</span>`;
         }
     }
-
-    stars();
-
+    
     ratingElement.innerHTML = ratingStarsHTML;
 
     const ratingDiv = document.getElementById('rating');
@@ -303,43 +295,43 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
+    const moreProductInfoHTML = `
+        <div id="box" class="dimenssion"> 
+            <i class="fas fa-info-circle"></i>
+            <div class="info">
+                <h3>Product Detail</h3>
+                <span>
+                    height: ${product.dimensions.height}, width: ${product.dimensions.width}
+                </span>
+            </div>
+        </div>
 
-    moreProductInformation.innerHTML = '';
+        <div id="box" class="return-policy"> 
+            <i class="fas fa-undo-alt"></i>
+            <div class="info">
+                <h3>Return Policy</h3>
+                <span>${product.returnPolicy}</span>
+            </div>
+        </div>
 
+        <div id="box" class="shipping"> 
+            <i class="fas fa-shipping-fast"></i>
+            <div class="info">
+                <h3>Shipping Information</h3>
+                <span>${product.shippingInformation}</span>
+            </div>
+        </div>
 
+        <div id="box" class="warranty"> 
+            <i class="fas fa-shield-alt"></i>
+            <div class="info">
+                <h3>Warranty Information</h3>
+                <span>${product.warrantyInformation}</span>
+            </div>
+        </div>
+    `;
 
-    // const dimensionContainer = document.getElementById('dimension-container');
-    // const shippingInfoContainer = document.getElementById('shipping-info');
-    // const returnPolicyContainer = document.getElementById('return-policy');
-    // const warrantyInformationContainer = document.getElementById('warranty-information');
-
-    // const dimensionsHTML = `
-    //     <h3>Dimensions:</h3>
-    //     <p>Width: ${product.dimension}</p>
-    //     <p>Height: ${product.dimension}</p>
-    //     <p>Length: ${product.dimension}</p>
-    //     <p>Weight: ${product.weight}</p>
-    // `;
-    // dimensionContainer.innerHTML = dimensionsHTML;
-
-    // const shippingHTML = `
-    //     <h3>Shipping Information:</h3>
-    //     <p>${product.shippingInfo}</p>
-    // `;
-    // shippingInfoContainer.innerHTML = shippingHTML;
-
-    // const returnPolicyHTML = `
-    //     <h3>Return Policy:</h3>
-    //     <p>${product.returnPolicy}</p>
-    // `;
-    // returnPolicyContainer.innerHTML = returnPolicyHTML;
-
-    // const warrantyHTML = `
-    //     <h3>Warranty Information:</h3>
-    //     <p>${product.warrantyInformation}</p>
-    // `;
-    // warrantyInformationContainer.innerHTML = warrantyHTML;
-
+    moreProductInformation.innerHTML = moreProductInfoHTML;
 
 
     reviewsCounter.innerHTML = `${product.reviews.length} reviews`;
