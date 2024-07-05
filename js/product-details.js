@@ -2,7 +2,61 @@ document.addEventListener('DOMContentLoaded', function () {
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
     console.log(localStorage);
 
-    document.querySelector('.fa-shopping-cart').addEventListener('click', () => { //navigate to the cart page
+    function getCartItemCount() {
+        return parseInt(localStorage.getItem('cartItemCount')) || 0;
+    }
+
+    function updateCartBadge() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const cartBadge = document.querySelector('.cart-badge');
+        cartBadge.textContent = itemCount;
+    }
+
+    function addToCart(product, requestedQuantity) {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const index = cart.findIndex(item => item.id === product.id);
+
+        // Update quantity if product is already in cart
+        if (index !== -1) {
+            const currentQuantity = cart[index].quantity;
+            const newQuantity = currentQuantity + requestedQuantity;
+            if (newQuantity > product.stock) {
+                if(currentQuantity < product.stock) {
+                    alert(`Sorry, only ${product.stock - currentQuantity} more units available.`);
+                } else {
+                    alert('Sorry, product is out of stock');
+                }
+                cart[index].quantity = product.stock; 
+            } else {
+                cart[index].quantity = newQuantity;
+            }
+        } else {
+            product.quantity = requestedQuantity;
+            cart.push(product);
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartBadge();
+    }
+
+
+    function removeFromCart(count = 1) {
+        let currentCount = getCartItemCount();
+        currentCount = Math.max(currentCount - count, 0);
+        localStorage.setItem('cartItemCount', currentCount);
+        updateCartBadge();
+    }
+
+    // reset the cart when we finish an order
+    function resetCart() {
+        localStorage.setItem('cartItemCount', 0);
+        updateCartBadge();
+    }
+
+    updateCartBadge();
+
+    document.querySelector('.fa-shopping-cart').addEventListener('click', () => {
         window.location.href = 'cart.html';
     });
 
@@ -243,31 +297,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('add-to-cart').addEventListener('click', function () {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const requestedQuantity = parseInt(document.querySelector('#quantity').textContent);
-        console.log(document.querySelector('#quantity').textContent);
-
-        const index = cart.findIndex(item => item.id === product.id);
-        // Update quantity if product is already in cart
-        if (index !== -1) {
-            const currentQuantity = cart[index].quantity;
-            const newQuantity = currentQuantity + requestedQuantity;
-            if (newQuantity > product.stock) {
-                if(currentQuantity<product.stock){
-                    alert(`Sorry, only ${product.stock - currentQuantity} more units available.`);
-                }else{
-                    alert('Sorry, product is out of stock');
-                }
-            
-                cart[index].quantity = product.stock; 
-            } else {
-                cart[index].quantity = newQuantity;
-            }
-        } else {
-            product.quantity = requestedQuantity;
-            cart.push(product);
-        }
-        localStorage.setItem('cart', JSON.stringify(cart));
+        addToCart(product, requestedQuantity);
     });
 
 

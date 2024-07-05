@@ -246,13 +246,13 @@ document.addEventListener("DOMContentLoaded", function () {
         twitterIcon.src = "../images/community-icons/twitter-black.png";
     });
 
-    // tiktokIcon.addEventListener("mouseover", function() {
-    //     tiktokIcon.src = tiktokIcon.getAttribute("data-src");
-    // });
+    tiktokIcon.addEventListener("mouseover", function() {
+        tiktokIcon.src = tiktokIcon.getAttribute("data-src");
+    });
 
-    // tiktokIcon.addEventListener("mouseout", function() {
-    //     tiktokIcon.src = "../images/community-icons/tiktok-black.png";
-    // });
+    tiktokIcon.addEventListener("mouseout", function() {
+        tiktokIcon.src = "../images/community-icons/tiktok-black.png";
+    });
 });
 
 function handleSearch() {
@@ -353,6 +353,38 @@ document.addEventListener('DOMContentLoaded', () => {
     showDefaultProducts();
     handleSearch();
     closeDropdown();
+
+    function getCartItemCount() {
+        return parseInt(localStorage.getItem('cartItemCount')) || 0;
+    }
+
+    function updateCartBadge() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const cartBadge = document.querySelector('.cart-badge');
+        cartBadge.textContent = itemCount;
+    }
+
+    function addToCart(count = 1) {
+        const currentCount = getCartItemCount();
+        localStorage.setItem('cartItemCount', currentCount + count);
+        updateCartBadge();
+    }
+
+    function removeFromCart(count = 1) {
+        let currentCount = getCartItemCount();
+        currentCount = Math.max(currentCount - count, 0);
+        localStorage.setItem('cartItemCount', currentCount);
+        updateCartBadge();
+    }
+
+    // reset the cart when we finish an order
+    function resetCart() {
+        localStorage.setItem('cartItemCount', 0);
+        updateCartBadge();
+    }
+
+    updateCartBadge();
 
     document.querySelector('.fa-shopping-cart').addEventListener('click', () => {
         window.location.href = 'cart.html';

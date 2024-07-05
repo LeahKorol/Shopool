@@ -207,12 +207,30 @@ header .logo-container img {
     gap: 1.5rem;
 }
 
+.cart-icon-container {
+    position: relative;
+}
+
 .icons i {
     color: var(--secondary-color);
     font-size: 28px;
     cursor: pointer;
     transition: 0.3s; 
-    position: relative; 
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--text-color);
+    color: var(--white);
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .icons i:hover {
