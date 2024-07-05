@@ -1,5 +1,6 @@
 body {
     margin-top: 18vh;
+    overflow-x: hidden;
 }
 
 .back-home-button {
@@ -24,6 +25,7 @@ body {
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    overflow-x: hidden;
 }
 
 #product-details {
@@ -319,7 +321,6 @@ body {
 
 
 
-
 #more-product-info {
     display: flex;
     justify-content: space-between;
@@ -331,7 +332,7 @@ body {
 
 .box {
     width: calc(25% - 20px);
-    background-color: #ffffff;
+    background-color: white;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     padding: 15px;
@@ -354,13 +355,13 @@ body {
     flex-grow: 1;
 }
 
-h3 {
+.box h3 {
     margin: 0 0 5px 0;
     font-size: 16px;
     color: #333;
 }
 
-p {
+.box p {
     margin: 0;
     font-size: 14px;
     color: #666;
@@ -372,20 +373,70 @@ p {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
     .box {
         width: 100%;
     }
+
+    .review-top {
+        justify-content: flex-start;
+        flex-direction: column;
+    }
 }
 
+
+.rating-overview {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin: 3vh 3vw;
+    height: 24vh;
+    width: 90vw;
+    gap: 2rem;
+}
+
+#overallRating {
+    text-align: center;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow-light);
+    padding: 20px;
+    width: 20%;
+}
+
+.rating-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rating-number {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+}
+
+.stars-container {
+    font-size: 24px;
+    color: #ffa41c;
+    margin: 10px 0;
+}
+
+.verification-text {
+    font-size: 14px;
+    color: #4CAF50;
+}
+
+#ratingChart {
+    width: 80%;
+}
 
 .rating-chart {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     padding: 20px;
-    max-width: 500px;
-    margin: 0 auto;
+    max-width: 50vw;
 }
 
 .rating-row {
@@ -440,13 +491,18 @@ p {
 
 
 
+#reviews-counter {
+    color: var(--text-color);
+    margin: 6vh 3vw 0 5vw;
+}
+
 
 #reviews-list {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     padding: 20px;
-    margin: 3vw 3vh;
+    margin: 0 3vw 5vh 3vw;
 }
 
 .review-container {
@@ -468,6 +524,7 @@ p {
 .review-top {
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
     align-items: center;
     margin-bottom: 10px;
 }

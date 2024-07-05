@@ -32,7 +32,7 @@
     </header>
 
 
-    <button class="back-home-button" onclick="window.location.href='../html/index.html'">חזור לדף הבית</button>
+    <button class="back-home-button" onclick="window.location.href='../html/index.html'">back home</button>
 
 
     <main class="main">
@@ -86,9 +86,13 @@
         </div>
         
 
-        <div class="rating-chart" id="ratingChart"></div>
+        <div class="rating-overview">
+            <div id="overallRating"></div>
+            <div id="ratingChart" class="rating-chart"></div>
+        </div>
         
 
+        <p id="reviews-counter"></p>
         <div id="reviews-list"></div>
         
     </main>

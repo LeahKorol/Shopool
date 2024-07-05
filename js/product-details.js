@@ -5,19 +5,85 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.fa-shopping-cart').addEventListener('click', () => { //navigate to the cart page
         window.location.href = 'cart.html';
     });
+
+
+    function createRatingDisplay() {
+        const overallRatingElement = document.getElementById('overallRating');
+        if (!overallRatingElement) {
+            return;
+        }
+    
+        const averageRating = product.rating;
+    
+        const ratingDisplay = document.createElement('div');
+        ratingDisplay.className = 'rating-display';
+    
+        const ratingNumber = document.createElement('div');
+        ratingNumber.className = 'rating-number';
+        ratingNumber.textContent = averageRating.toFixed(2);
+        ratingDisplay.appendChild(ratingNumber);
+    
+        const starsContainer = document.createElement('div');
+        starsContainer.className = 'stars-container';
+
+        for (let i = 1; i <= 5; i++) {
+            const star = document.createElement('span');
+            star.className = i <= averageRating ? 'star filled' : 'star';
+            star.innerHTML = '&#9733;';
+            starsContainer.appendChild(star);
+        }
+        ratingDisplay.appendChild(starsContainer);
+    
+        const verificationText = document.createElement('div');
+        verificationText.className = 'verification-text';
+        let descriptionText, textColor;
+
+        if (averageRating >= 0 && averageRating <= 1.5) {
+            descriptionText = 'Poor';
+            textColor = 'red';
+        } else if (averageRating > 1.5 && averageRating <= 2.5) {
+            descriptionText = 'Almost Good';
+            textColor = 'orange';
+        } else if (averageRating > 2.5 && averageRating <= 3.5) {
+            descriptionText = 'Good';
+            textColor = 'yellow';
+        } else if (averageRating > 3.5 && averageRating <= 4.5) {
+            descriptionText = 'Very Good';
+            textColor = 'yellowgreen';
+        } else {
+            descriptionText = 'Excellent';
+            textColor = 'green';
+        }
+        
+        verificationText.textContent = `${descriptionText}`;
+        verificationText.style.color = textColor;
+        ratingDisplay.appendChild(verificationText);
+    
+        overallRatingElement.appendChild(ratingDisplay);
+    }
     
     function createRatingChart() {
         const ratingCounts = [0, 0, 0, 0, 0];
         const chartElement = document.getElementById('ratingChart');
         
+        if (!chartElement) {
+            console.error('Rating chart element not found');
+            return;
+        }
+
         // Count ratings
         product.reviews.forEach(review => {
             ratingCounts[review.rating - 1]++;
         });
 
         const totalRatings = ratingCounts.reduce((sum, count) => sum + count, 0);
+        const averageRating = product.rating;
 
-        // Create and append chart rows
+        const ratingDisplay = document.createElement('div');
+        ratingDisplay.className = 'rating-display';
+
+        chartElement.appendChild(ratingDisplay);
+
         for (let i = 5; i >= 1; i--) {
             const row = document.createElement('div');
             row.className = 'rating-row';
@@ -47,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+
+    createRatingDisplay();
     // Call createRatingChart after loading product data
     createRatingChart();
 
@@ -68,9 +136,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const shippingInfo = document.getElementById('shipping-info');
     const returnPolicy = document.getElementById('return-policy');
     const warrantyInformation = document.getElementById('warranty-information');
+    const reviewsCounter = document.getElementById('reviews-counter');
     const reviewsListElement = document.getElementById('reviews-list');
     
-
 
     thumbnailElement.src = product.thumbnail;
 
@@ -110,21 +178,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let ratingStarsHTML = '';
 
-    for (let i = 1; i <= 5; i++) {
-        if (i <= fullStars) {
-            ratingStarsHTML += `<span class="star filled">&#9733;</span>`;
-        }
-        else if (i === fullStars + 1 && decimalPart > 0) {
-            // Calculate the percentage of the last star to fill
-            const percentage = 100 - Math.round(decimalPart * 100);
-            ratingStarsHTML += `<span class="star" style="position: relative;">`;
-            ratingStarsHTML += `<span class="star filled secondary-star" style="clip-path: inset(0 ${percentage}% 0 0);">&#9733;</span>`;
-            ratingStarsHTML += `&#9733;</span>`;
-        }
-        else {
-            ratingStarsHTML += `<span class="star">&#9733;</span>`;
+    function stars() {
+        for (let i = 1; i <= 5; i++) {
+            if (i <= fullStars) {
+                ratingStarsHTML += `<span class="star filled">&#9733;</span>`;
+            }
+            else if (i === fullStars + 1 && decimalPart > 0) {
+                // Calculate the percentage of the last star to fill
+                const percentage = 100 - Math.round(decimalPart * 100);
+                ratingStarsHTML += `<span class="star" style="position: relative;">`;
+                ratingStarsHTML += `<span class="star filled secondary-star" style="clip-path: inset(0 ${percentage}% 0 0);">&#9733;</span>`;
+                ratingStarsHTML += `&#9733;</span>`;
+            }
+            else {
+                ratingStarsHTML += `<span class="star">&#9733;</span>`;
+            }
         }
     }
+
+    stars();
 
     ratingElement.innerHTML = ratingStarsHTML;
 
@@ -236,7 +308,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+    // const dimensionContainer = document.getElementById('dimension-container');
+    // const shippingInfoContainer = document.getElementById('shipping-info');
+    // const returnPolicyContainer = document.getElementById('return-policy');
+    // const warrantyInformationContainer = document.getElementById('warranty-information');
 
+    // const dimensionsHTML = `
+    //     <h3>Dimensions:</h3>
+    //     <p>Width: ${product.dimension}</p>
+    //     <p>Height: ${product.dimension}</p>
+    //     <p>Length: ${product.dimension}</p>
+    //     <p>Weight: ${product.weight}</p>
+    // `;
+    // dimensionContainer.innerHTML = dimensionsHTML;
+
+    // const shippingHTML = `
+    //     <h3>Shipping Information:</h3>
+    //     <p>${product.shippingInfo}</p>
+    // `;
+    // shippingInfoContainer.innerHTML = shippingHTML;
+
+    // const returnPolicyHTML = `
+    //     <h3>Return Policy:</h3>
+    //     <p>${product.returnPolicy}</p>
+    // `;
+    // returnPolicyContainer.innerHTML = returnPolicyHTML;
+
+    // const warrantyHTML = `
+    //     <h3>Warranty Information:</h3>
+    //     <p>${product.warrantyInformation}</p>
+    // `;
+    // warrantyInformationContainer.innerHTML = warrantyHTML;
+
+
+
+    reviewsCounter.innerHTML = `${product.reviews.length} reviews`;
 
     reviewsListElement.innerHTML = '';
 
@@ -276,6 +382,8 @@ document.addEventListener('DOMContentLoaded', function () {
         reviewContainer.appendChild(reviewElement);
         reviewsListElement.appendChild(reviewContainer);
 
+        
+
         const reviewComment = reviewElement.querySelector('.review-comment');
 
         if (reviewComment.scrollHeight > reviewComment.clientHeight) {
@@ -297,6 +405,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             reviewElement.appendChild(readMoreLink);
         }
-    
+
+
+        console.log(product);    
     });
 });
