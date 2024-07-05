@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function rendercart() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+        console.log(cart);
+
         const productsContainer = document.getElementById('products-container');
         productsContainer.innerHTML = '';
 
@@ -13,13 +15,13 @@ document.addEventListener('DOMContentLoaded', function () {
             productElement.classList.add('product-item');
 
             productElement.innerHTML = `
-            <div class="product-link">
-                <img id="thumbnail" src="${product.thumbnail}" alt="Product Thumbnail">
-                <h3>${product.title}</h3>
-            </div>
-            <p>Price: $${product.price}</p>
-            <p>Quantity: ${product.quantity}</p>
-            <button class="delete-product-btn" onclick="deleteProduct(${product.id})">Delete</button>
+                <div class="product-link">
+                    <img id="thumbnail" src="${product.thumbnail}" alt="Product Thumbnail">
+                    <h3>${product.title}</h3>
+                </div>
+                <p>Price: $${product.price}</p>
+                <p>Quantity: ${product.quantity}</p>
+                <button class="delete-product-btn" onclick="deleteProduct(${product.id})">Delete</button>
             `;
             productsContainer.appendChild(productElement);
 
@@ -60,4 +62,5 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.removeItem('cart'); // Clear cart after payment
         rendercart(); // Update cart display
     });
+
 });

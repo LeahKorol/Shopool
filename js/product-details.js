@@ -13,6 +13,31 @@ document.addEventListener('DOMContentLoaded', function () {
         cartBadge.textContent = itemCount;
     }
 
+
+    function updateCartDropdown() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItemsContainer = document.querySelector('.cart-items');
+        cartItemsContainer.innerHTML = ''; 
+
+        cart.forEach(item => {
+            const cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+                <img src="${item.thumbnail}" alt="${item.title}">
+                <div class="item-details">
+                    <div class="item-name">${item.title}</div>
+                    <div class="item-quantity">Quantity: ${item.quantity}</div>
+                    <div class="item-price">Price: $${item.price}</div>
+                </div>
+            `;
+
+            cartItem.addEventListener('click', () => {
+                window.location.href = `product.html?id=${item.id}`;
+            });
+            cartItemsContainer.appendChild(cartItem);
+        });
+    }
+
     function addToCart(product, requestedQuantity) {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const index = cart.findIndex(item => item.id === product.id);
@@ -38,8 +63,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartBadge();
+        updateCartDropdown();
+        showCartDropdown();
     }
 
+    function showCartDropdown() {
+        const cartDropdown = document.querySelector('.cart-dropdown');
+        cartDropdown.style.display = 'block';
+    }
+
+    function hideCartDropdown() {
+        const cartDropdown = document.querySelector('.cart-dropdown');
+        cartDropdown.style.display = 'none';
+    }
+
+    function handleCartDropdownClick(event) {
+        if (!event.target.classList.contains('close-dropdown')) {
+            window.location.href = 'cart.html';
+        }
+    }
 
     function removeFromCart(count = 1) {
         let currentCount = getCartItemCount();
@@ -54,7 +96,13 @@ document.addEventListener('DOMContentLoaded', function () {
         updateCartBadge();
     }
 
+    document.querySelector('.close-dropdown').addEventListener('click', hideCartDropdown);
+
+    document.querySelector('.cart-dropdown').addEventListener('click', handleCartDropdownClick);
+
     updateCartBadge();
+    updateCartDropdown();
+
 
     document.querySelector('.fa-shopping-cart').addEventListener('click', () => {
         window.location.href = 'cart.html';
