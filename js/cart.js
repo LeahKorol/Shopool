@@ -13,25 +13,32 @@ document.addEventListener('DOMContentLoaded', function () {
         cart.forEach(product => {
             const productElement = document.createElement('div');
             productElement.classList.add('product-item');
-
             productElement.innerHTML = `
                 <div class="product-link">
-                    <img id="thumbnail" src="${product.thumbnail}" alt="Product Thumbnail">
-                    <h3>${product.title}</h3>
+                    <div class="choose-item">
+                        <input type="checkbox" id="buy-now-${product.id}" name="buy-now" checked>
+                    </div>
+                    <img class="thumbnail" src="${product.thumbnail}" alt="Product Thumbnail">
+                    <div class="product-details"> 
+                        <h3>${product.title}</h3>
+                        <p>Price: $${product.price}</p>
+                        <p>Quantity: ${product.quantity}</p>
+                    </div>
+                    <button class="delete-product-btn" onclick="deleteProduct(${product.id})">Delete</button>
                 </div>
-                <p>Price: $${product.price}</p>
-                <p>Quantity: ${product.quantity}</p>
-                <button class="delete-product-btn" onclick="deleteProduct(${product.id})">Delete</button>
             `;
+
             productsContainer.appendChild(productElement);
 
             productElement.querySelector('.product-link').addEventListener('click', function () {
                 localStorage.setItem('selectedProduct', JSON.stringify(product));
                 window.location.href = './product-details.html';
             });
+
             sum += product.price;
         });
-        document.getElementById('total').textContent = sum;
+
+        document.getElementById('total').textContent = sum.toFixed(2);
     }
 
     window.deleteProduct = function (productId) {
