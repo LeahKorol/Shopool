@@ -31,7 +31,7 @@ function getBillDetails() {
 function displayCustomerInfo() {
     const payingDetails = getPayingDetails();
     if (payingDetails) {
-        document.getElementById('customer-name').innerText = 'John Doe';
+        document.getElementById('customer-name').innerText = `${payingDetails.name}`;
         document.getElementById('customer-address').innerText = `${payingDetails.street}, ${payingDetails.city}, ${payingDetails.state}`;
         document.getElementById('credit-card-number').innerText = `**** **** **** ${payingDetails.creditCardLastFour}`;
     }

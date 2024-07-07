@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }));
 
         const payingDetails = {
+            name: document.querySelector('#customer-name').value,
             street: document.querySelector('#street-address').value,
             city: document.querySelector('#city').value,
             state: document.querySelector('#state').value,
