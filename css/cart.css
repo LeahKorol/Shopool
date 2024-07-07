@@ -14,60 +14,111 @@
   text-align: center;
 }
 
-
 #products-container {
   display: flex;
   flex-direction: column;
-  align-items: center;  
+  align-items: stretch;  
   margin: 0 0 5vh 0;
+  width: 100%;
 }
 
-.product-item {
+.product-item-in-list {
   display: flex;
   width: 100%; 
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
   border-radius: 8px;
   box-sizing: border-box;
-  margin-bottom: 10px;
+  padding: 2%;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  margin-bottom: 2%;
 }
 
-.product-item .product-link {
+.product-item-in-list .product-link {
   display: flex;
   align-items: center;
   width: 100%;
+  cursor: pointer;
 }
 
 .choose-item input[type="checkbox"] {
-    
+  margin-right: 10px;
 }
 
+.choose-item {
+  margin-right: 1rem;
+}
 
-.product-item .thumbnail {
-  width: 15vw;
+.product-item-in-list .thumbnail {
+  width: 12vw;
   height: auto;
   margin-right: 1rem;
 }
 
-.product-item .product-details {
+.product-item-in-list .product-details {
   flex: 1; 
+  padding-right: 1rem;
 }
 
-.product-item .delete-product-btn {
+.product-item-in-list .product-details h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.product-item-in-list .product-details p {
+  margin: 5px 0;
+}
+
+.product-itemin-list .delete-product-btn {
   background-color: var(--secondary-color);
   color: var(--white);
   border: none;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: auto; 
 }
+
+.product-item-in-list .delete-product-icon {
+  color: var(--secondary-color);
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+
+
+
+#empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px 0;
+}
+
+.empty-cart-icon {
+  width: 15vw;
+  height: 25vh;
+  margin-bottom: 20px;
+}
+
+.browse-products {
+  color: #ff4757;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+
 
 
 .total-summary {
   border-top: 2px solid var(--secondary-color);
   padding-top: 20px;
+}
+
+#shipping {
+  color: green;
 }
 
 .summary-product {
@@ -87,7 +138,7 @@
   margin-top: 20px;
 }
 
-#checkout-btn:hover, .product-item btn:hover, #pay-now-btn:hover {
+#checkout-btn:hover, .product-item-in-list btn:hover, #pay-now-btn:hover {
   background-color: var(--dark);
 }
 

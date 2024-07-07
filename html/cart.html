@@ -4,9 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
+    <title>Shopool | Shopping Cart</title>
+    <link rel="icon" href="../images/icon.png" type="image/png">
+
+    <!-- css links -->
     <link rel="stylesheet" href="../css/cart.css">
     <link rel="stylesheet" href="../css/style.css">
+
+    <!-- icons link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
 </head>
 
 <body>
@@ -27,6 +34,14 @@
             <div id="products-container">
                 <!-- Cart products will be dynamically added here -->
             </div>
+
+            
+            <div id="empty-cart" style="display: none;">
+                <img src="../images/empty-cart-icon.png" alt="Empty Cart" class="empty-cart-icon">
+                <p>The cart is empty? Choose items and start shopping!</p>
+                <a href="../html/index.html" class="browse-products">choose items!</a>
+            </div>
+
 
             <div class="total-summary">
                 <h3>Order Summary</h3>
