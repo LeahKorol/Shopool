@@ -105,12 +105,6 @@ document.addEventListener('DOMContentLoaded', function () {
     updateCartBadge();
     updateCartDropdown();
 
-
-    document.querySelector('.fa-shopping-cart').addEventListener('click', () => {
-        window.location.href = 'cart.html';
-    });
-
-
     function createRatingDisplay() {
         const overallRatingElement = document.getElementById('overallRating');
         if (!overallRatingElement) {

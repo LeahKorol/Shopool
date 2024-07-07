@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <link rel="stylesheet" href="../css/bill.css">
+  
+</head>
+<body>
+    <header>
+        <a href="../html/index.html">
+            <div class="logo-container">
+                <img src="../images/icon.png" alt="icon">
+                <img src="../images/shopool.png" alt="shopool">
+            </div>
+        </a>
+    </header>
+
+    <div class="invoice-box">
+
+        <div class="image-container">
+            <img src="../images/shopool.png" alt="shopool">
+            <span>Hartom 10, Har Hotzvim, Israel</span>
+        </div>
+
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="3">
+                    <table>
+                        <tr class="information">
+                            <td>
+                                <span id="customer-name"></span><br>
+                                <span id="customer-address"></span>
+                            </td>
+                            <td></td>
+                            <td>
+                                Invoice: <span id="invoice-number"></span><br>
+                                Created: <span id="invoice-date"></span><br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="heading">
+                <td>
+                    Payment Method
+                </td>
+                <td></td>
+                <td colspan="2">
+                    Card Number
+                </td>
+            </tr>
+            <tr class="details">
+                <td>
+                    Credit Card
+                </td>
+                <td></td>
+                <td colspan="2" id="credit-card-number">
+                    <!-- Credit card number will be inserted here -->
+                </td>
+            </tr>
+            <tr class="heading">
+                <td>
+                    Item
+                </td>
+                <td>
+                    Quantity
+                </td>
+                <td>
+                    Price
+                </td>
+            </tr>
+            <tbody id="items-list">
+                <!-- Items will be inserted here -->
+            </tbody>
+            <tr class="total">
+                <td></td>
+                <td></td>
+                <td>
+                   Total: $<span id="total-price"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <button class="print-button">Print Invoice</button>
+    <script src="../js/bill.js"></script>
+</body>
+</html>

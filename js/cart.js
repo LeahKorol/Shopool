@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             document.getElementById('total').textContent = '$' + sum.toFixed(2);
         }
-        
+
     }
 
     window.deleteProduct = function (productId) {
@@ -65,10 +65,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Event listeners for opening and closing the form
-    document.getElementById('checkout-btn').addEventListener('click', ()=>{
+    document.getElementById('checkout-btn').addEventListener('click', () => {
         document.getElementById('checkout-form').style.display = 'block';
     });
-    document.getElementById('closeCheckoutForm').addEventListener('click', ()=>{
+    document.getElementById('closeCheckoutForm').addEventListener('click', () => {
         document.getElementById('checkout-form').style.display = 'none';
     });
 
@@ -78,9 +78,32 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('checkout-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
-        alert('Payment successful! Your products are on their way.');
-        localStorage.removeItem('cart'); // Clear cart after payment
-        rendercart(); // Update cart display
+        saveBill();
+
+        localStorage.removeItem('cart'); // Remove cart after payment
+        window.location.href = 'bill.html'; //go to bill page
     });
 
+    function saveBill() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Transform the cart items into a bill array
+        const bill = cart.map(product => ({
+            sku: product.sku,
+            title: product.title,
+            quantity: product.quantity,
+            price: product.price
+        }));
+
+        const payingDetails = {
+            name: document.querySelector('#customer-name').value,
+            street: document.querySelector('#street-address').value,
+            city: document.querySelector('#city').value,
+            state: document.querySelector('#state').value,
+            creditCardLastFour: document.querySelector('#credit-card').value.slice(-4)
+        };
+
+        localStorage.setItem('bill', JSON.stringify(bill));
+        localStorage.setItem('payingDetails', JSON.stringify(payingDetails));
+    }
 });
