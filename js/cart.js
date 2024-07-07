@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             document.getElementById('total').textContent = '$' + sum.toFixed(2);
         }
-        
+
     }
 
     window.deleteProduct = function (productId) {
@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('checkout-form').addEventListener('submit', function (event) {
         event.preventDefault();
-        alert('Payment successful! Your products are on their way.');
 
         saveBill();
 
@@ -87,18 +86,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function saveBill() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let bill = [];
-    
-        cart.forEach(product => {
-            let item = {
-                sku: product.sku,
-                title: product.title,
-                quantity: product.quantity,
-                price: product.price
-            };
-            bill.push(item);
-        });
-    
+
+        // Transform the cart items into a bill array
+        const bill = cart.map(product => ({
+            sku: product.sku,
+            title: product.title,
+            quantity: product.quantity,
+            price: product.price
+        }));
+
+        const payingDetails = {
+            street: document.querySelector('#street-address').value,
+            city: document.querySelector('#city').value,
+            state: document.querySelector('#state').value,
+            creditCardLastFour: document.querySelector('#credit-card').value.slice(-4)
+        };
+
         localStorage.setItem('bill', JSON.stringify(bill));
+        localStorage.setItem('payingDetails', JSON.stringify(payingDetails));
     }
 });
