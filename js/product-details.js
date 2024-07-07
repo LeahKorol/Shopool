@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
-    console.log(localStorage);
+    
+    // Update the title of the page like the product title
+    document.title = `Shopool | ${product.title}`;
 
     function getCartItemCount() {
         return parseInt(localStorage.getItem('cartItemCount')) || 0;
