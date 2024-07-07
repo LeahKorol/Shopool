@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function getCartItemCount() {
         return parseInt(localStorage.getItem('cartItemCount')) || 0;
-    }
+    }    
 
     function updateCartBadge() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -352,28 +352,40 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    addToWishlistButton.addEventListener('click', function () {
-        addToWishlistButton.classList.toggle('active');
+    // wishlist
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-        const index = wishlist.findIndex(item => item.id === product.id);
+    function isFavorite(productId) {
+        return favorites.some(fav => fav.id === productId);
+    }
 
-        if (addToWishlistButton.classList.contains('active')) {
-            if (index === -1) {
-                wishlist.push(product);
-                alert(`${product.title} added to wishlist`);
-            }
+    function toggleFavorite(productId) {
+        const index = favorites.findIndex(fav => fav.id === productId);
+        if (index === -1) {
+            favorites.push(product);
+            addToWishlistButton.textContent = 'Remove from Favorites';
+            addToWishlistButton.classList.add('added-to-favorites');
+            showToast('Product added to favorites');
         } else {
-            if (index !== -1) {
-                wishlist.splice(index, 1);
-                alert(`${product.title} removed from wishlist`);
-            }
+            favorites.splice(index, 1);
+            addToWishlistButton.textContent = 'Add to Favorites';
+            addToWishlistButton.classList.remove('added-to-favorites');
+            showToast('Product removed from favorites');
         }
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
 
-        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    if (isFavorite(product.id)) {
+        addToWishlistButton.textContent = 'Remove from Favorites';
+        addToWishlistButton.classList.add('added-to-favorites');
+    } else {
+        addToWishlistButton.textContent = 'Add to Favorites';
+    }
 
-        console.log(localStorage);
-    });
+    addToWishlistButton.addEventListener('click', function () {
+        toggleFavorite(product.id);
+        addToWishlistButton.classList.toggle('added-to-favorites');
+    });  
 
 
     const moreProductInfoHTML = `
@@ -483,3 +495,25 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(product);    
     });
 });
+
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.classList.add('toast');
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    const bottomOffset = 20;
+    toast.style.bottom = `${bottomOffset}px`;
+
+    toast.offsetHeight; 
+
+    toast.style.opacity = '1';
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => {
+            toast.remove();
+        }, 300); 
+    }, 3000); 
+}

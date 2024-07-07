@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     window.location.href = './product-details.html';
                 });
 
-                sum += product.price * product.quantity;
+                sum += product.price * product.quantity || 0;
             });
 
             document.getElementById('total').textContent = '$' + sum.toFixed(2);
