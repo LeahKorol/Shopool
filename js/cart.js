@@ -52,10 +52,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Event listeners for opening and closing the form
-    document.getElementById('checkout-btn').addEventListener('click', ()=>{
+    document.getElementById('checkout-btn').addEventListener('click', () => {
         document.getElementById('checkout-form').style.display = 'block';
     });
-    document.getElementById('closeCheckoutForm').addEventListener('click', ()=>{
+    document.getElementById('closeCheckoutForm').addEventListener('click', () => {
         document.getElementById('checkout-form').style.display = 'none';
     });
 
@@ -64,10 +64,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('checkout-form').addEventListener('submit', function (event) {
         event.preventDefault();
-
         alert('Payment successful! Your products are on their way.');
-        localStorage.removeItem('cart'); // Clear cart after payment
-        rendercart(); // Update cart display
+
+        saveBill();
+
+        localStorage.removeItem('cart'); // Remove cart after payment
+        window.location.href = 'bill.html'; //go to bill page
     });
 
+    function saveBill() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let bill = [];
+    
+        cart.forEach(product => {
+            let item = {
+                sku: product.sku,
+                title: product.title,
+                quantity: product.quantity,
+                price: product.price
+            };
+            bill.push(item);
+        });
+    
+        localStorage.setItem('bill', JSON.stringify(bill));
+    }
 });

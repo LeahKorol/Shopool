@@ -385,8 +385,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateCartBadge();
-
-    document.querySelector('.fa-shopping-cart').addEventListener('click', () => {
-        window.location.href = 'cart.html';
-    });
 });
