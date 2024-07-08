@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopool | User Profile</title>
+    <link rel="icon" href="../images/icon.png" type="image/png">
+
+    <!-- css links -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/user.css">
+
+    <!-- icon links -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="profile">
+                <img src="../images/user-picture.png" alt="User Avatar">
+                <h2>Hello, Joe Doe</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#profile"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="#orders"><i class="fas fa-box"></i> Orders</a></li>
+                    <li><a href="#favorites"><i class="fas fa-heart"></i> Favorites</a></li>
+                    <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="main-content">
+            <section id="profile">
+                <h2>Profile</h2>
+                <div class="profile-info">
+                    <div class="profile-image">
+                        <img src="../images/user-picture.png" alt="User Avatar">
+                    </div>
+                    <div class="profile-details">
+                        <p><strong>Name: </strong>Joe Doe</p>
+                        <p><strong>E-mail: </strong> joedoe@gmail.com</p>
+                        <p><strong>Phone: </strong> 052-1234567</p>
+                    </div>
+
+                    <a class="edit-btn" href="#settings"><i class="fas fa-edit"></i> Edit</a>
+                </div>
+            </section>
+
+            <section id="orders">
+                <h2>Orders</h2>
+                <div class="order-list">
+                    <div class="order-item">
+                        <h3>order #12345</h3>
+                        <p><strong>Date:</strong> 01/01/2023</p>
+                        <p><strong>status:</strong> send</p>
+                        <button>read more</button>
+                    </div>
+                </div>
+            </section>
+            <section id="favorites">
+                <h2>Favorites</h2>
+                <div id="favorites-grid">
+                    <!-- Favorites will be rendered here -->
+                </div>
+            </section>
+            <section id="settings">
+                <h2>Settings</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="name">name</label>
+                        <input type="text" id="name" value="joe doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">e-mail</label>
+                        <input type="email" id="email" value="joedoe@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">phone</label>
+                        <input type="tel" id="phone" value="052-1234567">
+                    </div>
+                    <button type="submit">save changes</button>
+                </form>
+            </section>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
