@@ -36,7 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             <p>Quantity: ${product.quantity}</p>
                         </div>
                     </div>
-                    <i class="fas fa-trash delete-product-icon" title="Delete" onclick="deleteProduct(${product.id})"></i>
+                    
+                    <div class="product-actions">
+                        <i class="fas fa-heart add-to-favorites-icon" title="Add to Favorites" onclick="addToFavorites(${product.id})"></i>
+                        <i class="fas fa-trash delete-product-icon" title="Delete" onclick="deleteProduct(${product.id})"></i>
+                    </div>
                 `;
 
                 productsContainer.appendChild(productElement);
@@ -52,6 +56,34 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('total').textContent = '$' + sum.toFixed(2);
         }
 
+    }
+
+    window.addToFavorites = function (productId) {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    
+        const productIndex = cart.findIndex(product => product.id === productId);
+        if (productIndex !== -1) {
+            const product = cart[productIndex];
+            
+            cart.splice(productIndex, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+    
+            // Add product to favorites if it's not already there
+            if (!favorites.some(fav => fav.id === productId)) {
+                favorites.push(product);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+            }
+    
+            showToast('Product moved to favorites');
+    
+            rendercart();
+    
+            // Update favorites badge if it exists
+            if (typeof updateFavoritesBadge === 'function') {
+                updateFavoritesBadge();
+            }
+        }
     }
 
     window.deleteProduct = function (productId) {
@@ -107,3 +139,21 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('payingDetails', JSON.stringify(payingDetails));
     }
 });
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.classList.add('toast');
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    toast.offsetHeight;
+
+    toast.style.opacity = '1';
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 3000);
+}

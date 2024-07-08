@@ -70,6 +70,41 @@
   margin: 5px 0;
 }
 
+
+.product-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 2vh;
+}
+
+.add-to-favorites-icon,
+.delete-product-icon {
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.add-to-favorites-icon {
+  color: var(--primary-color);
+}
+
+.add-to-favorites-icon:hover {
+  color: var(--primary-color);
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 9999;
+}
+
 .product-itemin-list .delete-product-btn {
   background-color: var(--secondary-color);
   color: var(--white);
