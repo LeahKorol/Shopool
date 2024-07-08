@@ -1,12 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
+    if (!product || !product.price || isNaN(parseFloat(product.price))) {
+        console.error('Invalid product data');
+        return;
+    }
     
     // Update the title of the page like the product title
     document.title = `Shopool | ${product.title}`;
 
     function getCartItemCount() {
-        return parseInt(localStorage.getItem('cartItemCount')) || 0;
-    }    
+        return parseInt(localStorage.getItem('cartItemCount'), 10) || 0;
+    }
 
     function updateCartBadge() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -337,8 +341,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('buy-now').addEventListener('click', function () {
-        alert(`You have purchased ${quantity} units of ${product.title} for a total of $${(product.price * quantity).toFixed(2)}`);
+        const quantity = parseInt(document.querySelector('#quantity').textContent, 10) || 0;
+        const totalPrice = parseFloat(product.price) * quantity;
+        alert(`You have purchased ${quantity} units of ${product.title} for a total of $${totalPrice.toFixed(2)}`);
     });
+    
 
     document.getElementById('add-to-cart').addEventListener('click', function () {
         const requestedQuantity = parseInt(document.querySelector('#quantity').textContent);

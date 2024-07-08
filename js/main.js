@@ -156,7 +156,6 @@ function displayProducts(productsByCategory) {
                 <img src="${product.thumbnail}" alt="product #${product.id} image" />
                 <p>Price: $${product.price}</p>
                 <p>Rating: ${product.rating}</p>
-                <p>Availability: ${product.stock}</p>
                 <button class="view-details-btn">View Details</button>
             `;
             // Add click event listener to each product item's button
@@ -383,6 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('cartItemCount', 0);
         updateCartBadge();
     }
-
-    updateCartBadge();
+    
 });
+
+updateCartBadge();
