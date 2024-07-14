@@ -310,16 +310,11 @@ document.addEventListener('DOMContentLoaded', function () {
     priceElement.innerHTML = `$${product.price}`;
     descriptionElement.innerHTML = product.description;
 
-    let minOrderQuantity = product.minimumOrderQuantity || 1;
+    let minOrderQuantity =  1;
     if (product.stock < minOrderQuantity) {
         minOrderQuantity = product.stock;
     }
     let maxQuantity = product.stock;
-
-    if (minOrderQuantity > 1) {
-        minOrderInfoElement.style.display = 'block';
-        minOrderInfoElement.innerHTML = `Minimum order quantity: ${minOrderQuantity}`;
-    }
 
     if (quantityElement.innerHTML < minOrderQuantity) {
         quantityElement.innerHTML = minOrderQuantity;
