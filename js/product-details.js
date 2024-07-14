@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Invalid product data');
         return;
     }
-    
+
     // Update the title of the page like the product title
     document.title = `Shopool | ${product.title}`;
 
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateCartDropdown() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const cartItemsContainer = document.querySelector('.cart-items');
-        cartItemsContainer.innerHTML = ''; 
+        cartItemsContainer.innerHTML = '';
 
         cart.forEach(item => {
             const cartItem = document.createElement('div');
@@ -53,12 +53,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const currentQuantity = cart[index].quantity;
             const newQuantity = currentQuantity + requestedQuantity;
             if (newQuantity > product.stock) {
-                if(currentQuantity < product.stock) {
+                if (currentQuantity < product.stock) {
                     alert(`Sorry, only ${product.stock - currentQuantity} more units available.`);
                 } else {
                     alert('Sorry, product is out of stock');
                 }
-                cart[index].quantity = product.stock; 
+                cart[index].quantity = product.stock;
             } else {
                 cart[index].quantity = newQuantity;
             }
@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         localStorage.setItem('cart', JSON.stringify(cart));
+        updateProductDetails();
         updateCartBadge();
         updateCartDropdown();
         showCartDropdown();
@@ -114,17 +115,17 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!overallRatingElement) {
             return;
         }
-    
+
         const averageRating = product.rating;
-    
+
         const ratingDisplay = document.createElement('div');
         ratingDisplay.className = 'rating-display';
-    
+
         const ratingNumber = document.createElement('div');
         ratingNumber.className = 'rating-number';
         ratingNumber.textContent = averageRating.toFixed(2);
         ratingDisplay.appendChild(ratingNumber);
-    
+
         const starsContainer = document.createElement('div');
         starsContainer.className = 'stars-container';
 
@@ -135,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
             starsContainer.appendChild(star);
         }
         ratingDisplay.appendChild(starsContainer);
-    
+
         const verificationText = document.createElement('div');
         verificationText.className = 'verification-text';
         let descriptionText, textColor;
@@ -156,18 +157,18 @@ document.addEventListener('DOMContentLoaded', function () {
             descriptionText = 'Excellent';
             textColor = 'green';
         }
-        
+
         verificationText.textContent = `${descriptionText}`;
         verificationText.style.color = textColor;
         ratingDisplay.appendChild(verificationText);
-    
+
         overallRatingElement.appendChild(ratingDisplay);
     }
-    
+
     function createRatingChart() {
         const ratingCounts = [0, 0, 0, 0, 0];
         const chartElement = document.getElementById('ratingChart');
-        
+
         if (!chartElement) {
             console.error('Rating chart element not found');
             return;
@@ -236,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const moreProductInformation = document.getElementById('more-product-info');
     const reviewsCounter = document.getElementById('reviews-counter');
     const reviewsListElement = document.getElementById('reviews-list');
-    
+
 
     thumbnailElement.src = product.thumbnail;
 
@@ -244,16 +245,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const popupImg = document.getElementById('popup-img');
     const close = document.getElementsByClassName('close')[0];
 
-    thumbnailElement.addEventListener('click', function() {
+    thumbnailElement.addEventListener('click', function () {
         popup.style.display = 'block';
         popupImg.src = thumbnailElement.src;
     });
 
-    close.addEventListener('click', function() {
+    close.addEventListener('click', function () {
         popup.style.display = 'none';
     });
 
-    window.addEventListener('click', function(event) {
+    window.addEventListener('click', function (event) {
         if (event.target == popup) {
             popup.style.display = 'none';
         }
@@ -262,8 +263,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const imagesHTML = product.images.map(image => `<img src="${image}" alt="Product Image">`).join('');
     imagesElement.innerHTML = imagesHTML;
 
-    document.querySelectorAll('#images img').forEach(function(imageElement) {
-        imageElement.addEventListener('click', function() {
+    document.querySelectorAll('#images img').forEach(function (imageElement) {
+        imageElement.addEventListener('click', function () {
             thumbnailElement.src = imageElement.src;
         });
     });
@@ -291,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ratingStarsHTML += `<span class="star">&#9733;</span>`;
         }
     }
-    
+
     ratingElement.innerHTML = ratingStarsHTML;
 
     const ratingDiv = document.getElementById('rating');
@@ -304,43 +305,77 @@ document.addEventListener('DOMContentLoaded', function () {
     productSkuElement.innerHTML = `SKU: ${product.sku}`;
 
 
-    stockInfoElement.innerHTML = product.stock <= 5 ? `Only ${product.stock} items left in stock` : 'In Stock';
-    stockInfoElement.style.color = product.stock <= 5 ? 'red' : 'green';
-
     priceElement.innerHTML = `$${product.price}`;
     descriptionElement.innerHTML = product.description;
 
-    let minOrderQuantity =  1;
-    if (product.stock < minOrderQuantity) {
-        minOrderQuantity = product.stock;
-    }
-    let maxQuantity = product.stock;
+    let maxQuantity, minOrderQuantity;
+    function updateProductDetails() {
+        minOrderQuantity = 1;
 
-    if (quantityElement.innerHTML < minOrderQuantity) {
+        if (product.stock < minOrderQuantity) {
+            minOrderQuantity = product.stock;
+        }
+
+        maxQuantity = product.stock;
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const index = cart.findIndex(item => item.id === product.id);
+        if (index != -1) {
+            maxQuantity -= cart[index].quantity;
+        }
+
+        stockInfoElement.innerHTML = maxQuantity <= 5 ? `Only ${maxQuantity} items left in stock` : 'In Stock';
+        stockInfoElement.style.color = maxQuantity <= 5 ? 'red' : 'green';
+
+        if (maxQuantity == 0) {
+            const productDetailsButtons = document.querySelectorAll("#right-section button");
+
+            productDetailsButtons.forEach(button => {
+                button.disabled = true;
+                button.classList.add("disabled");
+            });
+            stockInfoElement.innerHTML = 'Not In Stock';
+            stockInfoElement.style.color = 'red';
+        }
+
         quantityElement.innerHTML = minOrderQuantity;
-    } else if (quantityElement.innerHTML > maxQuantity) {
-        quantityElement.innerHTML = maxQuantity;
+        if (quantityElement.innerHTML > maxQuantity) {
+            quantityElement.innerHTML = maxQuantity;
+        }
     }
-
+    updateProductDetails();
 
     decreaseQuantityButton.addEventListener('click', function () {
         if (quantityElement.innerHTML > minOrderQuantity) {
             quantityElement.innerHTML--;
         }
+        updateStockWhileClicking();
     });
 
     increaseQuantityButton.addEventListener('click', function () {
         if (quantityElement.innerHTML < maxQuantity) {
             quantityElement.innerHTML++;
         }
+        if (quantityElement.innerHTML < maxQuantity) {
+            updateStockWhileClicking();
+        }
+        else{
+            stockInfoElement.innerHTML = 'There are no more items in stock';
+            stockInfoElement.style.color = 'red';
+        }
     });
+
+    const updateStockWhileClicking = () => {
+        const requestedQuantity = quantityElement.innerHTML;
+        stockInfoElement.innerHTML = maxQuantity <= 5 ? `Only ${maxQuantity - requestedQuantity} items left in stock` : 'In Stock';
+        stockInfoElement.style.color = maxQuantity <= 5 ? 'red' : 'green';
+    }
 
     document.getElementById('buy-now').addEventListener('click', function () {
         const quantity = parseInt(document.querySelector('#quantity').textContent, 10) || 0;
         const totalPrice = parseFloat(product.price) * quantity;
         alert(`You have purchased ${quantity} units of ${product.title} for a total of $${totalPrice.toFixed(2)}`);
     });
-    
+
 
     document.getElementById('add-to-cart').addEventListener('click', function () {
         const requestedQuantity = parseInt(document.querySelector('#quantity').textContent);
@@ -356,11 +391,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         return favorites.some(fav => fav.id === productId);
     }
-    
+
     function toggleFavorite(product) {
         const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         const index = favorites.findIndex(fav => fav.id === product.id);
-        
+
         if (index === -1) {
             favorites.push(product);
             heartIcon.style.color = 'var(--primary-color)';
@@ -370,11 +405,11 @@ document.addEventListener('DOMContentLoaded', function () {
             heartIcon.style.color = 'white';
             showToast('Product removed from favorites');
         }
-        
+
         localStorage.setItem('favorites', JSON.stringify(favorites));
         updateWishlistButton();
     }
-    
+
     function updateWishlistButton() {
         if (isFavorite(product.id)) {
             heartIcon.style.color = 'var(--primary-color)';
@@ -382,13 +417,12 @@ document.addEventListener('DOMContentLoaded', function () {
             heartIcon.style.color = 'white';
         }
     }
-    
+
     addToWishlistButton.addEventListener('click', function () {
         toggleFavorite(product);
     });
-    
-    updateWishlistButton();
 
+    updateWishlistButton();
 
     const moreProductInfoHTML = `
         <div id="box" class="dimenssion"> 
@@ -469,7 +503,7 @@ document.addEventListener('DOMContentLoaded', function () {
         reviewContainer.appendChild(reviewElement);
         reviewsListElement.appendChild(reviewContainer);
 
-        
+
 
         const reviewComment = reviewElement.querySelector('.review-comment');
 
@@ -494,7 +528,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        console.log(product);    
+        console.log(product);
     });
 });
 

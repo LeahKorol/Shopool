@@ -652,3 +652,8 @@ body {
     bottom: 10px;
     right: 10px;
 }
+
+#right-section button.disabled{
+    opacity: 0.5; 
+    cursor: not-allowed; 
+}
