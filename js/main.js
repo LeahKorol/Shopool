@@ -1,4 +1,4 @@
-import { getCategoryList, getCategoryProducts, getDefaultProducts, searchProducts } from './api.js';
+import { getCategoryList, getCategoryProducts, getDefaultProducts, searchProducts } from '../js/api.js';
 
 async function showAllCategories() {
     try {

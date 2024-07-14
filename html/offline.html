@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אין חיבור לאינטרנט</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        .retry-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .retry-button:hover {
+            background-color: #45a049;
+        }
+        .icon {
+            font-size: 48px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🌐❌</div>
+        <h1>אין חיבור לאינטרנט</h1>
+        <p>נראה שאין לך חיבור לאינטרנט כרגע. אנא בדוק את החיבור שלך ונסה שוב.</p>
+        <button class="retry-button" onclick="checkConnection()">נסה שוב</button>
+    </div>
+
+    <script>
+        function checkConnection() {
+            fetch('https://www.google.com', {
+                mode: 'no-cors',
+            })
+            .then(() => {
+                window.location.reload();
+            })
+            .catch(() => {
+                alert('עדיין אין חיבור לאינטרנט. אנא נסה שוב מאוחר יותר.');
+            });
+        }
+
+        window.addEventListener('online', () => {
+            window.location.reload();
+        });
+
+        if (navigator.onLine) {
+            window.location.href = '../html/index.html'; 
+        }
+    </script>
+</body>
+</html>
