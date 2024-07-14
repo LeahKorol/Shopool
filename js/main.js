@@ -39,6 +39,18 @@ async function showAllCategories() {
     }
 }
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    const mobileSearchIcon = document.querySelector('.mobile-search-icon');
+    const searchContainer = document.querySelector('.search-container');
+
+    mobileSearchIcon.addEventListener('click', function () {
+        searchContainer.classList.toggle('active');
+    });
+});
+
+
+
 // Function to close the dropdown list
 function closeDropdown() {
     const dropdownContent = document.querySelector('.dropdown-content');

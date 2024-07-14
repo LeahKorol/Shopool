@@ -137,6 +137,13 @@ header .logo-container img {
     cursor: pointer;
 }
 
+.mobile-search-icon {
+    display: none; 
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--secondary-color);
+}
+
 .categories-container {
     position: relative;
     display: inline-block;
@@ -277,6 +284,142 @@ header .logo-container img {
 
 .user-dropdown:hover .dropdown-content {
     display: block;
+}
+
+
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .logo-container {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .logo-container img {
+        height: 40px;
+    }
+
+    .search-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .search-input {
+        font-size: 14px;
+        padding: 10px 15px;
+        padding-right: 40px; 
+    }
+
+    .search-container .search-icon {
+        font-size: 18px;
+    }
+
+    .categories-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .dropbtn {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .icons {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .cart-icon-container {
+        position: static;
+    }
+
+    .icons i {
+        font-size: 24px;
+    }
+
+    .cart-badge {
+        top: -5px;
+        right: -5px;
+        font-size: 8px;
+        padding: 1px 4px;
+    }
+
+    .user-dropdown .dropdown-content {
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+
+    .dropdown-content a {
+        font-size: 12px;
+        padding: 10px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .search-container {
+        display: none;
+    }
+
+    .mobile-search-icon {
+        display: block;
+        cursor: pointer;
+    }
+
+    .search-container.active {
+        display: block;
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        left: 0;
+        background: white;
+        padding: 10px;
+    }
+
+    .search-container input[type="text"] {
+        width: 100%;
+    }
+    
+    .mobile-search-icon {
+        display: block; 
+    }
+    
+    .mobile-search-active .search-container {
+        display: block; 
+        width: 100%; 
+        max-width: none;
+        margin: 0;
+        position: absolute;
+        top: 100%;
+        left: 0; 
+        padding: 10px; 
+    }
+    
+    .mobile-search-active .search-input {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    .mobile-search-active .search-container .search-icon {
+        right: 10px;
+        font-size: 18px;
+    }
+
+
+    footer p {
+        font-size: 14px;
+    }
 }
 
 
