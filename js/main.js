@@ -39,6 +39,24 @@ async function showAllCategories() {
     }
 }
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    const mobileSearchIcon = document.querySelector('.mobile-search-icon');
+    const searchContainer = document.querySelector('.search-container');
+    const mobileCategoriesIcon = document.querySelector('.mobile-categories-container .dropbtn');
+    const mobileCategoriesContent = document.querySelector('.mobile-categories-container .dropdown-content');
+
+    mobileSearchIcon.addEventListener('click', function () {
+        searchContainer.classList.toggle('active');
+    });
+
+    mobileCategoriesIcon.addEventListener('click', function () {
+        mobileCategoriesContent.classList.toggle('active');
+    });
+});
+
+
+
 // Function to close the dropdown list
 function closeDropdown() {
     const dropdownContent = document.querySelector('.dropdown-content');
