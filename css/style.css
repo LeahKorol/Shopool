@@ -248,7 +248,7 @@ header .logo-container img {
         2px 2px 0 black; 
 }
 
-/* User Dropdown Styles */
+
 .user-dropdown {
     position: relative;
     display: inline-block;
@@ -414,6 +414,14 @@ header .logo-container img {
     .mobile-search-active .search-container .search-icon {
         right: 10px;
         font-size: 18px;
+    }
+
+    .categories-container {
+        display: none;
+    }
+
+    .mobile-categories-container {
+        display: block;
     }
 
 
