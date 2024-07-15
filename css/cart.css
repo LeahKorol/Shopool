@@ -222,3 +222,17 @@ label {
   text-decoration: none;
   cursor: pointer;
 }
+
+.quantity-btn {
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  color: black;
+  background-color: transparent;
+}
+
+.quantity {
+  margin: 0 10px;
+  font-size: 16px;
+}

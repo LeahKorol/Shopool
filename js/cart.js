@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
             cart.forEach(product => {
                 const productElement = document.createElement('div');
                 productElement.classList.add('product-item-in-list');
+                productElement.id = `product-${product.id}`;
                 productElement.innerHTML = `
                     <div class="product-link">
                         <div class="choose-item">
@@ -31,9 +32,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                         <img class="thumbnail" src="${product.thumbnail}" alt="Product Thumbnail">
                         <div class="product-details"> 
-                            <h3>${product.title}</h3>
+                            <h3 class="product-name">${product.title}</h3>
                             <p>Price: $${product.price}</p>
-                            <p>Quantity: ${product.quantity}</p>
+                            <p>Quantity: 
+                                 <button id="decrease-quantity-${product.id}" class="quantity-btn">-</button>
+                                 <span class="quantity" id="quantity-${product.id}">${product.quantity}</span>
+                                 <button id="increase-quantity-${product.id}" class="quantity-btn">+</button>
+                            </p>
                         </div>
                     </div>
                     
@@ -50,6 +55,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     window.location.href = './product-details.html';
                 });
 
+                // Add event listeners to the quantity buttons to prevent event propagation
+                productElement.querySelector(`#decrease-quantity-${product.id}`).addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    decreaseQuantity(product.id);
+                });
+
+                productElement.querySelector(`#increase-quantity-${product.id}`).addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    increaseQuantity(product.id);
+                });
+
                 sum += product.price * product.quantity || 0;
             });
 
@@ -61,24 +77,24 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addToFavorites = function (productId) {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    
+
         const productIndex = cart.findIndex(product => product.id === productId);
         if (productIndex !== -1) {
             const product = cart[productIndex];
-            
+
             cart.splice(productIndex, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
-    
+
             // Add product to favorites if it's not already there
             if (!favorites.some(fav => fav.id === productId)) {
                 favorites.push(product);
                 localStorage.setItem('favorites', JSON.stringify(favorites));
             }
-    
+
             showToast('Product moved to favorites');
-    
+
             rendercart();
-    
+
             // Update favorites badge if it exists
             if (typeof updateFavoritesBadge === 'function') {
                 updateFavoritesBadge();
@@ -156,4 +172,125 @@ function showToast(message) {
             toast.remove();
         }, 300);
     }, 3000);
+}
+
+// function decreaseQuantity(productId) {
+//     const productElement = document.getElementById(`product-${productId}`);
+//     const quantityElement = productElement.querySelector('.quantity');
+//     let currentQuantity = parseInt(quantityElement.innerHTML, 10);
+
+//     if (currentQuantity > 1) {
+//         currentQuantity -= 1;
+//         quantityElement.innerHTML = currentQuantity;
+
+//         // Update the quantity in the cart stored in local storage
+//         let cart = JSON.parse(localStorage.getItem('cart'));
+//         const product = cart.find(item => item.id === productId);
+//         if (product) {
+//             product.quantity = currentQuantity;
+//             localStorage.setItem('cart', JSON.stringify(cart));
+//         }
+//     } else {
+//         const confirmation = confirm('Do you really want to delete the product?');
+//         if (confirmation) {
+//             // Remove the product from the cart in local storage
+//             let cart = JSON.parse(localStorage.getItem('cart'));
+//             cart = cart.filter(item => item.id !== productId);
+//             localStorage.setItem('cart', JSON.stringify(cart));
+
+//             // Remove the product element from the view
+//             productElement.remove();
+
+//             // Call renderCart to update the view
+//             renderCart();
+//         }
+//     }
+// }
+
+
+// function increaseQuantity(productId) {
+//     const productElement = document.getElementById(`product-${productId}`);
+//     const quantityElement = productElement.querySelector('.quantity');
+//     let currentQuantity = parseInt(quantityElement.innerHTML, 10);
+
+//     // Retrieve the cart from local storage
+//     let cart = JSON.parse(localStorage.getItem('cart'));
+
+//     // Find the product in the cart
+//     const product = cart.find(item => item.id === productId);
+//     if (product) {
+//         const maxQuantity = product.stock;
+
+//         if (currentQuantity < maxQuantity) {
+//             currentQuantity += 1;
+//             quantityElement.innerHTML = currentQuantity;
+
+//             // Update the quantity in the cart stored in local storage
+//             product.quantity = currentQuantity;
+//             localStorage.setItem('cart', JSON.stringify(cart));
+
+//             // Call renderCart to update the view
+//             renderCart();
+//         } else {
+//             alert('There are no more products in stock.');
+//         }
+//     } else {
+//         console.error('Product not found in the cart.');
+//     }
+// }
+
+function updateCart(productId, newQuantity) {
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    const product = cart.find(item => item.id === productId);
+    if (product) {
+        product.quantity = newQuantity;
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+}
+
+function getProductFromCart(productId) {
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    return cart.find(item => item.id === productId);
+}
+
+function decreaseQuantity(productId) {
+    const productElement = document.getElementById(`product-${productId}`);
+    const quantityElement = productElement.querySelector('.quantity');
+    let currentQuantity = parseInt(quantityElement.innerHTML, 10);
+
+    if (currentQuantity > 1) {
+        currentQuantity -= 1;
+        quantityElement.innerHTML = currentQuantity;
+        updateCart(productId, currentQuantity);
+    } else {
+        const confirmation = confirm(`Are you sure you want to remove ${productElement.querySelector('.product-name').innerHTML}?`);
+        if (confirmation) {
+            let cart = JSON.parse(localStorage.getItem('cart'));
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            productElement.remove();
+            renderCart();
+        }
+    }
+}
+
+function increaseQuantity(productId) {
+    const productElement = document.getElementById(`product-${productId}`);
+    const quantityElement = productElement.querySelector('.quantity');
+    let currentQuantity = parseInt(quantityElement.innerHTML, 10);
+
+    const product = getProductFromCart(productId);
+    if (product) {
+        const maxQuantity = product.stock;
+
+        if (currentQuantity < maxQuantity) {
+            currentQuantity += 1;
+            quantityElement.innerHTML = currentQuantity;
+            updateCart(productId, currentQuantity);
+        } else {
+            alert('There are no more products in stock.');
+        }
+    } else {
+        console.error('Product not found in the cart.');
+    }
 }
