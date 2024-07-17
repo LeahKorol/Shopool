@@ -1133,6 +1133,7 @@ footer {
     .icons i {
         font-size: 20px;
     }
+
     .products-container {
         display: grid;
         grid-template-columns: 1fr;

@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <div class="product-details"> 
                             <h3 class="product-name">${product.title}</h3>
                             <p>Price: $${product.price}</p>
-                            <p>Quantity: 
+                            <p>
                                  <button id="decrease-quantity-${product.id}" class="quantity-btn">-</button>
                                  <span class="quantity" id="quantity-${product.id}">${product.quantity}</span>
                                  <button id="increase-quantity-${product.id}" class="quantity-btn">+</button>
