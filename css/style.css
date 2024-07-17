@@ -270,6 +270,11 @@ header .logo-container img {
     z-index: 1;
 }
 
+.user-dropdown .dropdown-content {
+    right: 0;
+    width: 100%;
+}
+
 .dropdown:hover .dropdown-content {
     display: block;
 }
@@ -987,11 +992,6 @@ footer {
         right: -5px;
         font-size: 8px;
         padding: 1px 4px;
-    }
-
-    .user-dropdown .dropdown-content {
-        right: 0;
-        width: 100%;
     }
 
     .dropdown-content a {
