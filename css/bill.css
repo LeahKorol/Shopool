@@ -138,3 +138,33 @@ header .logo-container img {
         border: none;
     }
 }
+
+/* Media Queries for smaller screens */
+@media (max-width: 830px) {
+    header {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    header .logo-container img {
+        height: 40px;
+    }
+    
+    .invoice-box {
+        padding: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    }
+
+    .invoice-box table tr.top table td.title {
+        font-size: 30px;
+        line-height: 30px;
+    }
+
+    .invoice-box table tr.information table td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.total td:nth-child(3) {
+        text-align: left;
+    }
+}
