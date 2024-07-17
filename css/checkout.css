@@ -343,11 +343,6 @@ input:checked + .payment-method-item::before {
     transition: all .15s ease-in-out;
 }
 
-/* .payment-form-submit-button:hover {
-    background-color: var(white);
-    color: var(--primary-color);
-} */
-
 .payment-form-submit-button > i {
     margin-right: 8px;
 }
