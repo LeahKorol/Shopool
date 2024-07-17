@@ -1013,9 +1013,9 @@ footer {
         z-index: 1;
     }
 
-    #mobile-categories-list , .dropdown-content {
+    /* #mobile-categories-list , .dropdown-content {
         display: block;
-    }
+    } */
 
     .mobile-categories-container.active .dropdown-content {
         display: block;
