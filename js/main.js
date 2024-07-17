@@ -596,6 +596,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showDefaultProducts();
     handleSearch();
     closeDropdown();
+    updateCartBadge();
 
     function getCartItemCount() {
         return parseInt(localStorage.getItem('cartItemCount')) || 0;
@@ -628,4 +629,3 @@ document.addEventListener('DOMContentLoaded', () => {
     
 });
 
-// updateCartBadge();

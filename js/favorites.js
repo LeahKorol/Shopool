@@ -15,17 +15,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     <button class="favorite-btn" onclick="removeFromFavorites(${product.id})">
                         <i class="fas fa-trash"></i>
                     </button>
-                    <button class="cart-btn" onclick="showQuantityModal(${product.id})">
-                        <i class="fas fa-shopping-cart"></i>
+                    <button class="eye-btn">
+                        <i class="fas fa-eye"></i>
                     </button>
                 </div>
             `;
 
-            productElement.addEventListener('click', function (event) {
-                if (!event.target.closest('.buttons')) {
-                    localStorage.setItem('selectedProduct', JSON.stringify(product));
-                    window.location.href = './product-details.html';
-                }
+            const viewDetailsBtn = productElement.querySelector('.eye-btn');
+            viewDetailsBtn.addEventListener('click', () => {
+                showProductDetails(product);
             });
 
             favoritesGrid.appendChild(productElement);
@@ -40,48 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
         showToast('Product removed from favorites');
     };
 
-    window.showQuantityModal = function (productId) {
-        const modalPlaceholder = document.getElementById('modal-placeholder');
-        modalPlaceholder.innerHTML = `
-            <div class="quantity-modal">
-                <div class="modal-content">
-                    <h2>Enter Quantity</h2>
-                    <input type="number" id="quantity-input" min="1" value="1">
-                    <div class="modal-buttons">
-                        <button id="confirm-button">Confirm</button>
-                        <button id="cancel-button">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        document.getElementById('confirm-button').addEventListener('click', function () {
-            const quantity = parseInt(document.getElementById('quantity-input').value, 10);
-            if (quantity > 0) {
-                addToCart(productId, quantity);
-            }
-            modalPlaceholder.innerHTML = '';
-        });
-
-        document.getElementById('cancel-button').addEventListener('click', function () {
-            modalPlaceholder.innerHTML = '';
-        });
-    };
-
-    window.addToCart = function (productId, quantity) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-        const product = favorites.find(product => product.id === productId);
-
-        if (product) {
-            product.quantity = quantity;
-            cart.push(product);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            favorites = favorites.filter(p => p.id !== productId);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            renderFavorites();
-            showToast('Product added to cart');
-        }
+    window.showProductDetails = function (product) {
+        localStorage.setItem('selectedProduct', JSON.stringify(product));
+        window.location.href = './product-details.html';
+    
     };
 
     function showToast(message) {
