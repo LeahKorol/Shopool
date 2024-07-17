@@ -64,4 +64,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     renderFavorites();
+    updateCartBadge()
 });
+
+function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartBadge = document.querySelector('.cart-badge');
+    cartBadge.textContent = itemCount;
+}

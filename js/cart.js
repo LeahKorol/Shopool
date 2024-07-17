@@ -111,18 +111,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    document.getElementById('checkout-btn').addEventListener('click', function() {
+    document.getElementById('checkout-btn').addEventListener('click', function () {
         window.location.href = 'checkout.html';
     });
-    
+
     document.getElementById('checkout-form').addEventListener('submit', function (event) {
         event.preventDefault();
-    
+
         saveBill();
-        localStorage.removeItem('cart');    
+        localStorage.removeItem('cart');
         window.location.href = 'bill.html';
     });
-    
+
 
     document.getElementById('closeCheckoutForm').addEventListener('click', () => {
         document.getElementById('checkout-form').style.display = 'none';
@@ -247,13 +247,24 @@ function showToast(message) {
 //     }
 // }
 
-function updateCart(productId, newQuantity) {
+function updateCart(productId, newQuantity, isAdding) {
     let cart = JSON.parse(localStorage.getItem('cart'));
     const product = cart.find(item => item.id === productId);
     if (product) {
         product.quantity = newQuantity;
         localStorage.setItem('cart', JSON.stringify(cart));
+        updateTotalWithPrice(product.price, isAdding)
     }
+}
+
+function updateTotalWithPrice(price, isAdding) {
+    // Get the current total price as a number
+    let totalElement = document.getElementById('total');
+    let currentTotalText = totalElement.textContent;
+    let currentTotalPrice = parseFloat(currentTotalText.replace('$', ''));
+
+    let newTotalPrice = isAdding ? currentTotalPrice + price : currentTotalPrice - price;
+    totalElement.textContent = '$' + newTotalPrice.toFixed(2);  // Update the total in the document
 }
 
 function getProductFromCart(productId) {
@@ -269,7 +280,7 @@ function decreaseQuantity(productId) {
     if (currentQuantity > 1) {
         currentQuantity -= 1;
         quantityElement.innerHTML = currentQuantity;
-        updateCart(productId, currentQuantity);
+        updateCart(productId, currentQuantity, false);
     } else {
         const confirmation = confirm(`Are you sure you want to remove ${productElement.querySelector('.product-name').innerHTML}?`);
         if (confirmation) {
@@ -294,7 +305,7 @@ function increaseQuantity(productId) {
         if (currentQuantity < maxQuantity) {
             currentQuantity += 1;
             quantityElement.innerHTML = currentQuantity;
-            updateCart(productId, currentQuantity);
+            updateCart(productId, currentQuantity, true);
         } else {
             alert('There are no more products in stock.');
         }
