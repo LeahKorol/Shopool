@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-
     function rendercart() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const emptyCartDiv = document.getElementById('empty-cart');
@@ -96,10 +95,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Event listeners for opening and closing the form
-    document.getElementById('checkout-btn').addEventListener('click', () => {
-        document.getElementById('checkout-form').style.display = 'block';
+    document.getElementById('checkout-btn').addEventListener('click', function() {
+        window.location.href = 'checkout.html';
     });
+    
+    document.getElementById('checkout-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+    
+        saveBill();
+        localStorage.removeItem('cart');    
+        window.location.href = 'bill.html';
+    });
+    
+
     document.getElementById('closeCheckoutForm').addEventListener('click', () => {
         document.getElementById('checkout-form').style.display = 'none';
     });

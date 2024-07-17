@@ -345,7 +345,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('add-to-cart').addEventListener('click', function () {
         const requestedQuantity = parseInt(document.querySelector('#quantity').textContent);
         addToCart(product, requestedQuantity);
+    
+        this.classList.add('clicked');
+    
+        setTimeout(() => {
+            this.classList.remove('clicked');
+        }, 3500); 
     });
+    
 
 
     // wishlist

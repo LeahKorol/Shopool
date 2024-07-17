@@ -122,12 +122,13 @@ body {
     margin-bottom: 10px;
     cursor: zoom-in;
     object-fit: cover;
+    z-index: 10;
 }
 
 .popup {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 10000;
     left: 0;
     top: 0;
     width: 100%;
@@ -355,10 +356,132 @@ body {
 }
 
 
-#add-to-cart {
-    background-color: #f0ad4e;
-    color: white;
+.cart__button {
+    position: relative;
+    width: 150px;
+    height: 62px;
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+    cursor: pointer;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
 }
+
+.cart__button:hover {
+    background-color: var(--secondary-color);
+}
+
+.cart__button:active {
+    transform: scale(0.9);
+}
+
+.cart__button .fa-shopping-cart {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: -10%;
+    font-size: 1.5rem;
+    transform: translate(-50%, -50%);
+}
+
+.cart__button .fa-box {
+    position: absolute;
+    z-index: 3;
+    top: -20%;
+    left: 52%;
+    font-size: 0.875rem;
+    transform: translate(-50%, -50%);
+}
+
+.cart__button span {
+    position: absolute;
+    left: 50%;
+    z-index: 3;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cart__button span.add__to-cart {
+    opacity: 1;
+}
+
+.cart__button span.added {
+    opacity: 0;
+}
+
+.cart__button.clicked .fa-shopping-cart {
+    animation: cart 1.5s ease-in-out forwards;
+}
+
+.cart__button.clicked .fa-box {
+    animation: box 1.5s ease-in-out forwards;
+}
+
+.cart__button.clicked span.add__to-cart {
+    animation: txt1 1.5s ease-in-out forwards;
+}
+
+.cart__button.clicked span.added {
+    animation: txt2 1.5s ease-in-out forwards;
+}
+
+@keyframes cart {
+    0% {
+        left: -10%;
+    }
+
+    40%,
+    60% {
+        left: 50%;
+    }
+
+    100% {
+        left: 110%;
+    }
+}
+
+@keyframes box {
+    0%,
+    40% {
+        top: -20%;
+    }
+
+    60% {
+        top: 40%;
+        left: 52%;
+    }
+
+    100% {
+        top: 40%;
+        left: 112%;
+    }
+}
+
+@keyframes txt1 {
+    0% {
+        opacity: 1;
+    }
+
+    20%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes txt2 {
+    0%,
+    80% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 
 
 #add-to-wishlist {
@@ -412,7 +535,7 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     width: 85vw;
-    height: max-content;
+    height: fit-content;
     gap: 1.5rem;
     padding-bottom: 5rem;
     margin: 8vh 3vw 7vh 3vw;
@@ -651,4 +774,92 @@ body {
     position: absolute;
     bottom: 10px;
     right: 10px;
+}
+
+
+
+@media (max-width: 768px) {
+    .back-home-button {
+        margin-top: 0;
+    }
+
+    #product-info { 
+        flex-direction: column;
+    }
+
+    #left-section {
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    #left-section #thumbnail {
+        width: 50vw;
+    }
+
+    #left-section #images img {
+        width: 5vh;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    .popup-content {
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #quantity-controls {
+        margin: 2vh auto;
+    }
+
+    #action-buttons button,
+    #action-buttons span {
+        font-size: 14px;
+    }
+
+    #more-product-info {
+        flex-direction: column;
+        gap: 0;
+        margin: 0 auto;
+        padding-bottom: 0;
+    }
+
+    .rating-overview {
+        margin: 2vh auto;
+        width: 85vw;
+        height: fit-content;
+        align-items: stretch;
+        gap: 2.5vw;
+    }
+
+    #overallRating {
+        flex: 1;
+    }
+
+    .rating-display .star {
+        font-size: 18px;
+    }
+
+    #ratingChart {
+        flex: 4;
+        align-items: center;
+    }
+
+    .rating-row {
+        margin-bottom: 5px;
+    }
+
+    .rating-number {
+        font-size: 3vh;
+    }
+
+    #reviews-list {
+        flex-direction: column;
+    }
+
+    .review-container {
+        width: 100%;
+        height: 25vh; 
+    }
 }

@@ -195,6 +195,25 @@
   overflow-y: scroll;
 }
 
+#checkout-form.show {
+  display: block;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  z-index: 999; /* Higher than other content */
+  display: none;
+}
+
+.overlay.show {
+  display: block;
+}
+
 label {
   display: block;
   font-weight: bold;
@@ -221,4 +240,26 @@ label {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .cart-container {
+    margin: 5vw auto;
+    width: 90vw;
+  }
+
+  .product-item-in-list {
+    align-items: stretch;
+    height: max-content;
+    margin-bottom: 2vh;
+  }
+
+  .product-item-in-list .product-link {
+    text-overflow: ellipsis;
+  }
+
+  #checkout-btn, #pay-now-btn {
+    font-size: 4vw;
+  }
 }

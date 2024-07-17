@@ -24,15 +24,14 @@ header {
 }
 
 main {
-    padding: 20px;
-    max-width: 800px;
+    max-width: 90vw;
     margin: 0 auto;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .policy-container {
-    padding: 20px;
+    padding: 5vh;
 }
 
 .policy-container h1 {
@@ -55,6 +54,7 @@ main {
 .policy-container ul {
     padding-left: 20px;
 }
+
 
 footer {
     text-align: center;
