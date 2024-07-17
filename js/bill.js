@@ -1,15 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    initializeInvoice();
-    displayCustomerInfo();
-    displayBill();
+    loadBillData();
     setupPrintButton();
 });
 
-// Initialization Functions
-function initializeInvoice() {
-    const invoiceNumber = generateInvoiceNumber();
-    const today = new Date();
-    displayInvoiceDetails(invoiceNumber, today);
+function loadBillData() {
+    const billData = JSON.parse(localStorage.getItem('billData'));
+    if (billData) {
+        displayCustomerInfo(billData.shipping);
+        displayCreditCardInfo(billData.payment);
+        displayBillItems();
+        displayTotalPrice(billData.total);
+    }
 }
 
 function setupPrintButton() {
@@ -18,56 +19,27 @@ function setupPrintButton() {
     });
 }
 
-// Data Retrieval Functions
-function getPayingDetails() {
-    return JSON.parse(localStorage.getItem('payingDetails'));
+function displayCustomerInfo(shipping) {
+    document.getElementById('customer-name').innerText = shipping.fullName || '';
+    document.getElementById('customer-address').innerText = `${shipping.address || ''}, ${shipping.city || ''}, ${shipping.country || ''}`;
 }
 
-function getBillDetails() {
-    return JSON.parse(localStorage.getItem('bill')) || [];
+function displayCreditCardInfo(payment) {
+    document.getElementById('credit-card-number').innerText = `**** **** **** ${payment.cardNumber || ''}`;
 }
 
-// Display Functions
-function displayCustomerInfo() {
-    const payingDetails = getPayingDetails();
-    if (payingDetails) {
-        document.getElementById('customer-name').innerText = `${payingDetails.name}`;
-        document.getElementById('customer-address').innerText = `${payingDetails.street}, ${payingDetails.city}, ${payingDetails.state}`;
-        document.getElementById('credit-card-number').innerText = `**** **** **** ${payingDetails.creditCardLastFour}`;
-    }
-}
-
-function displayInvoiceDetails(invoiceNumber, date) {
-    document.getElementById('invoice-number').innerText = invoiceNumber;
-    document.getElementById('invoice-date').innerText = formatDate(date);
-}
-
-function displayBill() {
-    const bill = getBillDetails();
-    displayBillItems(bill);
-    displayTotalPrice(bill);
-}
-
-function displayBillItems(bill) {
+function displayBillItems() {
+    const billItems = JSON.parse(localStorage.getItem('billItems')) || [];
     const itemsList = document.getElementById('items-list');
-    bill.forEach(item => {
+    itemsList.innerHTML = '';
+    billItems.forEach(item => {
         const itemRow = document.createElement('tr');
         itemRow.className = 'item';
-        itemRow.innerHTML = `<td>${item.title} ${item.sku}</td><td>${item.quantity}</td><td>$${(item.price * item.quantity).toFixed(2)}</td>`;
+        itemRow.innerHTML = `<td>${item.title} (${item.sku})</td><td>${item.quantity}</td><td>$${(item.price * item.quantity).toFixed(2)}</td>`;
         itemsList.appendChild(itemRow);
     });
 }
 
-function displayTotalPrice(bill) {
-    const totalPrice = bill.reduce((total, item) => total + item.price * item.quantity, 0);
-    document.getElementById('total-price').innerText = totalPrice.toFixed(2);
-}
-
-// Utility Functions
-function generateInvoiceNumber() {
-    return Math.floor(Math.random() * 1000000);
-}
-
-function formatDate(date) {
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+function displayTotalPrice(total) {
+    document.getElementById('total-price').innerText = `${total}`;
 }

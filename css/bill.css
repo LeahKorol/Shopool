@@ -163,8 +163,4 @@ header .logo-container img {
     .invoice-box table tr.information table td {
         padding-bottom: 20px;
     }
-
-    .invoice-box table tr.total td:nth-child(3) {
-        text-align: left;
-    }
 }

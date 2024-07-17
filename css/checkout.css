@@ -367,3 +367,110 @@ input:checked + .payment-method-item::before {
         display: block;
     }
 }
+
+
+
+.checkout-section {
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+#same-as-shipping {
+    margin-right: 8px;
+}
+
+
+
+#checkout-progress {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0;
+    margin: 40px 0;
+    position: relative;
+}
+
+#checkout-progress::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #e0e0e0;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+#checkout-progress li {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#checkout-progress li::before {
+    content: '';
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border: 4px solid #e0e0e0;
+    border-radius: 50%;
+    display: block;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#checkout-progress li::after {
+    content: attr(data-step);
+    font-size: 14px;
+    font-weight: bold;
+    color: #999;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+#checkout-progress li span {
+    font-size: 14px;
+    color: #555;
+    position: relative;
+    top: 40px;
+}
+
+#checkout-progress li.active::before {
+    border-color: var(--secondary-color);
+    background:  var(--white);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+#checkout-progress li.active::after {
+    color: var(--secondary-color);
+}
+
+#checkout-progress li.active span {
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+#checkout-progress li.completed::before {
+    border-color: var(--secondary-color);
+    background: var(--secondary-color);
+}
+
+#checkout-progress li.completed::after {
+    content: '✓';
+    color: white;
+}
