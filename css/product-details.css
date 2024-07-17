@@ -776,6 +776,11 @@ body {
     right: 10px;
 }
 
+#right-section button.disabled{
+    opacity: 0.5; 
+    cursor: not-allowed; 
+}
+
 
 
 @media (max-width: 768px) {

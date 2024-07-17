@@ -1130,6 +1130,28 @@ footer {
     .icons i {
         font-size: 20px;
     }
+    .products-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .product-item {
+        max-width: 100vw;
+        flex: 1 1 100vw;
+        box-sizing: border-box;
+    }
+
+    .product-item h3 {
+        font-size: 14px;
+        margin: 5px 0;
+        white-space: normal; 
+    }
+
+    .product-item button {
+        padding: 8px 16px;
+        max-height: 15vh;
+    }
 
     .hot-sales {
         display: none;
