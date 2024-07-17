@@ -589,11 +589,15 @@ main {
 
 /* categories & products section */
 #header-categories-list, #footer-categories-list {
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     padding: 0;
     margin: 0;
     list-style: none;
+}
+
+#footer-categories-list {
+     display: flex;
 }
 
 #header-categories-list a, #footer-categories-list a {
