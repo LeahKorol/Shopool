@@ -1,4 +1,17 @@
+let subtotalElement;
+let totalElement;
+let subtotal = 0;
+let discount = 0;
+
 document.addEventListener('DOMContentLoaded', function() {
+    subtotalElement = document.getElementById('subtotal');
+    totalElement = document.getElementById('final-total');
+
+    const couponButton = document.getElementById('apply-coupon');
+    const couponInput = document.getElementById('coupon-code');
+    const couponMessage = document.getElementById('coupon-message');
+    const discountElement = document.getElementById('discount');
+
     const shippingSection = document.getElementById('shipping-section');
     const paymentSection = document.getElementById('payment-section');
     const reviewSection = document.getElementById('review-section');
@@ -13,6 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
     paymentSection.style.display = 'none';
     reviewSection.style.display = 'none';
     updateProgress(1);
+
+
+    displayCheckoutItems();
+
 
     toPaymentBtn.addEventListener('click', function(e) {
         e.preventDefault();
@@ -42,6 +59,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.href = 'bill.html';
             }, 1000); 
         }
+    });
+
+
+    couponButton.addEventListener('click', function() {
+        const couponCode = couponInput.value.trim().toUpperCase();
+        if (couponCode === 'DISCOUNT10') {
+            discount = subtotal * 0.1; // 10% הנחה
+            couponMessage.textContent = 'Coupon applied successfully!';
+            couponMessage.style.color = 'green';
+        } else if (couponCode === 'DISCOUNT20') {
+            discount = subtotal * 0.2; // 20% הנחה
+            couponMessage.textContent = 'Coupon applied successfully!';
+            couponMessage.style.color = 'green';
+        } else {
+            discount = 0;
+            couponMessage.textContent = 'Invalid coupon code.';
+            couponMessage.style.color = 'red';
+        }
+        updateTotals();
     });
 
 
@@ -171,6 +207,14 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>Expiry Date: ${document.getElementById('expiry-date').value}</p>
         `;
     
+        reviewHtml += '<h3>Order Items:</h3>';
+        const checkoutItems = JSON.parse(localStorage.getItem('checkoutItems')) || [];
+        checkoutItems.forEach(item => {
+            reviewHtml += `
+                <p>${item.title} - Quantity: ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}</p>
+            `;
+        });
+    
         const finalTotal = document.getElementById('final-total').textContent;
         reviewHtml += `<h3>Total:</h3><p>${finalTotal}</p>`;
     
@@ -179,6 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     function saveBill() {
+        const checkoutItems = JSON.parse(localStorage.getItem('checkoutItems')) || [];
         const billData = {
             shipping: {
                 fullName: document.getElementById('full-name').value,
@@ -191,10 +236,68 @@ document.addEventListener('DOMContentLoaded', function() {
                 cardNumber: document.getElementById('card-number').value.slice(-4),
                 expiryDate: document.getElementById('expiry-date').value
             },
-            total: document.getElementById('final-total').textContent
+            total: document.getElementById('final-total').textContent,
+            items: checkoutItems
         };
     
         localStorage.setItem('billData', JSON.stringify(billData));
-    }    
-    
+        localStorage.removeItem('checkoutItems'); // Clear checkout items
+    }
+
+    // localStorage.removeItem('cart'); // clear the cart
+
 });
+
+
+// document.getElementById('checkout-btn').addEventListener('click', function () {
+//     const cart = JSON.parse(localStorage.getItem('cart')) || [];
+//     localStorage.setItem('checkoutItems', JSON.stringify(cart));
+//     window.location.href = 'checkout.html';
+// });
+
+
+
+function displayCheckoutItems() {
+    const checkoutItems = JSON.parse(localStorage.getItem('checkoutItems')) || [];
+    const orderSummary = document.getElementById('order-summary');
+    let total = 0;
+
+    orderSummary.innerHTML = '';
+    checkoutItems.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('checkout-item');
+        itemElement.innerHTML = `
+            <div class="item-image">
+                <img src="${item.thumbnail}" alt="${item.title}">
+            </div>
+            <div class="item-details">
+                <h3>${item.title}</h3>
+                <p>Quantity: ${item.quantity}</p>
+                <p>Price: $${item.price.toFixed(2)}</p>
+            </div>
+            <div class="item-total">
+                $${(item.price * item.quantity).toFixed(2)}
+            </div>
+        `;
+        orderSummary.appendChild(itemElement);
+        total += item.price * item.quantity;
+    });
+
+    document.getElementById('final-total').textContent = `$${total.toFixed(2)}`;
+
+    subtotal = total;
+    updateTotals();
+}
+
+
+function updateTotals() {
+    subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+    if (discount > 0) {
+        document.querySelector('.payment-summary-discount').style.display = 'flex';
+        discountElement.textContent = `-$${discount.toFixed(2)}`;
+    } else {
+        document.querySelector('.payment-summary-discount').style.display = 'none';
+    }
+    const finalTotal = subtotal - discount;
+    totalElement.textContent = `$${finalTotal.toFixed(2)}`;
+}

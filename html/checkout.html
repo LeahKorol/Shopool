@@ -24,15 +24,22 @@
                     <div class="payment-header">
                         <div class="payment-header-icon"><i class="ri-flashlight-fill"></i></div>
                         <div class="payment-header-title">Order Summary</div>
-                        <p class="payment-header-description">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+                        <p class="payment-header-description">Your products are waiting! Complete the order with a click</p>
                     </div>
+                    <div id="order-summary-container">
+                        <div id="order-summary"></div>
+                        <div id="final-total-container">
+                          <p>Total: <span id="final-total"></span></p>
+                        </div>
+                      </div>
                     <div class="payment-content">
                         <div class="payment-body">
                             <div id="order-summary"></div>
-                            <div class="payment-form-group">
-                                <input type="text" placeholder=" " class="payment-form-control" id="coupon">
-                                <label for="coupon" class="payment-form-label">הכנס קופון</label>
+                            <div id="coupon-container">
+                                <h3>Have a coupon?</h3>
+                                <input type="text" id="coupon-code" placeholder="Enter coupon code">
                             </div>
+                            <div id="coupon-message"></div>
                             <button type="button" class="payment-form-submit-button" id="apply-coupon"><i class="ri-discount-2-line"></i> Apply Coupon</button>
                             <div class="payment-summary">
                                 <div class="payment-summary-item payment-summary-total">
@@ -47,7 +54,7 @@
                     <form action="" class="payment-form" id="checkout-form">
                         <h1 class="payment-title">Checkout</h1>
                         
-                        <!-- Shipping Section -->
+
                         <section class="checkout-section" id="shipping-section">
                             <h2 class="section-title">Shipping Details</h2>
                             <div class="payment-form-group">
@@ -75,7 +82,7 @@
                             <button type="button" class="payment-form-submit-button" id="to-payment-btn">Continue to Payment</button>
                         </section>
 
-                        <!-- Payment Section -->
+
                         <section class="checkout-section" id="payment-section" style="display: none;">
                             <h2 class="section-title">Payment Details</h2>
                             <div class="payment-method">
@@ -113,13 +120,19 @@
                             <button type="button" class="payment-form-submit-button" id="to-review-btn">Review Order</button>
                         </section>
 
-                        <!-- Review Section -->
+
                         <section class="checkout-section" id="review-section" style="display: none;">
                             <h2 class="section-title">Order Review</h2>
-                            <div id="order-review-summary">
-                                <!-- This will be populated with JS -->
-                            </div>
+                            <div id="order-review-summary"></div>
                             <div class="payment-summary">
+                                <div class="payment-summary-item payment-summary-subtotal">
+                                    <div class="payment-summary-name">Subtotal</div>
+                                    <div class="payment-summary-price" id="subtotal">$0.00</div>
+                                </div>
+                                <div class="payment-summary-item payment-summary-discount" style="display: none;">
+                                    <div class="payment-summary-name">Discount</div>
+                                    <div class="payment-summary-price" id="discount">$0.00</div>
+                                </div>
                                 <div class="payment-summary-item payment-summary-total">
                                     <div class="payment-summary-name">Total</div>
                                     <div class="payment-summary-price" id="final-total">$0.00</div>

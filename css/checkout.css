@@ -474,3 +474,114 @@ input:checked + .payment-method-item::before {
     content: '✓';
     color: white;
 }
+
+
+#order-summary {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.checkout-item:last-child {
+    border-bottom: none;
+}
+
+#order-summary-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  #order-summary-container h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .checkout-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .item-image img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .item-details {
+    flex-grow: 1;
+  }
+  
+  .item-details h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .item-details p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .item-total {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  #final-total-container {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  #coupon-container {
+    background-color: #ffedd0;
+    border: 1px dashed var(--secondary-color);
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 20px;
+  }
+  
+  #coupon-container h3 {
+    margin-top: 0;
+    color: var(--secondary-color);
+  }
+  
+  #coupon-code {
+    padding: 5px 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 3px;
+  }
+  
+  #apply-coupon {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  #apply-coupon:hover {
+    background-color: var(--secondary-color);
+  }
+
+  #coupon-message {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.payment-summary-discount {
+    color: #27ae60;
+}
