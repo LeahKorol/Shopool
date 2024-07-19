@@ -53,12 +53,12 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         if (validatePaymentForm()) {
             saveBill(); // save the bill in the localStorage
-            updateProgress(4); 
-    
+            updateProgress(4);
+
             // Show the toast
             const toast = document.getElementById("toast");
             toast.className = "toast show";
-    
+
             // After 3 seconds, hide the toast and redirect
             setTimeout(() => {
                 toast.className = toast.className.replace("show", "");
@@ -142,11 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return false;
         }
 
-        // if (!isValidCreditCard(cardNumber)) {
-        //     alert('Please enter a valid credit card number.');
-        //     return false;
-        // }
-
         const now = new Date();
         const expiry = new Date(expiryDate);
         if (expiry < now) {
@@ -198,106 +193,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-
-    //     function updateOrderReview() {
-    //         const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-
-    //         let reviewHtml = '<h3>Order Summary:</h3>';
-    //         reviewHtml += `
-    //             <div class="product-details">
-    //                 <p><strong>Product:</strong> ${selectedProduct.title}</p>
-    //                 <p><strong>Quantity:</strong> ${selectedProduct.quantity}</p>
-    //                 <p><strong>Price:</strong> $${selectedProduct.price.toFixed(2)}</p>
-    //                 <p><strong>Total:</strong> $${selectedProduct.totalPrice.toFixed(2)}</p>
-    //             </div>
-    //         `;
-
-    //         reviewHtml += '<h3>Shipping Details:</h3>';
-    //         reviewHtml += `
-    //             <p>Name: ${document.getElementById('full-name').value}</p>
-    //             <p>Address: ${document.getElementById('address').value}</p>
-    //             <p>City: ${document.getElementById('city').value}</p>
-    //             <p>Zip Code: ${document.getElementById('zip-code').value}</p>
-    //             <p>Country: ${document.getElementById('country').value}</p>
-    //         `;
-
-    //         reviewHtml += '<h3>Payment Details:</h3>';
-    //         reviewHtml += `
-    //             <p>Card Number: ${document.getElementById('card-number').value}</p>
-    //             <p>Expiry Date: ${document.getElementById('expiry-date').value}</p>
-    //         `;
-
-    //         const finalTotal = document.getElementById('final-total').textContent;
-    //         reviewHtml += `<h3>Total:</h3><p>${finalTotal}</p>`;
-
-    //         document.getElementById('order-review-summary').innerHTML = reviewHtml;
-    //     }
-
-
-
-    //     function saveBill() {
-    //         const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-    //         const billData = {
-    //             shipping: {
-    //                 fullName: document.getElementById('full-name').value,
-    //                 address: document.getElementById('address').value,
-    //                 city: document.getElementById('city').value,
-    //                 zipCode: document.getElementById('zip-code').value,
-    //                 country: document.getElementById('country').value
-    //             },
-    //             payment: {
-    //                 cardNumber: document.getElementById('card-number').value.slice(-4),
-    //                 expiryDate: document.getElementById('expiry-date').value
-    //             },
-    //             total: document.getElementById('final-total').textContent,
-    //             items: [selectedProduct]
-    //         };
-
-    //         localStorage.setItem('billData', JSON.stringify(billData));
-    //         // localStorage.setItem('cart', JSON.stringify([selectedProduct]))
-    //     }
-    // });
-
-
-    // function displayCheckoutItems() {
-    //     const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-    //     const orderSummary = document.getElementById('order-summary');
-
-    //     orderSummary.innerHTML = '';
-    //     if (selectedProduct) {
-    //         const itemElement = document.createElement('div');
-    //         itemElement.classList.add('checkout-item');
-    //         itemElement.innerHTML = `
-    //             <div class="item-image">
-    //                 <img src="${selectedProduct.thumbnail}" alt="${selectedProduct.title}">
-    //             </div>
-    //             <div class="item-details">
-    //                 <h3>${selectedProduct.title}</h3>
-    //                 <p>Quantity: ${selectedProduct.quantity}</p>
-    //                 <p>Price: $${selectedProduct.price.toFixed(2)}</p>
-    //             </div>
-    //             <div class="item-total">
-    //                 $${selectedProduct.totalPrice.toFixed(2)}
-    //             </div>
-    //         `;
-    //         orderSummary.appendChild(itemElement);
-    //     }
-
-    //     document.getElementById('final-total').textContent = `$${selectedProduct.totalPrice.toFixed(2)}`;
-
-//     subtotal = selectedProduct.totalPrice;
-//     updateTotals();
-// }
-
-
-
-
-
     function updateOrderReview() {
         let reviewHtml = '';
 
-    // Shipping Details
-    reviewHtml += `
+        // Shipping Details
+        reviewHtml += `
         <div class="review-section">
             <div class="review-icon"><i class="fas fa-truck-fast"></i></div>
             <div class="review-details">
@@ -309,8 +209,8 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
     `;
 
-    // Payment Details
-    reviewHtml += `
+        // Payment Details
+        reviewHtml += `
         <div class="review-section">
             <div class="review-icon"><i class="fas fa-credit-card"></i></div>
             <div class="review-details">
@@ -321,47 +221,9 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
     `;
 
-    // Total
-    // const finalTotal = document.getElementById('final-total').textContent;
-    // reviewHtml += `
-    //     <div class="review-section">
-    //         <div class="review-icon"><i class="fas fa-tag"></i></div>
-    //         <div class="review-details">
-    //             <h3>Total</h3>
-    //             <p>${finalTotal}</p>
-    //         </div>
-    //     </div>
-    // `;
+        document.getElementById('order-review-summary').innerHTML = reviewHtml;
+    }
 
-    document.getElementById('order-review-summary').innerHTML = reviewHtml;
-}
-
-
-
-
-// function updateOrderReview() {
-//     let reviewHtml = '';
-
-//     reviewHtml += '<h3>Shipping Details:</h3>';
-//     reviewHtml += `
-//         <p>Name: ${document.getElementById('full-name').value}</p>
-//         <p>Address: ${document.getElementById('address').value}</p>
-//         <p>City: ${document.getElementById('city').value}</p>
-//         <p>Zip Code: ${document.getElementById('zip-code').value}</p>
-//         <p>Country: ${document.getElementById('country').value}</p>
-//     `;
-
-//     reviewHtml += '<h3>Payment Details:</h3>';
-//     reviewHtml += `
-//         <p>Card Number: ${document.getElementById('card-number').value}</p>
-//         <p>Expiry Date: ${document.getElementById('expiry-date').value}</p>
-//     `;
-
-//     const finalTotal = document.getElementById('final-total').textContent;
-//     reviewHtml += `<h3>Total:</h3><p>${finalTotal}</p>`;
-
-//     document.getElementById('order-review-summary').innerHTML = reviewHtml;
-// }
 
     function saveBill() {
         const deleteCart = localStorage.getItem('delete-cart') === 'true';

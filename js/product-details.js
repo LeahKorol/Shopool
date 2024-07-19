@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    window.addToCart = function(product, requestedQuantity) {
+    window.addToCart = function (product, requestedQuantity) {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const index = cart.findIndex(item => item.id === product.id);
 
@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (quantityElement.innerHTML < maxQuantity) {
             updateStockWhileClicking();
         }
-        else{
+        else {
             stockInfoElement.innerHTML = 'There are no more items in stock';
             stockInfoElement.style.color = 'red';
         }
@@ -403,28 +403,27 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('buy-now').addEventListener('click', function () {
         const quantity = parseInt(document.querySelector('#quantity').textContent, 10) || 0;
         const totalPrice = parseFloat(product.price) * quantity;
-        
+
         const selectedProduct = {
             ...product,
             quantity: quantity,
             totalPrice: totalPrice
         };
-        
+
         localStorage.setItem('selectedProduct', JSON.stringify(selectedProduct));
-        // window.location.href = 'checkout.html';
-        jumpToCheckout(selectedProduct, true);
-    }); 
+        jumpToCheckout(true);
+    });
 
 
     document.getElementById('add-to-cart').addEventListener('click', function () {
         const requestedQuantity = parseInt(document.querySelector('#quantity').textContent);
         addToCart(product, requestedQuantity);
-    
+
         this.classList.add('clicked');
-    
+
         setTimeout(() => {
             this.classList.remove('clicked');
-        }, 3500); 
+        }, 3500);
     });
 
 
@@ -584,24 +583,10 @@ function setQuantity(quantity) {
     localStorage.setItem('selectedProduct', JSON.stringify(selectedProduct));
 }
 
-window.jumpToCheckout = function(product, directCheckout = false) {
-    // let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    // // הוספת המוצר לעגלה
-    // window.addToCart(product, product.quantity);
-    
-    // // עדכון העגלה
-    // let existingItem = cart.find(item => item.id === product.id);
-    // if (existingItem) {
-    //     existingItem.quantity = product.quantity;
-    // } else {
-    //     cart.push(product);
-    // }
-
-    // localStorage.setItem('cart', JSON.stringify(cart));
+window.jumpToCheckout = function (directCheckout = false) {
     localStorage.setItem('delete-cart', 'false');
-    
-    // אם נדרש מעבר ישיר לדף ה-checkout
+
+    //go directly to checkout
     if (directCheckout) {
         window.location.href = 'checkout.html';
     }

@@ -10,16 +10,6 @@ async function getCategoryList() {
     }
 }
 
-async function getAllProducts() {
-    try {
-        const response = await fetch('https://dummyjson.com/products');
-        const data = await response.json();
-        return data.products;
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-    }
-}
-
 async function getCategoryProducts(categoryName) {
     try {
         const response = await fetch(`https://dummyjson.com/products/category/${categoryName}`);
@@ -38,17 +28,6 @@ async function searchProducts(query) {
         return data.products;
     } catch (error) {
         console.error('Error fetching categories:', error);
-    }
-}
-
-async function getProductById(id) {
-    try {
-        const response = await fetch(`https://dummyjson.com/products/${id}`);
-        const product = await response.json();
-        return product;
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-        return null;
     }
 }
 
