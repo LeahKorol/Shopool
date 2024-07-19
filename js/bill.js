@@ -56,6 +56,7 @@
 // localStorage.removeItem('cart');
 
 document.addEventListener('DOMContentLoaded', () => {
+    displayInvoiceDetails()
     loadBillData();
     setupPrintButton();
 });
@@ -113,4 +114,20 @@ function displayBillItems(items) {
 
 function displayTotalPrice(total) {
     document.getElementById('total-price').textContent = total;
+}
+
+//utility functions
+function generateInvoiceNumber() {
+    return Math.floor(Math.random() * 1000000);
+}
+
+function formatDate() {
+    const today = new Date();
+    return `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+}
+
+// Insert data into HTML
+function displayInvoiceDetails() {
+    document.getElementById('invoice-number').innerText = generateInvoiceNumber();
+    document.getElementById('invoice-date').innerText = formatDate();
 }
