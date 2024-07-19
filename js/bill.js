@@ -68,6 +68,7 @@ function loadBillData() {
         displayCreditCardInfo(billData.payment);
         displayBillItems(billData.items);
         displayTotalPrice(billData.total);
+        displayDiscount(billData.subtotal, billData.discount);
 
         // Clear the data after loading
         localStorage.removeItem('billData');
@@ -114,6 +115,20 @@ function displayBillItems(items) {
 
 function displayTotalPrice(total) {
     document.getElementById('total-price').textContent = total;
+}
+
+function displayDiscount(subtotal, discount){
+    if (discount > 0) {
+        const subtotalRow = document.getElementById('subtotal-row');
+        const discountRow = document.getElementById('discount-row');
+        
+        document.getElementById('subtotal-price').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('discount-price').textContent = `$${discount.toFixed(2)}`;
+        
+        // Show rows
+        subtotalRow.style.display = '';
+        discountRow.style.display = '';
+    }
 }
 
 //utility functions
