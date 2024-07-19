@@ -132,6 +132,12 @@
   padding: 50px 0;
 }
 
+
+#empty-cart img {
+  width: 25vw;
+  height: 35vh;
+}
+
 .empty-cart-icon {
   width: 15vw;
   height: 25vh;
@@ -276,4 +282,10 @@ label {
   #checkout-btn, #pay-now-btn {
     font-size: 4vw;
   }
+
+  #empty-cart img {
+    width: 35vw;
+    height: 20vh;
+  }
+  
 }
