@@ -118,3 +118,33 @@
         max-width: calc(100% - 20px);
     }
 }
+
+
+.no-favorites-message {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.no-favorites-message img {
+    width: 35vw;
+    height: 40vh;
+    margin-bottom: 10px;
+}
+
+.no-favorites-message p {
+    font-size: 1.2em;
+    color: var(--text-color);
+}
+
+
+@media (max-width: 600px) {
+    .no-favorites-message img {
+        width: 80vw;
+        height: 25vh;
+    }
+
+    .no-favorites-message p {
+        font-size: 1em;
+    }
+}
