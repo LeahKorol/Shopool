@@ -585,20 +585,20 @@ function setQuantity(quantity) {
 }
 
 window.jumpToCheckout = function(product, directCheckout = false) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    // let cart = JSON.parse(localStorage.getItem('cart')) || [];
     
-    // הוספת המוצר לעגלה
-    window.addToCart(product, product.quantity);
+    // // הוספת המוצר לעגלה
+    // window.addToCart(product, product.quantity);
     
-    // עדכון העגלה
-    let existingItem = cart.find(item => item.id === product.id);
-    if (existingItem) {
-        existingItem.quantity = product.quantity;
-    } else {
-        cart.push(product);
-    }
+    // // עדכון העגלה
+    // let existingItem = cart.find(item => item.id === product.id);
+    // if (existingItem) {
+    //     existingItem.quantity = product.quantity;
+    // } else {
+    //     cart.push(product);
+    // }
 
-    localStorage.setItem('cart', JSON.stringify(cart));
+    // localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('delete-cart', 'false');
     
     // אם נדרש מעבר ישיר לדף ה-checkout

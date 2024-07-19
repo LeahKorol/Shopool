@@ -72,7 +72,7 @@ function loadBillData() {
         localStorage.removeItem('billData');
 
         let deleteCart = localStorage.getItem('delete-cart');
-        if (deleteCart === 'false') {
+        if (deleteCart === 'true') {
             localStorage.removeItem('cart');
         }
 

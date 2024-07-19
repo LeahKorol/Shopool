@@ -192,105 +192,173 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     
-    function updateOrderReview() {
-        const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+//     function updateOrderReview() {
+//         const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
     
-        let reviewHtml = '<h3>Order Summary:</h3>';
-        reviewHtml += `
-            <div class="product-details">
-                <p><strong>Product:</strong> ${selectedProduct.title}</p>
-                <p><strong>Quantity:</strong> ${selectedProduct.quantity}</p>
-                <p><strong>Price:</strong> $${selectedProduct.price.toFixed(2)}</p>
-                <p><strong>Total:</strong> $${selectedProduct.totalPrice.toFixed(2)}</p>
-            </div>
-        `;
+//         let reviewHtml = '<h3>Order Summary:</h3>';
+//         reviewHtml += `
+//             <div class="product-details">
+//                 <p><strong>Product:</strong> ${selectedProduct.title}</p>
+//                 <p><strong>Quantity:</strong> ${selectedProduct.quantity}</p>
+//                 <p><strong>Price:</strong> $${selectedProduct.price.toFixed(2)}</p>
+//                 <p><strong>Total:</strong> $${selectedProduct.totalPrice.toFixed(2)}</p>
+//             </div>
+//         `;
         
-        reviewHtml += '<h3>Shipping Details:</h3>';
-        reviewHtml += `
-            <p>Name: ${document.getElementById('full-name').value}</p>
-            <p>Address: ${document.getElementById('address').value}</p>
-            <p>City: ${document.getElementById('city').value}</p>
-            <p>Zip Code: ${document.getElementById('zip-code').value}</p>
-            <p>Country: ${document.getElementById('country').value}</p>
-        `;
+//         reviewHtml += '<h3>Shipping Details:</h3>';
+//         reviewHtml += `
+//             <p>Name: ${document.getElementById('full-name').value}</p>
+//             <p>Address: ${document.getElementById('address').value}</p>
+//             <p>City: ${document.getElementById('city').value}</p>
+//             <p>Zip Code: ${document.getElementById('zip-code').value}</p>
+//             <p>Country: ${document.getElementById('country').value}</p>
+//         `;
     
-        reviewHtml += '<h3>Payment Details:</h3>';
-        reviewHtml += `
-            <p>Card Number: ${document.getElementById('card-number').value}</p>
-            <p>Expiry Date: ${document.getElementById('expiry-date').value}</p>
-        `;
+//         reviewHtml += '<h3>Payment Details:</h3>';
+//         reviewHtml += `
+//             <p>Card Number: ${document.getElementById('card-number').value}</p>
+//             <p>Expiry Date: ${document.getElementById('expiry-date').value}</p>
+//         `;
     
-        const finalTotal = document.getElementById('final-total').textContent;
-        reviewHtml += `<h3>Total:</h3><p>${finalTotal}</p>`;
+//         const finalTotal = document.getElementById('final-total').textContent;
+//         reviewHtml += `<h3>Total:</h3><p>${finalTotal}</p>`;
     
-        document.getElementById('order-review-summary').innerHTML = reviewHtml;
-    }
+//         document.getElementById('order-review-summary').innerHTML = reviewHtml;
+//     }
     
     
 
-    function saveBill() {
-        const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-        const billData = {
-            shipping: {
-                fullName: document.getElementById('full-name').value,
-                address: document.getElementById('address').value,
-                city: document.getElementById('city').value,
-                zipCode: document.getElementById('zip-code').value,
-                country: document.getElementById('country').value
-            },
-            payment: {
-                cardNumber: document.getElementById('card-number').value.slice(-4),
-                expiryDate: document.getElementById('expiry-date').value
-            },
-            total: document.getElementById('final-total').textContent,
-            items: [selectedProduct]
-        };
+//     function saveBill() {
+//         const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+//         const billData = {
+//             shipping: {
+//                 fullName: document.getElementById('full-name').value,
+//                 address: document.getElementById('address').value,
+//                 city: document.getElementById('city').value,
+//                 zipCode: document.getElementById('zip-code').value,
+//                 country: document.getElementById('country').value
+//             },
+//             payment: {
+//                 cardNumber: document.getElementById('card-number').value.slice(-4),
+//                 expiryDate: document.getElementById('expiry-date').value
+//             },
+//             total: document.getElementById('final-total').textContent,
+//             items: [selectedProduct]
+//         };
     
-        localStorage.setItem('billData', JSON.stringify(billData));
-        localStorage.setItem('cart', JSON.stringify([selectedProduct]));
-    }
-
-    // localStorage.removeItem('cart'); // clear the cart
-
-});
-
-
-// document.getElementById('checkout-btn').addEventListener('click', function () {
-//     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-//     localStorage.setItem('checkoutItems', JSON.stringify(cart));
-//     window.location.href = 'checkout.html';
+//         localStorage.setItem('billData', JSON.stringify(billData));
+//         // localStorage.setItem('cart', JSON.stringify([selectedProduct]))
+//     }
 // });
 
 
+// function displayCheckoutItems() {
+//     const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+//     const orderSummary = document.getElementById('order-summary');
+    
+//     orderSummary.innerHTML = '';
+//     if (selectedProduct) {
+//         const itemElement = document.createElement('div');
+//         itemElement.classList.add('checkout-item');
+//         itemElement.innerHTML = `
+//             <div class="item-image">
+//                 <img src="${selectedProduct.thumbnail}" alt="${selectedProduct.title}">
+//             </div>
+//             <div class="item-details">
+//                 <h3>${selectedProduct.title}</h3>
+//                 <p>Quantity: ${selectedProduct.quantity}</p>
+//                 <p>Price: $${selectedProduct.price.toFixed(2)}</p>
+//             </div>
+//             <div class="item-total">
+//                 $${selectedProduct.totalPrice.toFixed(2)}
+//             </div>
+//         `;
+//         orderSummary.appendChild(itemElement);
+//     }
+
+//     document.getElementById('final-total').textContent = `$${selectedProduct.totalPrice.toFixed(2)}`;
+
+//     subtotal = selectedProduct.totalPrice;
+//     updateTotals();
+// }
+
+function updateOrderReview() {
+    let reviewHtml = '';
+
+    reviewHtml += '<h3>Shipping Details:</h3>';
+    reviewHtml += `
+        <p>Name: ${document.getElementById('full-name').value}</p>
+        <p>Address: ${document.getElementById('address').value}</p>
+        <p>City: ${document.getElementById('city').value}</p>
+        <p>Zip Code: ${document.getElementById('zip-code').value}</p>
+        <p>Country: ${document.getElementById('country').value}</p>
+    `;
+
+    reviewHtml += '<h3>Payment Details:</h3>';
+    reviewHtml += `
+        <p>Card Number: ${document.getElementById('card-number').value}</p>
+        <p>Expiry Date: ${document.getElementById('expiry-date').value}</p>
+    `;
+
+    const finalTotal = document.getElementById('final-total').textContent;
+    reviewHtml += `<h3>Total:</h3><p>${finalTotal}</p>`;
+
+    document.getElementById('order-review-summary').innerHTML = reviewHtml;
+}
+
+function saveBill() {
+    const deleteCart = localStorage.getItem('delete-cart') === 'true';
+    const items = deleteCart ? JSON.parse(localStorage.getItem('cart')) || [] : [JSON.parse(localStorage.getItem('selectedProduct'))];
+    const billData = {
+        shipping: {
+            fullName: document.getElementById('full-name').value,
+            address: document.getElementById('address').value,
+            city: document.getElementById('city').value,
+            zipCode: document.getElementById('zip-code').value,
+            country: document.getElementById('country').value
+        },
+        payment: {
+            cardNumber: document.getElementById('card-number').value.slice(-4),
+            expiryDate: document.getElementById('expiry-date').value
+        },
+        total: document.getElementById('final-total').textContent,
+        items: items
+    };
+
+    localStorage.setItem('billData', JSON.stringify(billData));
+}
+});
 
 function displayCheckoutItems() {
-    const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-    const orderSummary = document.getElementById('order-summary');
-    
-    orderSummary.innerHTML = '';
-    if (selectedProduct) {
-        const itemElement = document.createElement('div');
-        itemElement.classList.add('checkout-item');
-        itemElement.innerHTML = `
-            <div class="item-image">
-                <img src="${selectedProduct.thumbnail}" alt="${selectedProduct.title}">
-            </div>
-            <div class="item-details">
-                <h3>${selectedProduct.title}</h3>
-                <p>Quantity: ${selectedProduct.quantity}</p>
-                <p>Price: $${selectedProduct.price.toFixed(2)}</p>
-            </div>
-            <div class="item-total">
-                $${selectedProduct.totalPrice.toFixed(2)}
-            </div>
-        `;
-        orderSummary.appendChild(itemElement);
-    }
+const deleteCart = localStorage.getItem('delete-cart') === 'true';
+const items = deleteCart ? JSON.parse(localStorage.getItem('cart')) || [] : [JSON.parse(localStorage.getItem('selectedProduct'))];
+const orderSummary = document.getElementById('order-summary');
 
-    document.getElementById('final-total').textContent = `$${selectedProduct.totalPrice.toFixed(2)}`;
+orderSummary.innerHTML = '';
+subtotal = 0;
 
-    subtotal = selectedProduct.totalPrice;
-    updateTotals();
+items.forEach(item => {
+    const itemElement = document.createElement('div');
+    itemElement.classList.add('checkout-item');
+    itemElement.innerHTML = `
+        <div class="item-image">
+            <img src="${item.thumbnail}" alt="${item.title}">
+        </div>
+        <div class="item-details">
+            <p>${item.title}</p>
+            <p>Quantity: ${item.quantity}</p>
+            <p>Price: $${item.price.toFixed(2)}</p>
+        </div>
+        <div class="item-total">
+            <p>$${(item.price * item.quantity).toFixed(2)}</p>
+        </div>
+    `;
+    orderSummary.appendChild(itemElement);
+
+    subtotal += item.price * item.quantity;
+});
+
+updateTotals();
 }
 
 
