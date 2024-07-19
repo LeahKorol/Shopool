@@ -56,9 +56,17 @@ document.addEventListener('DOMContentLoaded', function() {
             saveBill(); // save the bill in the localStorage
             updateProgress(4); 
     
+            // Show the toast
+            const toast = document.getElementById("toast");
+            toast.className = "toast show";
+    
+            // After 3 seconds, hide the toast and redirect
             setTimeout(() => {
-                window.location.href = 'bill.html'; 
-            }, 1000); 
+                toast.className = toast.className.replace("show", "");
+                setTimeout(() => {
+                    window.location.href = 'bill.html';
+                }, 500); // Wait an additional 500ms for the toast to fade out
+            }, 3000);
         }
     });
 
