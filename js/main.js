@@ -387,7 +387,7 @@ function scrollToProducts() {
 function showProductDetails(product) {
     document.querySelector('.search-input').value = '';
     localStorage.setItem('selectedProduct', JSON.stringify(product));
-    window.location.href = './product-details.html';
+    window.location.href = './html/product-details.html';
 }
 
 async function showDefaultProducts() {
