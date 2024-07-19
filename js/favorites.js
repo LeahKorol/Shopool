@@ -2,32 +2,42 @@ document.addEventListener('DOMContentLoaded', function () {
     function renderFavorites() {
         const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         const favoritesGrid = document.getElementById('favorites-grid');
+        const noFavoritesMessage = document.getElementById('no-favorites-message');
+
         favoritesGrid.innerHTML = '';
 
-        favorites.forEach(product => {
-            const productElement = document.createElement('div');
-            productElement.classList.add('favorite-item');
-            productElement.innerHTML = `
-                <img src="${product.thumbnail}" alt="Product Thumbnail">
-                <h3>${product.title}</h3>
-                <p>Price: $${product.price}</p>
-                <div class="buttons">
-                    <button class="favorite-btn" onclick="removeFromFavorites(${product.id})">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                    <button class="eye-btn">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                </div>
-            `;
+        if (favorites.length === 0) {
+            favoritesGrid.style.display = 'none';
+            noFavoritesMessage.style.display = 'block';
+        } else {
+            favoritesGrid.style.display = 'flex';
+            noFavoritesMessage.style.display = 'none';
 
-            const viewDetailsBtn = productElement.querySelector('.eye-btn');
-            viewDetailsBtn.addEventListener('click', () => {
-                showProductDetails(product);
+            favorites.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.classList.add('favorite-item');
+                productElement.innerHTML = `
+                    <img src="${product.thumbnail}" alt="Product Thumbnail">
+                    <h3>${product.title}</h3>
+                    <p>Price: $${product.price}</p>
+                    <div class="buttons">
+                        <button class="favorite-btn" onclick="removeFromFavorites(${product.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="eye-btn">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                `;
+
+                const viewDetailsBtn = productElement.querySelector('.eye-btn');
+                viewDetailsBtn.addEventListener('click', () => {
+                    showProductDetails(product);
+                });
+
+                favoritesGrid.appendChild(productElement);
             });
-
-            favoritesGrid.appendChild(productElement);
-        });
+        }
     }
 
     window.removeFromFavorites = function (productId) {
@@ -41,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
     window.showProductDetails = function (product) {
         localStorage.setItem('selectedProduct', JSON.stringify(product));
         window.location.href = './product-details.html';
-    
     };
 
     function showToast(message) {
@@ -64,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     renderFavorites();
-    updateCartBadge()
+    updateCartBadge();
 });
 
 function updateCartBadge() {
