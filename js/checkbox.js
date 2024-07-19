@@ -49,17 +49,19 @@ document.addEventListener('DOMContentLoaded', function() {
             updateProgress(3);
         }
     });
-
+    
     placeOrderBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        if (validateAllForms()) {
-            saveBill();
+        if (validatePaymentForm()) {
+            saveBill(); // save the bill in the localStorage
             updateProgress(4); 
+    
             setTimeout(() => {
-                window.location.href = 'bill.html';
+                window.location.href = 'bill.html'; 
             }, 1000); 
         }
     });
+
 
 
     couponButton.addEventListener('click', function() {
@@ -191,8 +193,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     function updateOrderReview() {
-        const orderReviewSummary = document.getElementById('order-review-summary');
-        let reviewHtml = '<h3>Shipping Details:</h3>';
+        const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+    
+        let reviewHtml = '<h3>Order Summary:</h3>';
+        reviewHtml += `
+            <div class="product-details">
+                <p><strong>Product:</strong> ${selectedProduct.title}</p>
+                <p><strong>Quantity:</strong> ${selectedProduct.quantity}</p>
+                <p><strong>Price:</strong> $${selectedProduct.price.toFixed(2)}</p>
+                <p><strong>Total:</strong> $${selectedProduct.totalPrice.toFixed(2)}</p>
+            </div>
+        `;
+        
+        reviewHtml += '<h3>Shipping Details:</h3>';
         reviewHtml += `
             <p>Name: ${document.getElementById('full-name').value}</p>
             <p>Address: ${document.getElementById('address').value}</p>
@@ -207,23 +220,16 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>Expiry Date: ${document.getElementById('expiry-date').value}</p>
         `;
     
-        reviewHtml += '<h3>Order Items:</h3>';
-        const checkoutItems = JSON.parse(localStorage.getItem('checkoutItems')) || [];
-        checkoutItems.forEach(item => {
-            reviewHtml += `
-                <p>${item.title} - Quantity: ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}</p>
-            `;
-        });
-    
         const finalTotal = document.getElementById('final-total').textContent;
         reviewHtml += `<h3>Total:</h3><p>${finalTotal}</p>`;
     
-        orderReviewSummary.innerHTML = reviewHtml;
+        document.getElementById('order-review-summary').innerHTML = reviewHtml;
     }
+    
     
 
     function saveBill() {
-        const checkoutItems = JSON.parse(localStorage.getItem('checkoutItems')) || [];
+        const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
         const billData = {
             shipping: {
                 fullName: document.getElementById('full-name').value,
@@ -237,11 +243,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 expiryDate: document.getElementById('expiry-date').value
             },
             total: document.getElementById('final-total').textContent,
-            items: checkoutItems
+            items: [selectedProduct]
         };
     
         localStorage.setItem('billData', JSON.stringify(billData));
-        localStorage.removeItem('checkoutItems'); // Clear checkout items
+        localStorage.setItem('cart', JSON.stringify([selectedProduct]));
     }
 
     // localStorage.removeItem('cart'); // clear the cart
@@ -258,36 +264,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function displayCheckoutItems() {
-    const checkoutItems = JSON.parse(localStorage.getItem('checkoutItems')) || [];
+    const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
     const orderSummary = document.getElementById('order-summary');
-    let total = 0;
-
+    
     orderSummary.innerHTML = '';
-    checkoutItems.forEach(item => {
+    if (selectedProduct) {
         const itemElement = document.createElement('div');
         itemElement.classList.add('checkout-item');
         itemElement.innerHTML = `
             <div class="item-image">
-                <img src="${item.thumbnail}" alt="${item.title}">
+                <img src="${selectedProduct.thumbnail}" alt="${selectedProduct.title}">
             </div>
             <div class="item-details">
-                <h3>${item.title}</h3>
-                <p>Quantity: ${item.quantity}</p>
-                <p>Price: $${item.price.toFixed(2)}</p>
+                <h3>${selectedProduct.title}</h3>
+                <p>Quantity: ${selectedProduct.quantity}</p>
+                <p>Price: $${selectedProduct.price.toFixed(2)}</p>
             </div>
             <div class="item-total">
-                $${(item.price * item.quantity).toFixed(2)}
+                $${selectedProduct.totalPrice.toFixed(2)}
             </div>
         `;
         orderSummary.appendChild(itemElement);
-        total += item.price * item.quantity;
-    });
+    }
 
-    document.getElementById('final-total').textContent = `$${total.toFixed(2)}`;
+    document.getElementById('final-total').textContent = `$${selectedProduct.totalPrice.toFixed(2)}`;
 
-    subtotal = total;
+    subtotal = selectedProduct.totalPrice;
     updateTotals();
 }
+
+
+document.addEventListener('DOMContentLoaded', displayCheckoutItems);
 
 
 function updateTotals() {

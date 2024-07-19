@@ -44,6 +44,36 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+
+    window.addToCart = function(product, requestedQuantity) {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const index = cart.findIndex(item => item.id === product.id);
+
+        if (index !== -1) {
+            const currentQuantity = cart[index].quantity;
+            const newQuantity = currentQuantity + requestedQuantity;
+            if (newQuantity > product.stock) {
+                if (currentQuantity < product.stock) {
+                    alert(`Sorry, only ${product.stock - currentQuantity} more units available.`);
+                } else {
+                    alert('Sorry, product is out of stock');
+                }
+                cart[index].quantity = product.stock;
+            } else {
+                cart[index].quantity = newQuantity;
+            }
+        } else {
+            product.quantity = requestedQuantity;
+            cart.push(product);
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateProductDetails();
+        updateCartBadge();
+        updateCartDropdown();
+        showCartDropdown();
+    }
+
     function addToCart(product, requestedQuantity) {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const index = cart.findIndex(item => item.id === product.id);
@@ -373,8 +403,17 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('buy-now').addEventListener('click', function () {
         const quantity = parseInt(document.querySelector('#quantity').textContent, 10) || 0;
         const totalPrice = parseFloat(product.price) * quantity;
-        alert(`You have purchased ${quantity} units of ${product.title} for a total of $${totalPrice.toFixed(2)}`);
-    });
+        
+        const selectedProduct = {
+            ...product,
+            quantity: quantity,
+            totalPrice: totalPrice
+        };
+        
+        localStorage.setItem('selectedProduct', JSON.stringify(selectedProduct));
+        // window.location.href = 'checkout.html';
+        jumpToCheckout(selectedProduct, true);
+    }); 
 
 
     document.getElementById('add-to-cart').addEventListener('click', function () {
@@ -387,7 +426,6 @@ document.addEventListener('DOMContentLoaded', function () {
             this.classList.remove('clicked');
         }, 3500); 
     });
-    
 
 
     // wishlist
@@ -538,6 +576,35 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(product);
     });
 });
+
+
+function setQuantity(quantity) {
+    let selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+    selectedProduct.quantity = quantity;
+    localStorage.setItem('selectedProduct', JSON.stringify(selectedProduct));
+}
+
+window.jumpToCheckout = function(product, directCheckout = false) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // הוספת המוצר לעגלה
+    window.addToCart(product, product.quantity);
+    
+    // עדכון העגלה
+    let existingItem = cart.find(item => item.id === product.id);
+    if (existingItem) {
+        existingItem.quantity = product.quantity;
+    } else {
+        cart.push(product);
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // אם נדרש מעבר ישיר לדף ה-checkout
+    if (directCheckout) {
+        window.location.href = 'checkout.html';
+    }
+}
 
 
 function showToast(message) {
