@@ -599,6 +599,7 @@ window.jumpToCheckout = function(product, directCheckout = false) {
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('delete-cart', 'false');
     
     // אם נדרש מעבר ישיר לדף ה-checkout
     if (directCheckout) {

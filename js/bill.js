@@ -67,10 +67,15 @@ function loadBillData() {
         displayCreditCardInfo(billData.payment);
         displayBillItems(billData.items);
         displayTotalPrice(billData.total);
-        
+
         // Clear the data after loading
         localStorage.removeItem('billData');
-        localStorage.removeItem('cart');
+
+        let deleteCart = localStorage.getItem('delete-cart');
+        if (deleteCart === 'false') {
+            localStorage.removeItem('cart');
+        }
+
     } else {
         console.error('No bill data found');
     }
