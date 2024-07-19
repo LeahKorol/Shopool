@@ -218,7 +218,7 @@ body {
 }
 
 .payment-title {
-    font-size: 22px;
+    font-size: 28px;
     font-weight: 700;
     margin-bottom: 12px;
     line-height: 1.3;
@@ -584,4 +584,111 @@ input:checked + .payment-method-item::before {
 
 .payment-summary-discount {
     color: #27ae60;
+}
+
+.toast {
+    visibility: hidden;
+    width: 50vw; 
+    height: 30vh;
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 20px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.75); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; 
+}
+
+.toast i {
+    font-size: 7vw; 
+    color: yellowgreen; 
+}
+
+.toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+
+
+
+
+#order-review-summary {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.review-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.review-icon {
+    flex-shrink: 0;
+    width: 50px; 
+    text-align: center;
+}
+
+.review-icon i {
+    font-size: 24px; 
+    color: black; 
+}
+
+.review-details {
+    margin-left: 15px;
+}
+
+.review-details h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.review-details p {
+    margin: 5px 0;
+}
+
+.review-details p strong {
+    font-weight: bold;
+}
+
+.free-shipping {
+    color: green;
 }

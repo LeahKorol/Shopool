@@ -53,11 +53,19 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         if (validatePaymentForm()) {
             saveBill(); // save the bill in the localStorage
-            updateProgress(4);
-
+            updateProgress(4); 
+    
+            // Show the toast
+            const toast = document.getElementById("toast");
+            toast.className = "toast show";
+    
+            // After 3 seconds, hide the toast and redirect
             setTimeout(() => {
-                window.location.href = 'bill.html';
-            }, 1000);
+                toast.className = toast.className.replace("show", "");
+                setTimeout(() => {
+                    window.location.href = 'bill.html';
+                }, 500); // Wait an additional 500ms for the toast to fade out
+            }, 3000);
         }
     });
 
@@ -277,33 +285,83 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //     document.getElementById('final-total').textContent = `$${selectedProduct.totalPrice.toFixed(2)}`;
 
-    //     subtotal = selectedProduct.totalPrice;
-    //     updateTotals();
-    // }
+//     subtotal = selectedProduct.totalPrice;
+//     updateTotals();
+// }
+
+
+
+
 
     function updateOrderReview() {
         let reviewHtml = '';
 
-        reviewHtml += '<h3>Shipping Details:</h3>';
-        reviewHtml += `
-        <p>Name: ${document.getElementById('full-name').value}</p>
-        <p>Address: ${document.getElementById('address').value}</p>
-        <p>City: ${document.getElementById('city').value}</p>
-        <p>Zip Code: ${document.getElementById('zip-code').value}</p>
-        <p>Country: ${document.getElementById('country').value}</p>
+    // Shipping Details
+    reviewHtml += `
+        <div class="review-section">
+            <div class="review-icon"><i class="fas fa-truck-fast"></i></div>
+            <div class="review-details">
+                <h3>Shipping Details</h3>
+                <p><strong>Name:</strong> ${document.getElementById('full-name').value}</p>
+                <p><strong>Address:</strong> ${document.getElementById('address').value}, ${document.getElementById('city').value}, ${document.getElementById('country').value}, ${document.getElementById('zip-code').value}</p>
+                <p class="free-shipping"><strong>Free Shipping</strong></p>
+            </div>
+        </div>
     `;
 
-        reviewHtml += '<h3>Payment Details:</h3>';
-        reviewHtml += `
-        <p>Card Number: ${document.getElementById('card-number').value}</p>
-        <p>Expiry Date: ${document.getElementById('expiry-date').value}</p>
+    // Payment Details
+    reviewHtml += `
+        <div class="review-section">
+            <div class="review-icon"><i class="fas fa-credit-card"></i></div>
+            <div class="review-details">
+                <h3>Payment Details</h3>
+                <p><strong>Card Number:</strong> ${document.getElementById('card-number').value}</p>
+                <p><strong>Expiry Date:</strong> ${document.getElementById('expiry-date').value}</p>
+            </div>
+        </div>
     `;
 
-        const finalTotal = totalElement.textContent;
-        reviewHtml += `<h3>Total:</h3><p>${finalTotal}</p>`;
+    // Total
+    // const finalTotal = document.getElementById('final-total').textContent;
+    // reviewHtml += `
+    //     <div class="review-section">
+    //         <div class="review-icon"><i class="fas fa-tag"></i></div>
+    //         <div class="review-details">
+    //             <h3>Total</h3>
+    //             <p>${finalTotal}</p>
+    //         </div>
+    //     </div>
+    // `;
 
-        document.getElementById('order-review-summary').innerHTML = reviewHtml;
-    }
+    document.getElementById('order-review-summary').innerHTML = reviewHtml;
+}
+
+
+
+
+// function updateOrderReview() {
+//     let reviewHtml = '';
+
+//     reviewHtml += '<h3>Shipping Details:</h3>';
+//     reviewHtml += `
+//         <p>Name: ${document.getElementById('full-name').value}</p>
+//         <p>Address: ${document.getElementById('address').value}</p>
+//         <p>City: ${document.getElementById('city').value}</p>
+//         <p>Zip Code: ${document.getElementById('zip-code').value}</p>
+//         <p>Country: ${document.getElementById('country').value}</p>
+//     `;
+
+//     reviewHtml += '<h3>Payment Details:</h3>';
+//     reviewHtml += `
+//         <p>Card Number: ${document.getElementById('card-number').value}</p>
+//         <p>Expiry Date: ${document.getElementById('expiry-date').value}</p>
+//     `;
+
+//     const finalTotal = document.getElementById('final-total').textContent;
+//     reviewHtml += `<h3>Total:</h3><p>${finalTotal}</p>`;
+
+//     document.getElementById('order-review-summary').innerHTML = reviewHtml;
+// }
 
     function saveBill() {
         const deleteCart = localStorage.getItem('delete-cart') === 'true';
