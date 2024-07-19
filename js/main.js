@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         icon.addEventListener("mouseout", () => {
-            icon.src = `../images/community-icons/${platform}-black.png`;
+            icon.src = `./images/community-icons/${platform}-black.png`;
         });
     });
 });
