@@ -247,6 +247,24 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         localStorage.setItem('billData', JSON.stringify(billData));
+
+        // Save the order details
+        const orderDetails = {
+            id: Date.now(), // Use timestamp as a simple unique ID
+            date: new Date().toLocaleDateString(),
+            status: 'Pending',
+            items: items,
+            total: totalElement.textContent,
+        };
+
+        // Get existing orders or initialize an empty array
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        
+        // Add the new order
+        orders.push(orderDetails);
+
+        // Save back to localStorage
+        localStorage.setItem('orders', JSON.stringify(orders));
     }
 });
 
