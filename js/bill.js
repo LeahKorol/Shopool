@@ -48,7 +48,7 @@ function displayBillItems(items) {
         const itemRow = document.createElement('tr');
         itemRow.className = 'item';
         itemRow.innerHTML = `
-            <td>${item.title}</td>
+            <td>${item.title} ${item.sku}</td>
             <td>${item.quantity}</td>
             <td>$${(item.price * item.quantity).toFixed(2)}</td>
         `;
