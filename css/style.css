@@ -789,6 +789,16 @@ h2.category-title {
 }
 
 
+.support-btn {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
 
 /* footer - fixed */
 footer {
@@ -996,10 +1006,10 @@ footer {
     }
 
 
-
-
-
-
+    
+    .footer-section {
+        margin-bottom: 5vh;
+    }
 
     footer p {
         font-size: 13px;
