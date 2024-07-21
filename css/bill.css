@@ -51,6 +51,15 @@ header .logo-container img {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
+
+#subtotal-row {
+    display: none;
+}
+
+#discount-row {
+    display: none;
+}
+
 .invoice-box table {
     width: 100%;
     line-height: inherit;
