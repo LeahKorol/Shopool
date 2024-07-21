@@ -1,55 +1,55 @@
 document.addEventListener('DOMContentLoaded', function () {
-    function renderFavorites() {
-        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-        const favoritesGrid = document.getElementById('favorites-grid');
-        favoritesGrid.innerHTML = '';
+    // function renderFavorites() {
+    //     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    //     const favoritesGrid = document.getElementById('favorites-grid');
+    //     favoritesGrid.innerHTML = '';
 
-        if (favorites.length === 0) {
-            // Create a message element for empty favorites
-            const emptyMessage = document.createElement('div');
-            emptyMessage.classList.add('empty-favorites-message');
-            emptyMessage.innerHTML = `
-                <p>Your favorites list is empty.</p>
-                <p>Add some products to your favorites!</p>
-            `;
-            favoritesGrid.appendChild(emptyMessage);
-        } else {
-            favorites.forEach(product => {
-                const productElement = document.createElement('div');
-                productElement.classList.add('favorite-item');
-                productElement.innerHTML = `
-                    <img src="${product.thumbnail}" alt="Product Thumbnail">
-                    <h3>${product.title}</h3>
-                    <p>Price: $${product.price}</p>
-                    <div class="buttons">
-                        <button class="favorite-btn" onclick="removeFromFavorites(${product.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                        <button class="cart-btn" onclick="showQuantityModal(${product.id})">
-                            <i class="fas fa-shopping-cart"></i>
-                        </button>
-                    </div>
-                `;
+    //     if (favorites.length === 0) {
+    //         // Create a message element for empty favorites
+    //         const emptyMessage = document.createElement('div');
+    //         emptyMessage.classList.add('empty-favorites-message');
+    //         emptyMessage.innerHTML = `
+    //             <p>Your favorites list is empty.</p>
+    //             <p>Add some products to your favorites!</p>
+    //         `;
+    //         favoritesGrid.appendChild(emptyMessage);
+    //     } else {
+    //         favorites.forEach(product => {
+    //             const productElement = document.createElement('div');
+    //             productElement.classList.add('favorite-item');
+    //             productElement.innerHTML = `
+    //                 <img src="${product.thumbnail}" alt="Product Thumbnail">
+    //                 <h3>${product.title}</h3>
+    //                 <p>Price: $${product.price}</p>
+    //                 <div class="buttons">
+    //                     <button class="favorite-btn" onclick="removeFromFavorites(${product.id})">
+    //                         <i class="fas fa-trash"></i>
+    //                     </button>
+    //                     <button class="cart-btn" onclick="showQuantityModal(${product.id})">
+    //                         <i class="fas fa-shopping-cart"></i>
+    //                     </button>
+    //                 </div>
+    //             `;
 
-                productElement.addEventListener('click', function (event) {
-                    if (!event.target.closest('.buttons')) {
-                        localStorage.setItem('selectedProduct', JSON.stringify(product));
-                        window.location.href = './product-details.html';
-                    }
-                });
+    //             productElement.addEventListener('click', function (event) {
+    //                 if (!event.target.closest('.buttons')) {
+    //                     localStorage.setItem('selectedProduct', JSON.stringify(product));
+    //                     window.location.href = './product-details.html';
+    //                 }
+    //             });
 
-                favoritesGrid.appendChild(productElement);
-            });
-        }
-    }
+    //             favoritesGrid.appendChild(productElement);
+    //         });
+    //     }
+    // }
 
-    window.removeFromFavorites = function (productId) {
-        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-        favorites = favorites.filter(product => product.id !== productId);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-        renderFavorites();
-        showToast('Product removed from favorites');
-    };
+    // window.removeFromFavorites = function (productId) {
+    //     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    //     favorites = favorites.filter(product => product.id !== productId);
+    //     localStorage.setItem('favorites', JSON.stringify(favorites));
+    //     renderFavorites();
+    //     showToast('Product removed from favorites');
+    // };
 
     window.showQuantityModal = function (productId) {
         const modalPlaceholder = document.getElementById('modal-placeholder');
@@ -79,21 +79,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
 
-    window.addToCart = function (productId, quantity) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-        const product = favorites.find(product => product.id === productId);
+    // window.addToCart = function (productId, quantity) {
+    //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    //     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    //     const product = favorites.find(product => product.id === productId);
 
-        if (product) {
-            product.quantity = quantity;
-            cart.push(product);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            favorites = favorites.filter(p => p.id !== productId);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            renderFavorites();
-            showToast('Product added to cart');
-        }
-    };
+    //     if (product) {
+    //         product.quantity = quantity;
+    //         cart.push(product);
+    //         localStorage.setItem('cart', JSON.stringify(cart));
+    //         favorites = favorites.filter(p => p.id !== productId);
+    //         localStorage.setItem('favorites', JSON.stringify(favorites));
+    //         renderFavorites();
+    //         showToast('Product added to cart');
+    //     }
+    // };
 
     function showToast(message) {
         const toast = document.createElement('div');
@@ -122,12 +122,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        renderFavorites();
+        // renderFavorites();
     });
 
 
     renderOrders();
-    renderFavorites();
+    // renderFavorites();
 
 
 
@@ -136,48 +136,60 @@ document.addEventListener('DOMContentLoaded', function () {
         const orderList = document.querySelector('.order-list');
         orderList.innerHTML = '';
         orderList.classList.add('orders-grid');
-
-        orders.forEach(order => {
-            const orderDate = new Date(order.date);
-            const currentDate = new Date();
-            const daysSinceOrder = Math.floor((currentDate - orderDate) / (1000 * 60 * 60 * 24));
-
-            if (daysSinceOrder >= 3 && order.status === 'Pending') {
-                order.status = 'Sent';
-            }
-
-            const orderElement = document.createElement('div');
-            orderElement.classList.add('order-item');
-            orderElement.innerHTML = `
-            <h3>Order #${order.id}</h3>
-            <p><strong>Date:</strong> ${order.date}</p>
-            <p><strong>Status:</strong> <span class="order-status">${order.status}</span></p>
-            <p><strong>Total:</strong> ${order.total}</p>
-            <button class="view-details-btn" data-order-id="${order.id}">View Details</button>
-            ${order.status !== 'Received' ? `<button class="receive-order-btn" data-order-id="${order.id}">Mark as Received</button>` : ''}
-        `;
-
-            if (order.status === 'Received') {
-                orderElement.style.opacity = '0.5';
-            }
-
-            orderList.appendChild(orderElement);
-        });
-
-        document.querySelectorAll('.view-details-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const orderId = this.getAttribute('data-order-id');
-                showOrderDetails(orderId);
+    
+        if (orders.length === 0) {
+            const emptyMessage = document.createElement('div');
+            emptyMessage.classList.add('empty-orders-message');
+            emptyMessage.innerHTML = `
+                <p>You have no orders yet.</p>
+                <p>Start shopping now to make your first order!</p>
+                <a href="./shop.html" class="start-shopping-btn">Start Shopping</a>
+            `;
+            orderList.appendChild(emptyMessage);
+        } else {
+            orders.forEach(order => {
+                const orderDate = new Date(order.date);
+                const currentDate = new Date();
+                const daysSinceOrder = Math.floor((currentDate - orderDate) / (1000 * 60 * 60 * 24));
+    
+                if (daysSinceOrder >= 3 && order.status === 'Pending') {
+                    order.status = 'Sent';
+                }
+    
+                const orderElement = document.createElement('div');
+                orderElement.classList.add('order-item');
+                orderElement.innerHTML = `
+                    <h3>Order #${order.id}</h3>
+                    <p><strong>Date:</strong> ${order.date}</p>
+                    <p><strong>Status:</strong> <span class="order-status">${order.status}</span></p>
+                    <p><strong>Total:</strong> ${order.total}</p>
+                    <button class="view-details-btn" data-order-id="${order.id}">View Details</button>
+                    ${order.status !== 'Received' ? `<button class="receive-order-btn" data-order-id="${order.id}">Mark as Received</button>` : ''}
+                `;
+    
+                if (order.status === 'Received') {
+                    orderElement.style.opacity = '0.5';
+                }
+    
+                orderList.appendChild(orderElement);
             });
-        });
-
-        document.querySelectorAll('.receive-order-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const orderId = this.getAttribute('data-order-id');
-                markOrderAsReceived(orderId);
+    
+            document.querySelectorAll('.view-details-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const orderId = this.getAttribute('data-order-id');
+                    showOrderDetails(orderId);
+                });
             });
-        });
+    
+            document.querySelectorAll('.receive-order-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const orderId = this.getAttribute('data-order-id');
+                    markOrderAsReceived(orderId);
+                });
+            });
+        }
     }
+    
 
     function markOrderAsReceived(orderId) {
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
