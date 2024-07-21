@@ -329,17 +329,24 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCartBadge();
     }
 
-    function removeFromCart(count = 1) {
-        let currentCount = getCartItemCount();
-        currentCount = Math.max(currentCount - count, 0);
-        localStorage.setItem('cartItemCount', currentCount);
-        updateCartBadge();
-    }
+    // function removeFromCart(count = 1) {
+    //     let currentCount = getCartItemCount();
+    //     currentCount = Math.max(currentCount - count, 0);
+    //     localStorage.setItem('cartItemCount', currentCount);
+    //     updateCartBadge();
+    // }
 
-    function resetCart() {
-        localStorage.setItem('cartItemCount', 0);
-        updateCartBadge();
-    }
+    // function resetCart() {
+    //     localStorage.setItem('cartItemCount', 0);
+    //     updateCartBadge();
+    // }
+
+
+    const supportBtn = document.getElementById('support-request-btn');
+
+    supportBtn.addEventListener('click', function() {
+        window.location.href = './html/support-request.html';
+    });
     
 });
 
