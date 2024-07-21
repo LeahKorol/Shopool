@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
             emptyMessage.innerHTML = `
                 <p>You have no orders yet.</p>
                 <p>Start shopping now to make your first order!</p>
-                <a href="./shop.html" class="start-shopping-btn">Start Shopping</a>
+                <a href="../index.html" class="start-shopping-btn">Start Shopping</a>
             `;
             orderList.appendChild(emptyMessage);
         } else {
