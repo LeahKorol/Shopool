@@ -171,6 +171,8 @@ header .logo-container img {
     .invoice-box {
         padding: 10px;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+        width: 90vw;
+        margin:0 auto;
     }
 
     .invoice-box table tr.top table td.title {
