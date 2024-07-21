@@ -693,3 +693,12 @@ input:checked + .payment-method-item::before {
 .free-shipping {
     color: green;
 }
+
+
+#checkout-section , .checkout-section {
+    display: none;
+}
+
+.payment-summary-item {
+    display: none;
+}

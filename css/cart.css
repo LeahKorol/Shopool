@@ -262,6 +262,10 @@ label {
   font-size: 16px;
 }
 
+#empty-cart {
+  display: none;
+}
+
 
 @media (max-width: 768px) {
   .cart-container {
