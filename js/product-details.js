@@ -571,8 +571,6 @@ document.addEventListener('DOMContentLoaded', function () {
             reviewElement.appendChild(readMoreLink);
         }
 
-
-        console.log(product);
     });
 });
 

@@ -276,7 +276,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         } else {
-            console.log("Order not found");
             alert("Order details not found. Please try again later.");
         }
     }
@@ -326,8 +325,6 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
         }
     }
-
-    console.log("we are here");
 
 
     const editForm = document.getElementById('edit-profile-form');

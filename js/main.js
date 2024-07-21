@@ -112,10 +112,9 @@ async function showDefaultProducts() {
         const defaultProducts = await getDefaultProducts();
         if (defaultProducts) {
             displayProducts(defaultProducts);
-        } else {
-            console.log('Failed to fetch default products.');
         }
-    } catch (error) {
+    } 
+    catch (error) {
         console.error('Error fetching default products:', error);
     }
 }
@@ -241,8 +240,6 @@ function handleSearch() {
         const query = searchInput.value.trim();
         if (!query)
             showDefaultProducts();
-        else
-            console.log('Query:', query);
     });
 
     const performSearch = () => {

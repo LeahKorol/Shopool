@@ -208,8 +208,6 @@ function increaseQuantity(productId) {
 
 document.getElementById('checkout-btn').addEventListener('click', function () {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    console.log("Cart before checkout:", cart); // בדיקה
     localStorage.setItem('checkoutItems', JSON.stringify(cart));
-    console.log("CheckoutItems after setting:", JSON.parse(localStorage.getItem('checkoutItems'))); // בדיקה
     window.location.href = 'checkout.html';
 });

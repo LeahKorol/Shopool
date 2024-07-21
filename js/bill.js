@@ -21,9 +21,7 @@ function loadBillData() {
             localStorage.removeItem('cart');
         }
 
-    } else {
-        console.error('No bill data found');
-    }
+    } 
 }
 
 function setupPrintButton() {
