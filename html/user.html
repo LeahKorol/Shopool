@@ -14,6 +14,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
+
+    <header>
+        <a href="../index.html">
+            <div class="logo-container">
+                <img src="../images/icon.png" alt="icon">
+                <img src="../images/shopool.png" alt="shopool">
+            </div>
+        </a>
+    </header>
+
+
     <div class="container">
         <div class="sidebar">
             <div class="profile">
@@ -57,6 +68,9 @@
                     </div>
                 </div>
             </section>
+
+            <div id="modal-placeholder"></div>
+
             <section id="favorites">
                 <h2>Favorites</h2>
                 <div id="favorites-grid">
@@ -65,24 +79,21 @@
             </section>
             <section id="settings">
                 <h2>Settings</h2>
-                <form>
-                    <div class="form-group">
-                        <label for="name">name</label>
-                        <input type="text" id="name" value="joe doe">
+                <form id="edit-profile-form">
+                    <input type="text" id="edit-name" placeholder="Name">
+                    <input type="email" id="edit-email" placeholder="Email">
+                    <input type="tel" id="edit-phone" placeholder="Phone">
+                    <div class="avatar-upload">
+                        <label for="edit-avatar">Avatar:</label>
+                        <input type="file" id="edit-avatar" accept="image/*">
+                        <img id="avatar-preview" src="../images/user-picture.png" alt="Avatar Preview">
                     </div>
-                    <div class="form-group">
-                        <label for="email">e-mail</label>
-                        <input type="email" id="email" value="joedoe@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">phone</label>
-                        <input type="tel" id="phone" value="052-1234567">
-                    </div>
-                    <button type="submit">save changes</button>
+                    <button type="submit">Save Changes</button>
                 </form>
             </section>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script src="../js/user.js"></script>
 </body>
 </html>

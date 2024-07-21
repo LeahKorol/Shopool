@@ -55,10 +55,13 @@ header .logo-container img {
     width: 100%;
     line-height: inherit;
     text-align: left;
+
+
+    border-collapse: collapse;
 }
 
 .invoice-box table td {
-    padding: 5px;
+    padding: 8px;
     vertical-align: top;
 }
 
@@ -107,6 +110,21 @@ header .logo-container img {
     font-weight: bold;
 }
 
+.invoice-box table tr.total-row .total-label {
+    text-align: right;
+    padding-right: 20px;
+}
+
+.invoice-box table tr.total-row .total-price {
+    text-align: right;
+}
+
+.invoice-box table tr.total-row .total-price span {
+    font-size: 1.2em;
+    color: #333;
+}
+
+
 .print-button {
     display: block;
     width: 200px;
@@ -139,7 +157,7 @@ header .logo-container img {
     }
 }
 
-/* Media Queries for smaller screens */
+
 @media (max-width: 830px) {
     header {
         flex-direction: column;
